@@ -5,7 +5,7 @@ using System.Text;
 
 namespace FABS_DataAccess.DataAccess
 {
-    class PersonRepository : IRepository<Person>
+    public class PersonRepository : IRepository<Person>
     {
         private FABSContext _context = new FABSContext();
 
