@@ -33,8 +33,9 @@ namespace FABS_Api.Controllers
 
         // POST api/<PeopleController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Post(Person person)
         {
+            _personRepository.Insert(person);
         }
 
         // PUT api/<PeopleController>/5
