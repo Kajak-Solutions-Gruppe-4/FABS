@@ -1,4 +1,5 @@
 ﻿using FABS_DataAccess.DataAccess;
+using FABS_DataAccess.Model;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -19,6 +20,9 @@ namespace FABS_DataAccess
                 Console.WriteLine(item.FirstName);
 
             }
+
+            Person person = new Person("Clara", "Friis", 2, 1, false);
+            pR.Insert(person);
 
         }
 

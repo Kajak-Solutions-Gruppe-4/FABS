@@ -14,6 +14,16 @@ namespace FABS_DataAccess.Model
             Locations = new HashSet<Location>();
         }
 
+        public Person(string firstName, string lastName, int addressId, int loginId, bool isAdmin) : this()
+        {
+            
+            FirstName = firstName;
+            LastName = lastName;
+            AdressesId = addressId;
+            LoginsId = loginId;
+            IsAdmin = isAdmin;
+        }
+
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

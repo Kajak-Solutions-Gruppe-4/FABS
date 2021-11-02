@@ -29,7 +29,20 @@ namespace FABS_DataAccess.DataAccess
 
         public bool Insert(Person entity)
         {
-            throw new NotImplementedException();
+            
+
+            var p = _context.People.Add(entity);
+            var result = _context.SaveChanges();
+
+            if(result > 0)
+            {
+                return true;
+            } else
+            {
+                return false;
+            }
+
+          
         }
 
         public bool Update(Person entity)
