@@ -15,17 +15,26 @@ namespace FABS_WPF_Client.Model
         public string LastName { get; set; }
         [JsonPropertyName("telephoneNumber")]
         public string TelephoneNumber { get; set; }
+        [JsonPropertyName("adressesId")]
+        public int AdressesId { get; set; }
+        [JsonPropertyName("loginsId")]
+        public int LoginsId { get; set; }
+        [JsonPropertyName("isAdmin")]
+        public bool IsAdmin { get; set; }
+
 
         public Person()
         {
         }
 
-        public Person(int id, string firstName, string lastName, string telephoneNumber)
+        public Person(string firstName, string lastName, string telephoneNumber, int adressesId, int loginsId, bool isAdmin)
         {
-            Id = id;
             FirstName = firstName;
             LastName = lastName;
             TelephoneNumber = telephoneNumber;
+            AdressesId = adressesId;
+            LoginsId = loginsId;
+            IsAdmin = isAdmin;
         }
 
         public override string ToString()

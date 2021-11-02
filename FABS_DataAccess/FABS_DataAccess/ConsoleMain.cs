@@ -21,7 +21,7 @@ namespace FABS_DataAccess
 
             }
 
-            Person person = new Person("Clara", "Friis", 2, 1, false);
+            Person person = new Person("Clara", "Friis", "98765432", 2, 1, false);
             pR.Insert(person);
 
         }

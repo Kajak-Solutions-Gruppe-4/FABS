@@ -82,7 +82,9 @@
 
         <Button x:Name="SubmitButton" Content="Kiss Me!" Grid.Column="2" Grid.Row="7" Click="SubmitButton_Click"/>
 
-        <ListView x:Name = "ListOfPeople" Grid.Column="3" Grid.Row="1" Width="100" Grid.RowSpan="6"></ListView>
+        <ListView x:Name = "ListOfPeople" Grid.Column="3" Grid.Row="1" Width="auto" Height="100" Grid.RowSpan="6" VerticalContentAlignment="Top"  
+          ScrollViewer.VerticalScrollBarVisibility="Visible"
+          ScrollViewer.CanContentScroll="True"></ListView>
 
         <Button x:Name="RefreshButton" Content="Refresh" Grid.Column="3" Grid.Row="7" Click="RefreshButton_Click"/>
 
