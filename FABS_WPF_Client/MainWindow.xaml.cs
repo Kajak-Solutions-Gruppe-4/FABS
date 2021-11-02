@@ -28,7 +28,7 @@ namespace FABS_WPF_Client
         public MainWindow()
         {
             InitializeComponent();
-            //RefreshList();
+            RefreshList();
         }
 
         private void SubmitButton_Click(object sender, RoutedEventArgs e)

@@ -27,5 +27,10 @@ namespace FABS_WPF_Client.Model
             LastName = lastName;
             TelephoneNumber = telephoneNumber;
         }
+
+        public override string ToString()
+        {
+            return $"{Id} - {FirstName} {LastName}, {TelephoneNumber}";
+        }
     }
 }
