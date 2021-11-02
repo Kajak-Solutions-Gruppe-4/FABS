@@ -1,6 +1,10 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\FABS_DataAccess",
+    "\\FABS_DataAccess\\FABS_Api",
+    "\\FABS_DataAccess\\FABS_DataAccess"
   ],
+  "SelectedNode": "\\FABS_DataAccess\\FABS_DataAccess\\FABS_DataAccess.csproj",
   "PreviewInSolutionExplorer": false
 }
