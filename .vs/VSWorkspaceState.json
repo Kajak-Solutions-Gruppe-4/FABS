@@ -1,7 +1,12 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\FABS_DataAccess",
+    "\\FABS_DataAccess\\FABS_DataAccess",
+    "\\FABS_DataAccess\\FABS_DataAccess\\DataAccess",
+    "\\FABS_WPF_Client",
+    "\\FABS_WPF_Client\\Model"
   ],
-  "SelectedNode": "\\FABS_DataAccess",
+  "SelectedNode": "\\FABS_DataAccess\\FABS_DataAccess\\DataAccess\\PersonRepository.cs",
   "PreviewInSolutionExplorer": false
 }
