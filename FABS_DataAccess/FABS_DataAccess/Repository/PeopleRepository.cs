@@ -5,8 +5,10 @@ using System.Text;
 
 namespace FABS_DataAccess.Repository
 {
-    class PeopleRepository : IRepository<Person>
+    public class PeopleRepository : IRepository<Person>
     {
+        private FABSContext _dbAccess = new FABSContext();
+        
         public int Create(Person entity)
         {
             
@@ -21,7 +23,8 @@ namespace FABS_DataAccess.Repository
 
         public Person Get(int id)
         {
-            throw new NotImplementedException();
+            var p = _dbAccess.People.Find(id);
+            return p;
         }
 
         public IEnumerable<Person> GetAll()
