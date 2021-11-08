@@ -31,7 +31,10 @@ namespace FABS_DataAccess.Repository
         {
             //SKRIV TEST!!! SKRIV FOR FANDEN!
 
-            throw new NotImplementedException();
+            var p = _dbAccess.People;
+            return p;
+
+            //throw new NotImplementedException();
         }
 
         public bool Update(Person entity)

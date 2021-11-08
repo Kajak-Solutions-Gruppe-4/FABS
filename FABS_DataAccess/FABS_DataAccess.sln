@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31624.102
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FABS_DataAccess", "FABS_DataAccess\FABS_DataAccess.csproj", "{D9AB6BB4-CDC8-4F5D-904B-C5ED963EFE1D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FABS_DataAccess", "FABS_DataAccess\FABS_DataAccess.csproj", "{D9AB6BB4-CDC8-4F5D-904B-C5ED963EFE1D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FABS_Test_DataAccess", "FABS_Test_DataAccess\FABS_Test_DataAccess.csproj", "{0FE7D9D5-C8E0-40A6-B23D-CFEA178E0AE1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FABS_Test_DataAccess", "FABS_Test_DataAccess\FABS_Test_DataAccess.csproj", "{0FE7D9D5-C8E0-40A6-B23D-CFEA178E0AE1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FABS_API", "FABS_API\FABS_API.csproj", "{A1F8BED2-4ABD-480B-8BD1-252ED7BE8967}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{0FE7D9D5-C8E0-40A6-B23D-CFEA178E0AE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0FE7D9D5-C8E0-40A6-B23D-CFEA178E0AE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0FE7D9D5-C8E0-40A6-B23D-CFEA178E0AE1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1F8BED2-4ABD-480B-8BD1-252ED7BE8967}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1F8BED2-4ABD-480B-8BD1-252ED7BE8967}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1F8BED2-4ABD-480B-8BD1-252ED7BE8967}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1F8BED2-4ABD-480B-8BD1-252ED7BE8967}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
