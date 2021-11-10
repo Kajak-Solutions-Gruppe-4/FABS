@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31729.503
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{17D46B5B-E2CE-4FD6-A5D6-8AAEDCCF0D7A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Business logic", "Business logic\Business logic.csproj", "{0165727E-003F-43AE-A2D3-052D73CB3DF5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "API\API.csproj", "{305AB270-B8B1-425C-9A88-2DDFADB55EB2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{17D46B5B-E2CE-4FD6-A5D6-8AAEDCCF0D7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17D46B5B-E2CE-4FD6-A5D6-8AAEDCCF0D7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17D46B5B-E2CE-4FD6-A5D6-8AAEDCCF0D7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17D46B5B-E2CE-4FD6-A5D6-8AAEDCCF0D7A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0165727E-003F-43AE-A2D3-052D73CB3DF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0165727E-003F-43AE-A2D3-052D73CB3DF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0165727E-003F-43AE-A2D3-052D73CB3DF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0165727E-003F-43AE-A2D3-052D73CB3DF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{305AB270-B8B1-425C-9A88-2DDFADB55EB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{305AB270-B8B1-425C-9A88-2DDFADB55EB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{305AB270-B8B1-425C-9A88-2DDFADB55EB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{305AB270-B8B1-425C-9A88-2DDFADB55EB2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9921D69B-AF4E-4680-A625-E58E1B236318}
+	EndGlobalSection
+EndGlobal
