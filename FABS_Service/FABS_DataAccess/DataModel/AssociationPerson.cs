@@ -8,8 +8,13 @@ namespace FABS_DataAccess.Model
     {
         public AssociationPerson(Association associations, Person people)
         {
-            Associations = associations;
-            People = people;
+            Association = associations;
+            Person = people;
+        }
+
+        public AssociationPerson()
+        {
+
         }
     }
 }

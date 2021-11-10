@@ -30,8 +30,13 @@ namespace FABS_Test_DataAccess
                 Association asso1 = new Association("12341234", "UCN Kajakker", add1);
                 Login log1 = new Login("test@test.com", "1234");
                 Person per1 = new Person("Peter", "Hahn", "20202020", false, add1, log1);
+                List<AssociationPerson> assoPer = new List<AssociationPerson>();
+                AssociationPerson assoPer1 = new AssociationPerson(asso1, per1);
+                assoPer.Add(assoPer1);
+                asso1.AssociationPeople = assoPer;
+                per1.AssociationPeople = assoPer;
 
-                context.AddRange(zip1, add1, asso1, log1, per1);
+                context.AddRange(zip1, add1, asso1, log1, per1, assoPer1);
                 context.SaveChanges();
             }
         }
@@ -42,21 +47,25 @@ namespace FABS_Test_DataAccess
             using (var context = new FABSContext())
             {
                 var controller = new PeopleController(context);
-                List<Person> persons = controller.Get().Value.ToList();
+                var response = controller.Get(0);
 
-                Assert.Single(persons);
-                Assert.Equal("Peter", persons[0].FirstName);
-                Assert.Equal("Hahn", persons[0].LastName);
-                Assert.Equal("20202020", persons[0].TelephoneNumber);
-                Assert.False(persons[0].IsAdmin);
-                Assert.Equal("Sofiendalsvej", persons[0].Adresses.StreetName);
-                Assert.Equal("60", persons[0].Adresses.StreetNumber);
-                Assert.Null(persons[0].Adresses.ApartmentNumber);
-                Assert.Equal("9000", persons[0].Adresses.Zipcode);
-                Assert.Equal("Danmark", persons[0].Adresses.Country);
-                Assert.Equal("Aalborg", persons[0].Adresses.ZipcodeCountryCity.City);
-                Assert.Equal("test@test.com", persons[0].Logins.Email);
-                Assert.Equal("1234", persons[0].Logins.Password);
+                Person person = response.Value;
+
+                Assert.Equal("Peter", person.FirstName);
+                Assert.Equal("Hahn", person.LastName);
+                Assert.Equal("20202020", person.TelephoneNumber);
+                Assert.False(person.IsAdmin);
+                Assert.Equal("Sofiendalsvej", person.Adresses.StreetName);
+                Assert.Equal("60", person.Adresses.StreetNumber);
+                Assert.Null(person.Adresses.ApartmentNumber);
+                Assert.Equal("9000", person.Adresses.Zipcode);
+                Assert.Equal("Danmark", person.Adresses.Country);
+                Assert.Equal("Aalborg", person.Adresses.ZipcodeCountryCity.City);
+                Assert.Equal("test@test.com", person.Logins.Email);
+                Assert.Equal("1234", person.Logins.Password);
+                Assert.Equal("12341234", person.AssociationPeople.ToList()[0].Association.Cvr);
+                Assert.Equal("UCN Kajakker", person.AssociationPeople.ToList()[0].Association.Name);
+                
             }
         }
     }

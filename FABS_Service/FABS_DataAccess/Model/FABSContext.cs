@@ -1,8 +1,6 @@
 ﻿using System;
-using System.IO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.Extensions.Configuration;
 
 #nullable disable
 
@@ -10,26 +8,9 @@ namespace FABS_DataAccess.Model
 {
     public partial class FABSContext : DbContext
     {
-        private IConfiguration Configuration { get; set; }
-
         public FABSContext()
         {
-            string appSettingsString = @"\FABS_API_Service\appsettings.json";
-            // Loops to search back in folders to be able to find appsettings.
-            // TODO: find a better solution than just looping 10 times
-            for (int i = 0; i < 10; i++)
-            {
-                string physicalPath = @Directory.GetCurrentDirectory() + appSettingsString;
-                if (physicalPath.Contains(@"FABS_Service\FABS_API_Service\appsettings.json"))
-                {
-                    break;
-                }
-            }
-
-            Configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile(@Directory.GetCurrentDirectory() + @"\..\..\..\..\FABS_API_Service\appsettings.json")
-                .Build();
+            OnCreate();
         }
 
         public FABSContext(DbContextOptions<FABSContext> options)
@@ -57,21 +38,20 @@ namespace FABS_DataAccess.Model
         {
             if (!optionsBuilder.IsConfigured)
             {
-                string connectionString = Configuration.GetConnectionString("FABS_connectionstring");
-#pragma warning disable CS1030 // #warning directive
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer(connectionString);
-#pragma warning restore CS1030 // #warning directive
+                optionsBuilder.UseSqlServer(_connectionString);
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("Relational:Collation", "Latin1_General_CI_AS");
+            modelBuilder.HasAnnotation("Relational:Collation", "Danish_Norwegian_CI_AS");
 
             modelBuilder.Entity<Address>(entity =>
             {
                 entity.ToTable("addresses");
+
+                entity.HasIndex(e => new { e.Zipcode, e.Country }, "IX_addresses_zipcode_country");
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
@@ -138,23 +118,23 @@ namespace FABS_DataAccess.Model
 
             modelBuilder.Entity<AssociationPerson>(entity =>
             {
-                entity.HasKey(e => new { e.AssociationsId, e.PeopleId });
+                entity.HasKey(e => new { e.AssociationId, e.PersonId });
 
                 entity.ToTable("association_person");
 
-                entity.Property(e => e.AssociationsId).HasColumnName("associations_id");
+                entity.Property(e => e.AssociationId).HasColumnName("association_id");
 
-                entity.Property(e => e.PeopleId).HasColumnName("people_id");
+                entity.Property(e => e.PersonId).HasColumnName("person_id");
 
-                entity.HasOne(d => d.Associations)
+                entity.HasOne(d => d.Association)
                     .WithMany(p => p.AssociationPeople)
-                    .HasForeignKey(d => d.AssociationsId)
+                    .HasForeignKey(d => d.AssociationId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_association_person_associations");
 
-                entity.HasOne(d => d.People)
+                entity.HasOne(d => d.Person)
                     .WithMany(p => p.AssociationPeople)
-                    .HasForeignKey(d => d.PeopleId)
+                    .HasForeignKey(d => d.PersonId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_association_person_people");
             });
@@ -185,6 +165,10 @@ namespace FABS_DataAccess.Model
             modelBuilder.Entity<Booking>(entity =>
             {
                 entity.ToTable("bookings");
+
+                entity.HasIndex(e => e.PeopleId, "IX_bookings_people_id");
+
+                entity.HasIndex(e => e.StatusesId, "IX_bookings_statuses_id");
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
@@ -217,6 +201,10 @@ namespace FABS_DataAccess.Model
             {
                 entity.ToTable("booking_line");
 
+                entity.HasIndex(e => e.BookingsId, "IX_booking_line_bookings_id");
+
+                entity.HasIndex(e => e.ItemsId, "IX_booking_line_items_id");
+
                 entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.BookingsId).HasColumnName("bookings_id");
@@ -240,8 +228,12 @@ namespace FABS_DataAccess.Model
             {
                 entity.ToTable("items");
 
+                entity.HasIndex(e => e.AssociationId, "IX_items_association_id");
+
+                entity.HasIndex(e => e.StatusesId, "IX_items_statuses_id");
+
                 entity.Property(e => e.Id)
-                    .ValueGeneratedOnAdd()
+                    .ValueGeneratedNever()
                     .HasColumnName("id");
 
                 entity.Property(e => e.AssociationId).HasColumnName("association_id");
@@ -272,6 +264,10 @@ namespace FABS_DataAccess.Model
                 entity.HasKey(e => e.ItemsId);
 
                 entity.ToTable("kayaks");
+
+                entity.HasIndex(e => e.KayakTypesId, "IX_kayaks_kayak_types_id");
+
+                entity.HasIndex(e => e.LocationsId, "IX_kayaks_locations_id");
 
                 entity.Property(e => e.ItemsId)
                     .ValueGeneratedNever()
@@ -328,6 +324,10 @@ namespace FABS_DataAccess.Model
             modelBuilder.Entity<Location>(entity =>
             {
                 entity.ToTable("locations");
+
+                entity.HasIndex(e => e.PeopleId, "IX_locations_people_id");
+
+                entity.HasIndex(e => e.WarehousesId, "IX_locations_warehouses_id");
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
@@ -445,6 +445,8 @@ namespace FABS_DataAccess.Model
             modelBuilder.Entity<Warehouse>(entity =>
             {
                 entity.ToTable("warehouses");
+
+                entity.HasIndex(e => e.AddressesId, "IX_warehouses_addresses_id");
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
