@@ -13,7 +13,7 @@ namespace FABS_Test_DataAccess
             [Fact]
         public void Test1()
         {
-             var pRep = new PeopleRepository(_configuration);
+             var pRep = new PeopleRepository();
 
             var res = pRep.Get(3);
 

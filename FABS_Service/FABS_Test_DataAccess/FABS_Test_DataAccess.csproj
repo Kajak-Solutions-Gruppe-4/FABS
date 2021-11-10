@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\FABS_API_Service\FABS_API_Service.csproj" />
     <ProjectReference Include="..\FABS_DataAccess\FABS_DataAccess.csproj" />
   </ItemGroup>
 

@@ -8,19 +8,23 @@ namespace FABS_DataAccess.Repository
 {
     public class PeopleRepository : IRepository<Person>
     {
-        FABSContext _FABSContext;
+        FABSContext _Context;
         public PeopleRepository()
         {
-            _FABSContext = new FABSContext();
+            _Context = new FABSContext();
         }
 
+        public PeopleRepository(FABSContext context)
+        {
+            _Context = context;
+        }
 
         public Person Get(int id)
         {
             Person foundPerson;
             try
             {
-                foundPerson = _FABSContext.People.Find(id);
+                foundPerson = _Context.People.Find(id);
             }
             catch
             {
@@ -35,7 +39,7 @@ namespace FABS_DataAccess.Repository
             IEnumerable<Person> listPerson;
             try
             {
-                listPerson = _FABSContext.People;
+                listPerson = _Context.People;
 
             }
             catch
@@ -49,8 +53,8 @@ namespace FABS_DataAccess.Repository
             int insertedId;
             try
             {
-                var res = _FABSContext.Add(p);
-                _FABSContext.SaveChanges();
+                var res = _Context.Add(p);
+                _Context.SaveChanges();
                 insertedId = res.Entity.Id;
             }
             catch
@@ -66,9 +70,9 @@ namespace FABS_DataAccess.Repository
 
             try
             {
-                var p = _FABSContext.People.Find(id);
-                var res = _FABSContext.Remove(p);
-                _FABSContext.SaveChanges();
+                var p = _Context.People.Find(id);
+                var res = _Context.Remove(p);
+                _Context.SaveChanges();
                 wasDeleted = true;
             }
             catch
@@ -87,11 +91,11 @@ namespace FABS_DataAccess.Repository
 
             try
             {
-                using (_FABSContext)
+                using (_Context)
 
                 {
                     //Get the context entity form DB so we can change it.
-                    var personResultEntity = _FABSContext.People.Find(id);
+                    var personResultEntity = _Context.People.Find(id);
                     //Update the context entity with the date recieved from the update object
                     personResultEntity.FirstName = p.FirstName;
                     personResultEntity.LastName = p.LastName;
@@ -105,7 +109,7 @@ namespace FABS_DataAccess.Repository
                     personResultEntity.Bookings = p.Bookings;
                     personResultEntity.Locations = p.Locations;
 
-                    _FABSContext.SaveChanges();
+                    _Context.SaveChanges();
                 }
 
                 wasUpdated = true;

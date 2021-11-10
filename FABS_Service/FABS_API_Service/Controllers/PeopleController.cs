@@ -6,6 +6,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using FABS_DataAccess.Repository;
 using FABS_DataAccess.Model;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -17,12 +19,18 @@ namespace FABS_API_Service.Controllers
     {
         private readonly IRepository<Person> _peopleRepository;
 
+        [ActivatorUtilitiesConstructor]
         public PeopleController()
         {
             _peopleRepository = new PeopleRepository();
         }
-        // GET: api/<PeopleController>
-        [HttpGet]
+
+        public PeopleController(FABSContext context)
+        {
+            _peopleRepository = new PeopleRepository(context);
+        }
+            // GET: api/<PeopleController>
+            [HttpGet]
         public ActionResult<IEnumerable<Person>> Get()
         {
             IEnumerable<Person> listPeople = _peopleRepository.GetAll();
