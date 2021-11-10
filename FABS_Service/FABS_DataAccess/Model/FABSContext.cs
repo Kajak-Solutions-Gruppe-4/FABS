@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.Configuration;
@@ -11,9 +12,12 @@ namespace FABS_DataAccess.Model
     {
         private IConfiguration Configuration { get; set; }
 
-        public FABSContext(IConfiguration configuration)
+        public FABSContext()
         {
-            Configuration = configuration;
+            Configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile(@Directory.GetCurrentDirectory() + "/../FABS_API_Service/appsettings.json")
+                .Build();
         }
 
         public FABSContext(DbContextOptions<FABSContext> options)

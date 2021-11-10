@@ -18,10 +18,9 @@ namespace FABS_API_Service.Controllers
         private readonly IConfiguration _configuration;
         private readonly IRepository<Person> _peopleRepository;
 
-        public PeopleController(IConfiguration configuration)
+        public PeopleController()
         {
-            _configuration = configuration;
-            _peopleRepository = new PeopleRepository(_configuration);
+            _peopleRepository = new PeopleRepository();
         }
         // GET: api/<PeopleController>
         [HttpGet]

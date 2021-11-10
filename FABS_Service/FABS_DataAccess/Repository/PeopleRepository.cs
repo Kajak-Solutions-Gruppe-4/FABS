@@ -9,9 +9,9 @@ namespace FABS_DataAccess.Repository
     public class PeopleRepository : IRepository<Person>
     {
         FABSContext _FABSContext;
-        public PeopleRepository(IConfiguration configuration)
+        public PeopleRepository()
         {
-            _FABSContext = new FABSContext(configuration);
+            _FABSContext = new FABSContext();
         }
 
 
