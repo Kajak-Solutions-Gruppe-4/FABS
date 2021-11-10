@@ -15,7 +15,6 @@ namespace FABS_API_Service.Controllers
     [ApiController]
     public class PeopleController : ControllerBase
     {
-        private readonly IConfiguration _configuration;
         private readonly IRepository<Person> _peopleRepository;
 
         public PeopleController()
