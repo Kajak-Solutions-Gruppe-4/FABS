@@ -6,13 +6,14 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 using System.Linq;
+using FABS_DataAccess.Repository;
 
 namespace FABS_Test_DataAccess
 {
-    public class PeopleControllerTest
+    public class PeopleRepositoryTest
     {
         // The constroctur is called before every test
-        public PeopleControllerTest()
+        public PeopleRepositoryTest()
         {
             // calls this method to ensure the database filled with data for testing
             Seed();
@@ -46,10 +47,9 @@ namespace FABS_Test_DataAccess
         {
             using (var context = new FABSContext())
             {
-                var controller = new PeopleController(context);
-                var response = controller.Get(1);
+                var peopleRepository = new PeopleRepository();
 
-                Person person = response.Value;
+                Person person = peopleRepository.Get(1);
 
                 Assert.Equal("Peter", person.FirstName);
                 Assert.Equal("Hahn", person.LastName);

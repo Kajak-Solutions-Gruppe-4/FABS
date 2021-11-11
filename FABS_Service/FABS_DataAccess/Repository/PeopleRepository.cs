@@ -3,6 +3,8 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace FABS_DataAccess.Repository
 {
@@ -24,7 +26,14 @@ namespace FABS_DataAccess.Repository
             Person foundPerson;
             try
             {
-                foundPerson = _Context.People.Find(id);
+                // eager loading
+                foundPerson = _Context.People
+                    .Include(a => a.Adresses)
+                    .ThenInclude(z => z.ZipcodeCountryCity)
+                    .Include(l => l.Logins)
+                    .Include(ap => ap.AssociationPeople)
+                    .ThenInclude(a => a.Association)
+                    .FirstOrDefault(x => x.Id == id);
             }
             catch
             {
