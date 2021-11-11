@@ -47,7 +47,7 @@ namespace FABS_Test_DataAccess
             using (var context = new FABSContext())
             {
                 var controller = new PeopleController(context);
-                var response = controller.Get(0);
+                var response = controller.Get(1);
 
                 Person person = response.Value;
 

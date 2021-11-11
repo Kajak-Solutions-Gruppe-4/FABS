@@ -47,13 +47,13 @@ namespace FABS_API_Service.Controllers
         public ActionResult<Person> Get(int id)
         {
             ActionResult<Person> foundPerson = _peopleRepository.Get(id);
-            if (foundPerson != null)
+            if (foundPerson.Value != null)
             {
                 return Ok(foundPerson);
             }
             else
             {
-                return new StatusCodeResult(500);
+                return new StatusCodeResult(404);
             }
 
 
