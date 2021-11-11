@@ -11,14 +11,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace FABS_Client.Pages
+namespace FABS_Client.Pages.Persons
 {
     /// <summary>
-    /// Interaction logic for Page1.xaml
+    /// Interaction logic for PersonsGUI.xaml
     /// </summary>
-    public partial class Page1 : Page
+    public partial class PersonsGUI : Page
     {
-        public Page1()
+        public PersonsGUI()
         {
             InitializeComponent();
         }

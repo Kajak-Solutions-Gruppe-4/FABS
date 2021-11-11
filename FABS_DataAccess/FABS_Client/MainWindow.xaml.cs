@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -18,18 +16,31 @@ namespace FABS_Client
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Page
     {
         public MainWindow()
         {
-            
             InitializeComponent();
-            var newForm = new Pages.PersonsGui();
         }
 
-        private void ButtonPerson_Click(object sender, RoutedEventArgs e)
+        private void ButtonMember(object sender, RoutedEventArgs e)
         {
-            //Main.Content = new Pages.PersonsGUI();
+            Home.Content = new Pages.Persons.PersonsGUI();
+        }
+
+        private void ButtonStorage(object sender, RoutedEventArgs e)
+        {
+            //Home.Content = new Pages.Storage.StorageGUI();
+        }
+
+        private void ButtonEquipment(object sender, RoutedEventArgs e)
+        {
+            Home.Content = new Pages.Items.ItemGUI();
+        }
+
+        private void ButtonBooking(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

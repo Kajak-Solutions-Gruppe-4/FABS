@@ -6,4 +6,10 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Pages\Checkout\" />
+    <Folder Include="Pages\Booking\" />
+    <Folder Include="Pages\Storage\" />
+  </ItemGroup>
+
 </Project>

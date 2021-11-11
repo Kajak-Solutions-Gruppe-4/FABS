@@ -8,17 +8,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace FABS_Client.Pages
+namespace FABS_Client.Pages.Items
 {
     /// <summary>
-    /// Interaction logic for ItemsGUI.xaml
+    /// Interaction logic for CreateKayak.xaml
     /// </summary>
-    public partial class ItemsGUI : Page
+    public partial class CreateKayak : Window
     {
-        public ItemsGUI()
+        public CreateKayak()
         {
             InitializeComponent();
         }

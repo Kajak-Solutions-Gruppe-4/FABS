@@ -1,17 +1,16 @@
-﻿<Page x:Class="FABS_Client.MainWindow"
+﻿<Page x:Class="FABS_Client.Pages.Persons.PersonsGUI"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:FABS_Client"
+      xmlns:local="clr-namespace:FABS_Client.Pages.Persons"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="MainWindow">
+      Title="PersonsGUI">
 
     <Grid>
 
 
-        <!--Row/Column Size-->
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width ="20" />
             <ColumnDefinition Width ="auto" />
@@ -31,8 +30,8 @@
             <RowDefinition Height="20"/>
             <RowDefinition Height="20"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
             <RowDefinition Height="20"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
@@ -44,22 +43,18 @@
 
         </Grid.RowDefinitions>
 
+
+
         <!--Menu Navigation-->
-        <Button x:Name="ButtonHome" Content="Forside" Grid.Column="1" Grid.Row="1" Width="75" Height="20" Grid.RowSpan="10" VerticalAlignment="Top" FontWeight="Bold"/>
-        <Button x:Name="ButtonMember" Content="Medlemmer" Grid.Column="2" Grid.Row="1" Width="75" Height="20" Grid.RowSpan="10" VerticalAlignment="Top" Click="ButtonMember" FontWeight="SemiBold"/>
+        <Button x:Name="ButtonHome" Content="Forside" Grid.Column="1" Grid.Row="1" Width="75" Height="20" Grid.RowSpan="10" VerticalAlignment="Top" FontWeight="SemiBold"/>
+        <Button x:Name="ButtonMember" Content="Medlemmer" Grid.Column="2" Grid.Row="1" Width="75" Height="20" Grid.RowSpan="10" VerticalAlignment="Top" Click="ButtonMember" FontWeight="Bold"/>
         <Button x:Name="ButtonStorage" Content="Lager" Grid.Column="3" Grid.Row="1" Width="75" Click="ButtonStorage" FontWeight="SemiBold"/>
-        <Button x:Name="ButtonEquipment" Content="Udstyr Udlån" Grid.Column="4" Grid.Row="1" Width="75" FontWeight="SemiBold" Click="ButtonEquipment"/>
-        <Button x:Name="ButtonBooking" Content="Booking" Grid.Column="5" Grid.Row="1" Width="75" FontWeight="SemiBold" Click="ButtonBooking"/>
-        
-        <!--Page Elements-->
-        <TextBlock Grid.Column="1" Grid.Row="3" FontWeight="SemiBold" Text="Brugernavn: " FontFamily="Segce UI" Margin="3"/>
-        <TextBox x:Name="usernameText" Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="9" Margin="5,3,500,3" />
+        <Button x:Name="ButtonEquipment" Content="Udstyr Udlån" Grid.Column="4" Grid.Row="1" Width="75" FontWeight="SemiBold"/>
+        <Button x:Name="ButtonBooking" Content="Booking" Grid.Column="5" Grid.Row="1" Width="75" FontWeight="SemiBold"/>
 
-        <TextBlock Grid.Column="1" Grid.Row="4" FontWeight="SemiBold" Text="Kodeord: " FontFamily="Segce UI" Margin="3"/>
-        <TextBox x:Name="passwordText" Grid.Column="2" Grid.Row="4" Grid.ColumnSpan="9" Margin="5,3,500,3" />
+        <TextBlock Grid.Column="1" Grid.Row="3" FontSize="12" FontWeight="Bold" Text="--- Member List ---" FontFamily="Segce UI" Grid.ColumnSpan="4" Margin="15" TextAlignment="Center"/>
 
-        <Button x:Name="ButtonLogin" Content="Login" Grid.Column="1" Grid.Row="6" Width="75"/>
-        <Frame x:Name="Home" NavigationUIVisibility="Hidden"/>
-
+        <Button x:Name="ButtonBack" Content="Tilbage" Grid.Column="2" Grid.Row="5" Width="75"/>
+        <Button x:Name="ButtonCreatePerson" Content="Opret Person" Grid.Column="3" Grid.Row="5" Width="75" Click="ButtonPerson" />
     </Grid>
 </Page>
