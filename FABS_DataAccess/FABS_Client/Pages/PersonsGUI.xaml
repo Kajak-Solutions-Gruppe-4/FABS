@@ -51,7 +51,7 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="20"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
@@ -92,6 +92,10 @@
 
         <TextBlock Grid.Column="1" Grid.Row="12" FontWeight="SemiBold" Text="Postnummer: " FontFamily="Segce UI" Margin="3"/>
         <TextBox x:Name="zipcodeText" Grid.Column="2" Grid.Row="12" Grid.ColumnSpan="9" Margin="5,3,500,3" />
+
+        <Button x:Name="backButton" Content="Tilbage" Grid.Column="2" Grid.Row="14" Width="75"/>
+        <Button x:Name="createPersonButton" Content="Opret Medlem" Grid.Column="3" Grid.Row="14" Width="75"/>
+
 
         <Frame x:Name="Main" />
     </Grid>
