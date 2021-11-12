@@ -11,21 +11,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace FABS_Client.Pages.Items
+namespace FABS_Client.Pages.Checkout
 {
     /// <summary>
-    /// Interaction logic for CreateKayak.xaml
+    /// Interaction logic for CheckoutGUI.xaml
     /// </summary>
-    public partial class CreateKayak : Window
+    public partial class CheckoutGUI : Page
     {
-        public CreateKayak()
+        public CheckoutGUI()
         {
             InitializeComponent();
-        }
-
-        private void BackButton(object sender, RoutedEventArgs e)
-        {
-            Close();
         }
     }
 }

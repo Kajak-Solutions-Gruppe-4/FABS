@@ -22,5 +22,12 @@ namespace FABS_Client.Pages.Persons
         {
             InitializeComponent();
         }
+
+        private void ButtonPerson(object sender, RoutedEventArgs e)
+        {
+            CreatePersonWindow createPersonWindow = new CreatePersonWindow();
+            //this.Visibility = Visibility.Hidden //Hides Main window while usng second window
+            createPersonWindow.Show();
+        }
     }
 }

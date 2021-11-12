@@ -23,7 +23,11 @@ namespace FABS_Client.Pages.Items
             InitializeComponent();
         }
 
-
-        
+        private void CreateKayakButton(object sender, RoutedEventArgs e)
+        {
+            CreateKayak createKayak = new CreateKayak();
+            //this.Visibility = Visibility.Hidden //Hides Main window while usng second window
+            createKayak.Show();
+        }
     }
 }

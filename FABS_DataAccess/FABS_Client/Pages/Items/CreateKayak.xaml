@@ -81,8 +81,8 @@
         <TextBlock Grid.Column="1" Grid.Row="12" FontWeight="SemiBold" Text="Beskrivelse: " FontFamily="Segce UI" Margin="3"/>
         <TextBox x:Name="DecriptionText" Grid.Column="2" Grid.Row="12" Grid.ColumnSpan="2" />
 
-        <Button x:Name="backButton" Content="Tilbage" Grid.Column="2" Grid.Row="14" Width="75"/>
-        <Button x:Name="createPersonButton" Content="Opret Kajak" Grid.Column="3" Grid.Row="14" Width="75"/>
+        <Button Content="Tilbage" Grid.Column="2" Grid.Row="14" Width="75" Click="BackButton"/>
+        <Button Content="Opret Kajak" Grid.Column="3" Grid.Row="14" Width="75"/>
 
         <!--<Frame x:Name="PageCreateKayak" NavigationUIVisibility="Hidden"/>-->
 

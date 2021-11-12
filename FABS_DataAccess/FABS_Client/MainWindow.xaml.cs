@@ -32,5 +32,15 @@ namespace FABS_Client
         {
             Main.Content = new Pages.Items.ItemGUI();
         }
+
+        private void EquipmentButton(object sender, RoutedEventArgs e)
+        {
+            Main.Content = new Pages.Checkout.CheckoutGUI();
+        }
+
+        private void BookingButton(object sender, RoutedEventArgs e)
+        {
+            Main.Content = new Pages.Booking.BookingGUI();
+        }
     }
 }

@@ -7,17 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Pages\Booking\**" />
-    <Compile Remove="Pages\Checkout\**" />
     <Compile Remove="Pages\Storage\**" />
-    <EmbeddedResource Remove="Pages\Booking\**" />
-    <EmbeddedResource Remove="Pages\Checkout\**" />
     <EmbeddedResource Remove="Pages\Storage\**" />
-    <None Remove="Pages\Booking\**" />
-    <None Remove="Pages\Checkout\**" />
     <None Remove="Pages\Storage\**" />
-    <Page Remove="Pages\Booking\**" />
-    <Page Remove="Pages\Checkout\**" />
     <Page Remove="Pages\Storage\**" />
   </ItemGroup>
 

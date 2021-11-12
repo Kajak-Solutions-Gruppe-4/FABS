@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:FABS_Client.Pages.Persons"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="450" d:DesignWidth="600"
       Title="PersonsGUI">
 
     <Grid Background="White">
@@ -48,7 +48,7 @@
 
         <TextBlock Grid.Column="1" Grid.Row="3" FontSize="12" FontWeight="Bold" Text="--- Member List ---" FontFamily="Segce UI" Grid.ColumnSpan="4" Margin="15" TextAlignment="Center"/>
 
-        <Button x:Name="ButtonBack" Content="Tilbage" Grid.Column="2" Grid.Row="5" Width="75"/>
-        <Button x:Name="ButtonCreatePerson" Content="Opret Person" Grid.Column="3" Grid.Row="5" Width="75" />
+        <Button Content="Tilbage" Grid.Column="2" Grid.Row="5" Width="75"/>
+        <Button Content="Opret Person" Grid.Column="3" Grid.Row="5" Width="75" Click="ButtonPerson" />
     </Grid>
 </Page>

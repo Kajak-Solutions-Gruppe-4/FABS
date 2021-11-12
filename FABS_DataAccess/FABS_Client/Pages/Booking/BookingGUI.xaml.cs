@@ -11,21 +11,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace FABS_Client.Pages.Items
+namespace FABS_Client.Pages.Booking
 {
     /// <summary>
-    /// Interaction logic for CreateKayak.xaml
+    /// Interaction logic for BookingGUI.xaml
     /// </summary>
-    public partial class CreateKayak : Window
+    public partial class BookingGUI : Page
     {
-        public CreateKayak()
+        public BookingGUI()
         {
             InitializeComponent();
-        }
-
-        private void BackButton(object sender, RoutedEventArgs e)
-        {
-            Close();
         }
     }
 }

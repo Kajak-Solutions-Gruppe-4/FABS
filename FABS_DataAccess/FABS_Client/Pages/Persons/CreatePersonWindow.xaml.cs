@@ -21,5 +21,10 @@ namespace FABS_Client.Pages.Persons
         {
             InitializeComponent();
         }
+
+        private void BackButton(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
     }
 }
