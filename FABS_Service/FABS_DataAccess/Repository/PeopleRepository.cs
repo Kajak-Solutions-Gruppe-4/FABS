@@ -21,6 +21,11 @@ namespace FABS_DataAccess.Repository
             _Context = context;
         }
 
+        /// <summary>
+        /// Finds person in database via id.
+        /// </summary>
+        /// <param name="id">The id of the person to find in database.</param>
+        /// <returns>Returns the person object or NULL if nothing was found.</returns>
         public Person Get(int id)
         {
             Person foundPerson;
@@ -57,6 +62,12 @@ namespace FABS_DataAccess.Repository
             }
             return listPerson;
         }
+
+        /// <summary>
+        /// Creates a person in the database.
+        /// </summary>
+        /// <param name="p">The person objcet</param>
+        /// <returns>The ID if the person added to the database. Returns -1 if the person could not be added.</returns>
         public int Create(Person p)
         {
             int insertedId;
