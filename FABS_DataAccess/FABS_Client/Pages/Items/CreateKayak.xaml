@@ -69,12 +69,10 @@
         <TextBox x:Name="personCapacityText" Grid.Column="2" Grid.Row="8" Grid.ColumnSpan="2" />
 
         <TextBlock Grid.Column="1" Grid.Row="10" FontWeight="SemiBold" Text="Varehus: " FontFamily="Segce UI" Margin="3"/>
-        <ComboBox x:Name = "warehouse" Grid.Column="2" Grid.Row="10" Grid.ColumnSpan="2"
-         SelectionChanged = "Combo_SelectionChanged" Cursor="">
-
-            <ComboBoxItem Content = "Item #1" />
-            <ComboBoxItem Content = "Item #2" />
-            <ComboBoxItem Content = "Item #3" />
+        <ComboBox x:Name = "warehouse" Grid.Column="2" Grid.Row="10" Grid.ColumnSpan="2">
+            <ComboBoxItem IsSelected="True">Udvælg Varehus</ComboBoxItem>
+            <ComboBoxItem>ComboBox Item #2</ComboBoxItem>
+            <ComboBoxItem>ComboBox Item #3</ComboBoxItem>
         </ComboBox>
 
         <TextBlock Grid.Column="1" Grid.Row="11" FontWeight="SemiBold" Text="Lager Plads: " FontFamily="Segce UI" Margin="3"/>
@@ -86,7 +84,7 @@
         <Button x:Name="backButton" Content="Tilbage" Grid.Column="2" Grid.Row="14" Width="75"/>
         <Button x:Name="createPersonButton" Content="Opret Kajak" Grid.Column="3" Grid.Row="14" Width="75"/>
 
-        <Frame x:Name="CreateKayak" NavigationUIVisibility="Hidden"/>
+        <!--<Frame x:Name="PageCreateKayak" NavigationUIVisibility="Hidden"/>-->
 
     </Grid>
 </Window>

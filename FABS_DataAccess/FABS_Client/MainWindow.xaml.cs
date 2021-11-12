@@ -25,22 +25,12 @@ namespace FABS_Client
 
         private void ButtonMember(object sender, RoutedEventArgs e)
         {
-            Home.Content = new Pages.Persons.PersonsGUI();
+            Main.Content = new Pages.Persons.PersonsGUI();
         }
 
         private void ButtonStorage(object sender, RoutedEventArgs e)
         {
-            //Home.Content = new Pages.Storage.StorageGUI();
-        }
-
-        private void ButtonEquipment(object sender, RoutedEventArgs e)
-        {
-            Home.Content = new Pages.Items.ItemGUI();
-        }
-
-        private void ButtonBooking(object sender, RoutedEventArgs e)
-        {
-
+            Main.Content = new Pages.Items.ItemGUI();
         }
     }
 }

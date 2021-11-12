@@ -23,16 +23,6 @@ namespace FABS_Client.Pages.Items
             InitializeComponent();
         }
 
-        //private void CreateKyakButton(object sender, RoutedEventArgs e)
-        //{
-        //    ItemGUI itemGUI = new Pages.Items.CreateKayak();
-        //}
-
-        //private void CreateKyakButton(object sender, RoutedEventArgs e)
-        //{
-        //    var win = new CreateKayak();
-        //    win.ShowDialog(); //instead of ".Show();" this makes the window modal
-        //}
 
         
     }

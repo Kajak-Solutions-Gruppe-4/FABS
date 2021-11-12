@@ -8,58 +8,28 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="MainWindow">
 
-    <Grid>
+    <Grid Background="White">
 
 
-        <!--Row/Column Size-->
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width ="20" />
-            <ColumnDefinition Width ="auto" />
-            <ColumnDefinition Width ="auto" />
-            <ColumnDefinition Width ="auto" />
-            <ColumnDefinition Width ="auto" />
-            <ColumnDefinition Width ="auto" />
-            <ColumnDefinition Width ="auto" />
-            <ColumnDefinition Width ="auto" />
-            <ColumnDefinition Width ="auto" />
-            <ColumnDefinition Width ="auto" />
-            <ColumnDefinition Width ="*" />
-            <ColumnDefinition Width ="20" />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="20"/>
-            <RowDefinition Height="20"/>
-            <RowDefinition Height="20"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="20"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="20"/>
 
-            <RowDefinition Height="Auto"/>
+        <!--Global Menu Navigation-->
+        <StackPanel Orientation="Horizontal" Height="40" VerticalAlignment="Top">
+            <Button x:Name="_ButtonHome" Content="Forside" Width="75" Height="20" VerticalAlignment="Top" FontWeight="Bold" MinHeight="40" MinWidth="100"/>
+            <Button x:Name="_ButtonMember" Content="Medlemmer" Width="75" Height="20" VerticalAlignment="Top" Click="ButtonMember" FontWeight="SemiBold" MinHeight="40" MinWidth="100"/>
+            <Button x:Name="_ButtonStorage" Content="Lager" Width="75" Click="ButtonStorage" FontWeight="SemiBold" MinHeight="40" MinWidth="100"/>
+            <Button x:Name="_ButtonEquipment" Content="Udstyr Udlån" Width="75" FontWeight="SemiBold" MinHeight="40" MinWidth="100"/>
+            <Button x:Name="_ButtonBooking" Content="Booking" Width="75" FontWeight="SemiBold" MinHeight="40" MinWidth="100"/>
+        </StackPanel>
 
-        </Grid.RowDefinitions>
-
-        <!--Menu Navigation-->
-        <Button x:Name="ButtonHome" Content="Forside" Grid.Column="1" Grid.Row="1" Width="75" Height="20" Grid.RowSpan="10" VerticalAlignment="Top" FontWeight="Bold"/>
-        <Button x:Name="ButtonMember" Content="Medlemmer" Grid.Column="2" Grid.Row="1" Width="75" Height="20" Grid.RowSpan="10" VerticalAlignment="Top" Click="ButtonMember" FontWeight="SemiBold"/>
-        <Button x:Name="ButtonStorage" Content="Lager" Grid.Column="3" Grid.Row="1" Width="75" Click="ButtonStorage" FontWeight="SemiBold"/>
-        <Button x:Name="ButtonEquipment" Content="Udstyr Udlån" Grid.Column="4" Grid.Row="1" Width="75" FontWeight="SemiBold" Click="ButtonEquipment"/>
-        <Button x:Name="ButtonBooking" Content="Booking" Grid.Column="5" Grid.Row="1" Width="75" FontWeight="SemiBold" Click="ButtonBooking"/>
-        
-        <!--Page Elements-->
-        <TextBlock Grid.Column="1" Grid.Row="3" FontWeight="SemiBold" Text="Brugernavn: " FontFamily="Segce UI" Margin="3"/>
+            <!--Page Elements-->
+        <!--<TextBlock Grid.Column="1" Grid.Row="3" FontWeight="SemiBold" Text="Brugernavn: " FontFamily="Segce UI" Margin="3"/>
         <TextBox x:Name="usernameText" Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="9" Margin="5,3,500,3" />
 
         <TextBlock Grid.Column="1" Grid.Row="4" FontWeight="SemiBold" Text="Kodeord: " FontFamily="Segce UI" Margin="3"/>
         <TextBox x:Name="passwordText" Grid.Column="2" Grid.Row="4" Grid.ColumnSpan="9" Margin="5,3,500,3" />
 
         <Button x:Name="ButtonLogin" Content="Login" Grid.Column="1" Grid.Row="6" Width="75"/>
-        <Frame x:Name="Home" NavigationUIVisibility="Hidden"/>
-
+        <Frame x:Name="Home" NavigationUIVisibility="Hidden"/>-->
+        <Frame x:Name="Main" Margin="0,40,0,0" NavigationUIVisibility="Hidden"/>
     </Grid>
 </Page>
