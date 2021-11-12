@@ -45,7 +45,7 @@ namespace FABS_Client
 
         private void HomeButton(object sender, RoutedEventArgs e)
         {
-
+            Main.Content = new Pages.Home.HomeGUI();
         }
     }
 }
