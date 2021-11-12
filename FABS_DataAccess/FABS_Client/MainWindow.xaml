@@ -6,17 +6,19 @@
       xmlns:local="clr-namespace:FABS_Client"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="600"
+      WindowHeight="600" WindowWidth="600"
       Title="MainWindow">
 
-    <Grid Background="White">
+    <Grid Background="White" MinHeight="700" MinWidth="600">
 
 
 
         <!--Global Menu Navigation-->
-        <StackPanel>
-            <Image Source="/Pages/Kayak.png"  MaxHeight="200" MaxWidth="600" VerticalAlignment="Top" HorizontalAlignment="Left" Visibility="Visible"/>
+        <StackPanel Background="Black">
+            <Image Source="/Pages/Kayak.png"  MaxHeight="200" MaxWidth="600" VerticalAlignment="Top" HorizontalAlignment="Center" Visibility="Visible" />
         </StackPanel>
-            <StackPanel Orientation="Horizontal" Height="40" VerticalAlignment="Top" Margin="0,100">
+    
+        <StackPanel  Orientation="Horizontal" Height="40" VerticalAlignment="Top" Margin="0,100" Background="#FFDDDDDD" HorizontalAlignment="Stretch">
             <Button Content="Forside" Width="75" Height="20" VerticalAlignment="Top" FontWeight="Bold" MinHeight="40" MinWidth="100"/>
             <Button Content="Medlemmer" Width="75" Height="20" VerticalAlignment="Top" Click="ButtonMember" FontWeight="SemiBold" MinHeight="40" MinWidth="100"/>
             <Button Content="Lager" Width="75" Click="ButtonStorage" FontWeight="SemiBold" MinHeight="40" MinWidth="100"/>
@@ -33,6 +35,6 @@
         <textbox x:name="passwordtext" grid.column="2" grid.row="4" grid.columnspan="9" margin="5,3,500,3" />
 
         <button x:name="buttonlogin" content="login" grid.column="1" grid.row="6" width="75"/>-->
-        <Frame x:Name="Main" Margin="0,140,0,0" NavigationUIVisibility="Hidden"/>
+        <Frame x:Name="Main" Background="#FFDDDDDD" Margin="0,140,0,0" NavigationUIVisibility="Hidden"/>
     </Grid>
 </Page>
