@@ -16,7 +16,7 @@ namespace FABS_Client
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Page
+    public partial class MainWindow
     {
         public MainWindow()
         {
@@ -41,6 +41,11 @@ namespace FABS_Client
         private void BookingButton(object sender, RoutedEventArgs e)
         {
             Main.Content = new Pages.Booking.BookingGUI();
+        }
+
+        private void HomeButton(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
