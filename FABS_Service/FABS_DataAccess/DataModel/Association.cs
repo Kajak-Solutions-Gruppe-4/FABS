@@ -6,7 +6,7 @@ namespace FABS_DataAccess.Model
 {
     public partial class Association
     {
-        public Association(string cvr, string name, Address addresses)
+        public Association(string cvr, string name, Address addresses) : this()
         {
             Cvr = cvr;
             Name = name;

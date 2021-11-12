@@ -6,7 +6,7 @@ namespace FABS_DataAccess.Model
 {
     public partial class ZipcodeCountryCity
     {
-        public ZipcodeCountryCity(string zipcode, string country, string city)
+        public ZipcodeCountryCity(string zipcode, string country, string city) : this()
         {
             Zipcode = zipcode;
             Country = country;

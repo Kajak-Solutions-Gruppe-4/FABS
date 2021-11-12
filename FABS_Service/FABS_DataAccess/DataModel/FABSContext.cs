@@ -9,7 +9,7 @@ namespace FABS_DataAccess.Model
     {
         private string _connectionString;
 
-        public void OnCreate()
+        private void Initialize()
         {
             string physicalPath = "";
             string appSettingsString = @"FABS_API_Service\appsettings.json";

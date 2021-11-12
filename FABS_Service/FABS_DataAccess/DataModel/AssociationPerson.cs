@@ -6,7 +6,7 @@ namespace FABS_DataAccess.Model
 {
     public partial class AssociationPerson
     {
-        public AssociationPerson(Association associations, Person people)
+        public AssociationPerson(Association associations, Person people) : this()
         {
             Association = associations;
             Person = people;

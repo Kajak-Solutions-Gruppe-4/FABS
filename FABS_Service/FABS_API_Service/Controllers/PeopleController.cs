@@ -24,11 +24,6 @@ namespace FABS_API_Service.Controllers
         {
             _peopleRepository = new PeopleRepository();
         }
-
-        public PeopleController(FABSContext context)
-        {
-            _peopleRepository = new PeopleRepository(context);
-        }
             // GET: api/<PeopleController>
             [HttpGet]
         public ActionResult<IEnumerable<Person>> Get()

@@ -10,7 +10,7 @@ namespace FABS_DataAccess.Model
     {
         public FABSContext()
         {
-            OnCreate();
+            Initialize();
         }
 
         public FABSContext(DbContextOptions<FABSContext> options)
@@ -93,6 +93,8 @@ namespace FABS_DataAccess.Model
             {
                 entity.ToTable("associations");
 
+                entity.HasIndex(e => e.AddressesId, "IX_associations_addresses_id");
+
                 entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.AddressesId).HasColumnName("addresses_id");
@@ -122,6 +124,8 @@ namespace FABS_DataAccess.Model
 
                 entity.ToTable("association_person");
 
+                entity.HasIndex(e => e.PersonId, "IX_association_person_person_id");
+
                 entity.Property(e => e.AssociationId).HasColumnName("association_id");
 
                 entity.Property(e => e.PersonId).HasColumnName("person_id");
@@ -144,6 +148,8 @@ namespace FABS_DataAccess.Model
                 entity.HasKey(e => new { e.AssociationsId, e.WarehousesId });
 
                 entity.ToTable("association_warehouse");
+
+                entity.HasIndex(e => e.WarehousesId, "IX_association_warehouse_warehouses_id");
 
                 entity.Property(e => e.AssociationsId).HasColumnName("associations_id");
 
@@ -361,12 +367,14 @@ namespace FABS_DataAccess.Model
 
             modelBuilder.Entity<Login>(entity =>
             {
+                entity.HasKey(e => e.PeopleId);
+
                 entity.ToTable("logins");
 
                 entity.HasIndex(e => e.Email, "IX_logins")
                     .IsUnique();
 
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.PeopleId).HasColumnName("people_id");
 
                 entity.Property(e => e.Email)
                     .IsRequired()
@@ -385,7 +393,13 @@ namespace FABS_DataAccess.Model
             {
                 entity.ToTable("people");
 
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.HasIndex(e => e.AdressesId, "IX_people_adresses_id");
+
+                entity.HasIndex(e => e.LoginsId, "IX_people_logins_id");
+
+                entity.Property(e => e.Id)
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("id");
 
                 entity.Property(e => e.AdressesId).HasColumnName("adresses_id");
 
@@ -410,17 +424,17 @@ namespace FABS_DataAccess.Model
                     .IsUnicode(false)
                     .HasColumnName("telephone_number");
 
-                entity.HasOne(d => d.Adresses)
+                entity.HasOne(d => d.Addresses)
                     .WithMany(p => p.People)
                     .HasForeignKey(d => d.AdressesId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_people_addresses");
 
-                entity.HasOne(d => d.Logins)
-                    .WithMany(p => p.People)
-                    .HasForeignKey(d => d.LoginsId)
+                entity.HasOne(d => d.Login)
+                    .WithOne(p => p.Person)
+                    .HasForeignKey<Person>(d => d.Id)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_people_logins");
+                    .HasConstraintName("FK_people_logins1");
             });
 
             modelBuilder.Entity<Status>(entity =>

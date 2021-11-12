@@ -11,13 +11,13 @@ using System.Collections;
 
 namespace FABS_Test_DataAccess
 {
-    public class PeopleRepositoryTest
+    public class PeopleRepositoryTest : IDisposable
     {
         // The constroctur is called before every test
         public PeopleRepositoryTest()
         {
             // calls this method to ensure the database filled with data for testing
-            //Seed();
+            Seed();
         }
 
         /// <summary>
@@ -51,12 +51,12 @@ namespace FABS_Test_DataAccess
             ZipcodeCountryCity zipcodeCountryCity1 = new ZipcodeCountryCity("9000", "Danmark", "Aalborg");
             Address address1 = new Address("Sofiendalsvej", "60", null, zipcodeCountryCity1);
             Association association1 = new Association("12341234", "UCN Kajakker", address1);
-            Login login1 = new Login("test@test.com", "1234");
-            Login login2 = new Login("tes1t@test.com", "1234");
+            Login login1 = new Login("test1@test.com", "1234");
+            Login login2 = new Login("test2@test.com", "1234");
 
             Person person1 = new Person("Peter", "Hahn", "20202020", false, address1, login1);
-            Person person2 = new Person("Lars", "Andersen", "29292929", false, address1, login1);
-            Person person3 = new Person("Rasmus", "Larsen", "28282828", false, address1, login2);
+            Person person2 = new Person("Lars", "Andersen", "29292929", false, 1, login1);
+            Person person3 = new Person("Rasmus", "Larsen", "28282828", false, 1, login2);
 
             List<AssociationPerson> associationPersonList = new List<AssociationPerson>();
             AssociationPerson associationPerson1 = new AssociationPerson(association1, person1);
@@ -92,7 +92,7 @@ namespace FABS_Test_DataAccess
 
         [Theory]
         [MemberData(nameof(GetData), parameters: "ReadPerson")]
-        public void ReadPersonDataSeed(int id, bool expectedSuccess)
+        public void ReadPerson(int id, bool expectedSuccess)
         {
             using (var context = new FABSContext())
             {
@@ -106,14 +106,14 @@ namespace FABS_Test_DataAccess
                     Assert.Equal("Hahn", person.LastName);
                     Assert.Equal("20202020", person.TelephoneNumber);
                     Assert.False(person.IsAdmin);
-                    Assert.Equal("Sofiendalsvej", person.Adresses.StreetName);
-                    Assert.Equal("60", person.Adresses.StreetNumber);
-                    Assert.Null(person.Adresses.ApartmentNumber);
-                    Assert.Equal("9000", person.Adresses.Zipcode);
-                    Assert.Equal("Danmark", person.Adresses.Country);
-                    Assert.Equal("Aalborg", person.Adresses.ZipcodeCountryCity.City);
-                    Assert.Equal("test@test.com", person.Logins.Email);
-                    Assert.Equal("1234", person.Logins.Password);
+                    Assert.Equal("Sofiendalsvej", person.Addresses.StreetName);
+                    Assert.Equal("60", person.Addresses.StreetNumber);
+                    Assert.Null(person.Addresses.ApartmentNumber);
+                    Assert.Equal("9000", person.Addresses.Zipcode);
+                    Assert.Equal("Danmark", person.Addresses.Country);
+                    Assert.Equal("Aalborg", person.Addresses.ZipcodeCountryCity.City);
+                    Assert.Equal("test1@test.com", person.Login.Email);
+                    Assert.Equal("1234", person.Login.Password);
                     Assert.Equal("12341234", person.AssociationPeople.ToList()[0].Association.Cvr);
                     Assert.Equal("UCN Kajakker", person.AssociationPeople.ToList()[0].Association.Name);
                 }
@@ -127,7 +127,7 @@ namespace FABS_Test_DataAccess
 
         [Theory]
         [MemberData(nameof(GetData), parameters: "CreatePerson")]
-        public void CreatePersonDataSeed(Person person, bool expectedSuccess)
+        public void CreatePerson(Person person, bool expectedSuccess)
         {
             using (var context = new FABSContext())
             {
@@ -138,6 +138,16 @@ namespace FABS_Test_DataAccess
                 int returnedID = peopleRepository.Create(person);
                 var result = peopleRepository.Get(returnedID);
 
+                //more arranging after creating
+                if (person.Addresses == null)
+                {
+                    person.Addresses = context.Addresses.Include(z => z.ZipcodeCountryCity).Single(x => x.Id == person.AdressesId);
+                }
+                if (person.Login == null)
+                {
+                    person.Login = context.Logins.Single(x => x.PeopleId == person.LoginsId);
+                }
+
                 //assert
                 if (expectedSuccess == true && returnedID > 0)
                 {
@@ -145,16 +155,19 @@ namespace FABS_Test_DataAccess
                     Assert.Equal(result.LastName, person.LastName);
                     Assert.Equal(result.TelephoneNumber, person.TelephoneNumber);
                     Assert.Equal(result.IsAdmin, person.IsAdmin);
-                    Assert.Equal(result.Adresses.StreetName, person.Adresses.StreetName);
-                    Assert.Equal(result.Adresses.StreetNumber, person.Adresses.StreetNumber);
-                    Assert.Equal(result.Adresses.ApartmentNumber, person.Adresses.ApartmentNumber);
-                    Assert.Equal(result.Adresses.Zipcode, person.Adresses.Zipcode);
-                    Assert.Equal(result.Adresses.Country, person.Adresses.Country);
-                    Assert.Equal(result.Adresses.ZipcodeCountryCity.City, person.Adresses.ZipcodeCountryCity.City);
-                    Assert.Equal(result.Logins.Email, person.Logins.Email);
-                    Assert.Equal(result.Logins.Password, person.Logins.Password);
-                    Assert.Equal(result.AssociationPeople.ToList()[0].Association.Cvr, person.AssociationPeople.ToList()[0].Association.Cvr);
-                    Assert.Equal(result.AssociationPeople.ToList()[0].Association.Name, person.AssociationPeople.ToList()[0].Association.Name);
+                    Assert.Equal(result.Addresses.StreetName, person.Addresses.StreetName);
+                    Assert.Equal(result.Addresses.StreetNumber, person.Addresses.StreetNumber);
+                    Assert.Equal(result.Addresses.ApartmentNumber, person.Addresses.ApartmentNumber);
+                    Assert.Equal(result.Addresses.Zipcode, person.Addresses.Zipcode);
+                    Assert.Equal(result.Addresses.Country, person.Addresses.Country);
+                    Assert.Equal(result.Addresses.ZipcodeCountryCity.City, person.Addresses.ZipcodeCountryCity.City);
+                    Assert.Equal(result.Login.Email, person.Login.Email);
+                    Assert.Equal(result.Login.Password, person.Login.Password);
+                    if(person.AssociationPeople.Count > 0)
+                    {
+                        Assert.Equal(result.AssociationPeople.ToList()[0].Association.Cvr, person.AssociationPeople.ToList()[0].Association.Cvr);
+                        Assert.Equal(result.AssociationPeople.ToList()[0].Association.Name, person.AssociationPeople.ToList()[0].Association.Name);
+                    }
                 } 
                 else if(expectedSuccess == false)
                 {
@@ -165,6 +178,11 @@ namespace FABS_Test_DataAccess
                     Assert.True(false, "Was supposed to create person, but failed");
                 }
             }
+        }
+
+        public void Dispose()
+        {
+            Seed();
         }
         //[Fact]
         //public void ReadPersonSuccess()

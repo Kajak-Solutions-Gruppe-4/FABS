@@ -10,15 +10,8 @@ namespace FABS_DataAccess.Repository
 {
     public class PeopleRepository : IRepository<Person>
     {
-        FABSContext _Context;
         public PeopleRepository()
         {
-            _Context = new FABSContext();
-        }
-
-        public PeopleRepository(FABSContext context)
-        {
-            _Context = context;
         }
 
         /// <summary>
@@ -31,14 +24,17 @@ namespace FABS_DataAccess.Repository
             Person foundPerson;
             try
             {
-                // eager loading
-                foundPerson = _Context.People
-                    .Include(a => a.Adresses)
+                using (var context = new FABSContext())
+                {
+                    // eager loading
+                    foundPerson = context.People
+                    .Include(a => a.Addresses)
                     .ThenInclude(z => z.ZipcodeCountryCity)
-                    .Include(l => l.Logins)
+                    .Include(l => l.Login)
                     .Include(ap => ap.AssociationPeople)
                     .ThenInclude(a => a.Association)
                     .FirstOrDefault(x => x.Id == id);
+                }
             }
             catch
             {
@@ -53,7 +49,10 @@ namespace FABS_DataAccess.Repository
             IEnumerable<Person> listPerson;
             try
             {
-                listPerson = _Context.People;
+                using (var context = new FABSContext())
+                {
+                    listPerson = context.People;
+                }
 
             }
             catch
@@ -73,12 +72,16 @@ namespace FABS_DataAccess.Repository
             int insertedId;
             try
             {
-                var res = _Context.Add(p);
-                _Context.SaveChanges();
-                insertedId = res.Entity.Id;
+                using (var context = new FABSContext())
+                {
+                    var res = context.People.Add(p);
+                    context.SaveChanges();
+                    insertedId = res.Entity.Id;
+                }
             }
-            catch
+            catch(Exception e)
             {
+                Console.WriteLine(e.Message);
                 insertedId = -1;
             }
             return insertedId;
@@ -90,10 +93,13 @@ namespace FABS_DataAccess.Repository
 
             try
             {
-                var p = _Context.People.Find(id);
-                var res = _Context.Remove(p);
-                _Context.SaveChanges();
-                wasDeleted = true;
+                using (var context = new FABSContext())
+                {
+                    var p = context.People.Find(id);
+                    var res = context.Remove(p);
+                    context.SaveChanges();
+                    wasDeleted = true;
+                }
             }
             catch
             {
@@ -111,11 +117,10 @@ namespace FABS_DataAccess.Repository
 
             try
             {
-                using (_Context)
-
+                using (var context = new FABSContext())
                 {
                     //Get the context entity form DB so we can change it.
-                    var personResultEntity = _Context.People.Find(id);
+                    var personResultEntity = context.People.Find(id);
                     //Update the context entity with the date recieved from the update object
                     personResultEntity.FirstName = p.FirstName;
                     personResultEntity.LastName = p.LastName;
@@ -123,13 +128,13 @@ namespace FABS_DataAccess.Repository
                     personResultEntity.AdressesId = p.AdressesId;
                     personResultEntity.LoginsId = p.LoginsId;
                     personResultEntity.IsAdmin = p.IsAdmin;
-                    personResultEntity.Adresses = p.Adresses;
-                    personResultEntity.Logins = p.Logins;
+                    personResultEntity.Addresses = p.Addresses;
+                    personResultEntity.Login = p.Login;
                     personResultEntity.AssociationPeople = p.AssociationPeople;
                     personResultEntity.Bookings = p.Bookings;
                     personResultEntity.Locations = p.Locations;
 
-                    _Context.SaveChanges();
+                    context.SaveChanges();
                 }
 
                 wasUpdated = true;
