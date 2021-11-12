@@ -82,7 +82,7 @@
         <TextBox x:Name="DecriptionText" Grid.Column="2" Grid.Row="12" Grid.ColumnSpan="2" />
 
         <Button Content="Tilbage" Grid.Column="2" Grid.Row="14" Width="75" Click="BackButton"/>
-        <Button Content="Opret Kajak" Grid.Column="3" Grid.Row="14" Width="75"/>
+        <Button Content="Opret Kajak" Grid.Column="3" Grid.Row="14" Width="75" Click="CreatKayakButton"/>
 
         <!--<Frame x:Name="PageCreateKayak" NavigationUIVisibility="Hidden"/>-->
 

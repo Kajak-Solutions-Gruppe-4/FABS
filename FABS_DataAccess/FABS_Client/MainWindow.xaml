@@ -13,8 +13,8 @@
 
 
         <!--Global Menu Navigation-->
-            <StackPanel>
-            <Image Source="Pages/Kayak.png" MaxHeight="200" MaxWidth="600" VerticalAlignment="Top" HorizontalAlignment="Left" Visibility="Visible"/>
+        <StackPanel>
+            <Image Source="/Pages/Kayak.png"  MaxHeight="200" MaxWidth="600" VerticalAlignment="Top" HorizontalAlignment="Left" Visibility="Visible"/>
         </StackPanel>
             <StackPanel Orientation="Horizontal" Height="40" VerticalAlignment="Top" Margin="0,100">
             <Button Content="Forside" Width="75" Height="20" VerticalAlignment="Top" FontWeight="Bold" MinHeight="40" MinWidth="100"/>

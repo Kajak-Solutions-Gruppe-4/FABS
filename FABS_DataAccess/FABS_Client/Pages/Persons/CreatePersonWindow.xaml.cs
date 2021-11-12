@@ -26,5 +26,10 @@ namespace FABS_Client.Pages.Persons
         {
             Close();
         }
+
+        private void CreatePersonButton(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
     }
 }

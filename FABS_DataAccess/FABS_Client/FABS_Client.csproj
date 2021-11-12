@@ -13,4 +13,12 @@
     <Page Remove="Pages\Storage\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Pages\Kayak.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Pages\Kayak.png" />
+  </ItemGroup>
+
 </Project>

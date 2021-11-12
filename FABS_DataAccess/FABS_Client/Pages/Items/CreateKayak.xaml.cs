@@ -27,5 +27,10 @@ namespace FABS_Client.Pages.Items
         {
             Close();
         }
+
+        private void CreatKayakButton(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
     }
 }
