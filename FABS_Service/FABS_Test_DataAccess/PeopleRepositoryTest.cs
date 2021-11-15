@@ -186,7 +186,7 @@ namespace FABS_Test_DataAccess
 
         public void Dispose()
         {
-            Seed();
+            RepopulateDatabase.Seed();
         }
     }
 }

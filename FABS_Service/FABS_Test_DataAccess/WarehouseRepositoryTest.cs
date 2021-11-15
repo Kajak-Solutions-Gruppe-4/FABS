@@ -11,7 +11,7 @@ using System.Collections;
 
 namespace FABS_Test_DataAccess
 {
-    public class WarehouseRepositoryTest
+    public class WarehouseRepositoryTest : IDisposable
     {
         // The constroctur is called before every test
         public WarehouseRepositoryTest()
@@ -181,7 +181,7 @@ namespace FABS_Test_DataAccess
 
         public void Dispose()
         {
-            Seed();
+            RepopulateDatabase.Seed();
         }
     }
 }
