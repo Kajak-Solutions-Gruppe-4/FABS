@@ -27,6 +27,7 @@ namespace FABS_Test_DataAccess
         {
             using (var context = new FABSContext())
             {
+                // TODO: never production database
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
@@ -141,11 +142,14 @@ namespace FABS_Test_DataAccess
                 //more arranging after creating
                 if (person.Addresses == null)
                 {
-                    person.Addresses = context.Addresses.Include(z => z.ZipcodeCountryCity).Single(x => x.Id == person.AdressesId);
+                    person.Addresses = context.Addresses
+                                              .Include(z => z.ZipcodeCountryCity)
+                                              .Single(x => x.Id == person.AdressesId);
                 }
                 if (person.Login == null)
                 {
-                    person.Login = context.Logins.Single(x => x.PeopleId == person.LoginsId);
+                    person.Login = context.Logins
+                                          .Single(x => x.PeopleId == person.LoginsId);
                 }
 
                 //assert
