@@ -10,9 +10,13 @@ namespace FABS_DataAccess.Repository
 {
     public class PeopleRepository : IRepository<Person>
     {
+        private readonly FABSContext _context;
+
         public PeopleRepository()
         {
+            _context = new FABSContext();
         }
+
 
         /// <summary>
         /// Finds person in database via id.
@@ -24,17 +28,16 @@ namespace FABS_DataAccess.Repository
             Person foundPerson;
             try
             {
-                using (var context = new FABSContext())
-                {
+               
                     // eager loading
-                    foundPerson = context.People
+                    foundPerson = _context.People
                     .Include(a => a.Addresses)
                     .ThenInclude(z => z.ZipcodeCountryCity)
                     .Include(l => l.Login)
                     .Include(ap => ap.AssociationPeople)
                     .ThenInclude(a => a.Association)
                     .FirstOrDefault(x => x.Id == id);
-                }
+                
             }
             catch
             {
@@ -47,12 +50,12 @@ namespace FABS_DataAccess.Repository
         public IEnumerable<Person> GetAll()
         {
             IEnumerable<Person> listPerson;
+           
             try
             {
-                using (var context = new FABSContext())
-                {
-                    listPerson = context.People;
-                }
+                
+                    listPerson = _context.People;
+                
 
             }
             catch
@@ -72,12 +75,11 @@ namespace FABS_DataAccess.Repository
             int insertedId;
             try
             {
-                using (var context = new FABSContext())
-                {
-                    var res = context.People.Add(p);
-                    context.SaveChanges();
+                
+                    var res = _context.People.Add(p);
+                    _context.SaveChanges();
                     insertedId = res.Entity.Id;
-                }
+                
             }
             catch(Exception e)
             {
@@ -93,13 +95,12 @@ namespace FABS_DataAccess.Repository
 
             try
             {
-                using (var context = new FABSContext())
-                {
-                    var p = context.People.Find(id);
-                    var res = context.Remove(p);
-                    context.SaveChanges();
+               
+                    var p = _context.People.Find(id);
+                    var res = _context.Remove(p);
+                    _context.SaveChanges();
                     wasDeleted = true;
-                }
+                
             }
             catch
             {
@@ -117,10 +118,9 @@ namespace FABS_DataAccess.Repository
 
             try
             {
-                using (var context = new FABSContext())
-                {
+               
                     //Get the context entity form DB so we can change it.
-                    var personResultEntity = context.People.Find(id);
+                    var personResultEntity = _context.People.Find(id);
                     //Update the context entity with the date recieved from the update object
                     personResultEntity.FirstName = p.FirstName;
                     personResultEntity.LastName = p.LastName;
@@ -134,8 +134,8 @@ namespace FABS_DataAccess.Repository
                     personResultEntity.Bookings = p.Bookings;
                     personResultEntity.Locations = p.Locations;
 
-                    context.SaveChanges();
-                }
+                    _context.SaveChanges();
+                
 
                 wasUpdated = true;
             }
