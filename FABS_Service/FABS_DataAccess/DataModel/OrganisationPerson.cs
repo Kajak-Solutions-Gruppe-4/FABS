@@ -14,7 +14,6 @@ namespace FABS_DataAccess.Model
 
         public OrganisationPerson()
         {
-
         }
     }
 }

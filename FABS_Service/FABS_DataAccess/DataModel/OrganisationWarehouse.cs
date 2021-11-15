@@ -6,7 +6,11 @@ namespace FABS_DataAccess.Model
 {
     public partial class OrganisationWarehouse
     {
-        public OrganisationWarehouse(Organisation organisation, Warehouse warehouses)
+        public OrganisationWarehouse()
+        {
+        }
+        
+        public OrganisationWarehouse(Organisation organisation, Warehouse warehouses) : this()
         {
             Organisations = organisation;
             Warehouses = warehouses;
