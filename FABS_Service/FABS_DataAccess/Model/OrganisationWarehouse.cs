@@ -5,12 +5,12 @@ using System.Collections.Generic;
 
 namespace FABS_DataAccess.Model
 {
-    public partial class AssociationWarehouse
+    public partial class OrganisationWarehouse
     {
-        public int AssociationsId { get; set; }
+        public int OrganisationsId { get; set; }
         public int WarehousesId { get; set; }
 
-        public virtual Association Associations { get; set; }
+        public virtual Organisation Organisations { get; set; }
         public virtual Warehouse Warehouses { get; set; }
     }
 }

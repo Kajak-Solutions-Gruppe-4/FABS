@@ -9,7 +9,7 @@ namespace FABS_DataAccess.Model
     {
         public Address()
         {
-            Associations = new HashSet<Association>();
+            Organisations = new HashSet<Organisation>();
             People = new HashSet<Person>();
             Warehouses = new HashSet<Warehouse>();
         }
@@ -22,7 +22,7 @@ namespace FABS_DataAccess.Model
         public string Country { get; set; }
 
         public virtual ZipcodeCountryCity ZipcodeCountryCity { get; set; }
-        public virtual ICollection<Association> Associations { get; set; }
+        public virtual ICollection<Organisation> Organisations { get; set; }
         public virtual ICollection<Person> People { get; set; }
         public virtual ICollection<Warehouse> Warehouses { get; set; }
     }

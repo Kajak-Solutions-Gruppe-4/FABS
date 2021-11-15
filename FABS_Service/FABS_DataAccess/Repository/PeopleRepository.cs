@@ -34,8 +34,8 @@ namespace FABS_DataAccess.Repository
                     .Include(a => a.Addresses)
                     .ThenInclude(z => z.ZipcodeCountryCity)
                     .Include(l => l.Login)
-                    .Include(ap => ap.AssociationPeople)
-                    .ThenInclude(a => a.Association)
+                    .Include(ap => ap.OrganisationPeople)
+                    .ThenInclude(a => a.Organisations)
                     .FirstOrDefault(x => x.Id == id);
                 
             }
@@ -130,7 +130,7 @@ namespace FABS_DataAccess.Repository
                     personResultEntity.IsAdmin = p.IsAdmin;
                     personResultEntity.Addresses = p.Addresses;
                     personResultEntity.Login = p.Login;
-                    personResultEntity.AssociationPeople = p.AssociationPeople;
+                    personResultEntity.OrganisationPeople = p.OrganisationPeople;
                     personResultEntity.Bookings = p.Bookings;
                     personResultEntity.Locations = p.Locations;
 
