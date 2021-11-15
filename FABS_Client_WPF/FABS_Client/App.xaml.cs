@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace FABS_Client
+namespace FABS_Client_WPF
 {
     /// <summary>
     /// Interaction logic for App.xaml

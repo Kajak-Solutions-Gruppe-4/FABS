@@ -1,9 +1,9 @@
-﻿<Window x:Class="FABS_Client.Pages.Persons.CreatePersonWindow"
+﻿<Window x:Class="FABS_Client_WPF.Pages.Persons.CreatePersonWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:FABS_Client.Pages.Persons"
+        xmlns:local="clr-namespace:FABS_Client_WPF.Pages.Persons"
         mc:Ignorable="d"
         Title="CreatePersonWindow" Height="410" Width="290">
     <Grid Background="White">
