@@ -4,11 +4,11 @@ using System.Text;
 
 namespace FABS_DataAccess.Model
 {
-    public partial class AssociationWarehouse
+    public partial class OrganisationWarehouse
     {
-        public AssociationWarehouse(Association associations, Warehouse warehouses)
+        public OrganisationWarehouse(Organisation organisation, Warehouse warehouses)
         {
-            Associations = associations;
+            Organisations = organisation;
             Warehouses = warehouses;
         }
     }

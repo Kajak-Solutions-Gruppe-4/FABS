@@ -4,9 +4,9 @@ using System.Text;
 
 namespace FABS_DataAccess.Model
 {
-    public partial class Association
+    public partial class Organisation
     {
-        public Association(string cvr, string name, Address addresses) : this()
+        public Organisation(string cvr, string name, Address addresses) : this()
         {
             Cvr = cvr;
             Name = name;

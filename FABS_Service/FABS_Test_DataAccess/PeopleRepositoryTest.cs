@@ -35,10 +35,10 @@ namespace FABS_Test_DataAccess
 
                 context.AddRange(data[0][0] as ZipcodeCountryCity,
                                  data[0][1] as Address,
-                                 data[0][2] as Association,
+                                 data[0][2] as Organisation,
                                  data[0][3] as Login,
                                  data[0][4] as Person,
-                                 data[0][5] as AssociationPerson);
+                                 data[0][5] as OrganisationPerson);
                 context.SaveChanges();
             }
         }
@@ -51,7 +51,7 @@ namespace FABS_Test_DataAccess
         {
             ZipcodeCountryCity zipcodeCountryCity1 = new ZipcodeCountryCity("9000", "Danmark", "Aalborg");
             Address address1 = new Address("Sofiendalsvej", "60", null, zipcodeCountryCity1);
-            Association association1 = new Association("12341234", "UCN Kajakker", address1);
+            Organisation organisation1 = new Organisation("12341234", "UCN Kajakker", address1);
             Login login1 = new Login("test1@test.com", "1234");
             Login login2 = new Login("test2@test.com", "1234");
 
@@ -59,11 +59,11 @@ namespace FABS_Test_DataAccess
             Person person2 = new Person("Lars", "Andersen", "29292929", false, 1, login1);
             Person person3 = new Person("Rasmus", "Larsen", "28282828", false, 1, login2);
 
-            List<AssociationPerson> associationPersonList = new List<AssociationPerson>();
-            AssociationPerson associationPerson1 = new AssociationPerson(association1, person1);
-            associationPersonList.Add(associationPerson1);
-            association1.AssociationPeople = associationPersonList;
-            person1.AssociationPeople = associationPersonList;
+            List<OrganisationPerson> organisationPersonList = new List<OrganisationPerson>();
+            OrganisationPerson organisationPerson1 = new OrganisationPerson(organisation1, person1);
+            organisationPersonList.Add(organisationPerson1);
+            organisation1.OrganisationPeople = organisationPersonList;
+            person1.OrganisationPeople = organisationPersonList;
 
             var allData = new List<object[]>();
             switch (nameOfCaller)
@@ -71,10 +71,10 @@ namespace FABS_Test_DataAccess
                 case "Seed":
                     allData.Add(new object[] { zipcodeCountryCity1,
                                                address1,
-                                               association1,
+                                               organisation1,
                                                login1,
                                                person1,
-                                               associationPerson1 });
+                                               organisationPerson1 });
                     break;
                 case "ReadPerson":
                     allData.Add(new object[] { 1, true });
@@ -115,8 +115,8 @@ namespace FABS_Test_DataAccess
                     Assert.Equal("Aalborg", person.Addresses.ZipcodeCountryCity.City);
                     Assert.Equal("test1@test.com", person.Login.Email);
                     Assert.Equal("1234", person.Login.Password);
-                    Assert.Equal("12341234", person.AssociationPeople.ToList()[0].Association.Cvr);
-                    Assert.Equal("UCN Kajakker", person.AssociationPeople.ToList()[0].Association.Name);
+                    Assert.Equal("12341234", person.OrganisationPeople.ToList()[0].Organisations.Cvr);
+                    Assert.Equal("UCN Kajakker", person.OrganisationPeople.ToList()[0].Organisations.Name);
                 }
                 else if(expectedSuccess == false)
                 {
@@ -167,10 +167,10 @@ namespace FABS_Test_DataAccess
                     Assert.Equal(result.Addresses.ZipcodeCountryCity.City, person.Addresses.ZipcodeCountryCity.City);
                     Assert.Equal(result.Login.Email, person.Login.Email);
                     Assert.Equal(result.Login.Password, person.Login.Password);
-                    if(person.AssociationPeople.Count > 0)
+                    if(person.OrganisationPeople.Count > 0)
                     {
-                        Assert.Equal(result.AssociationPeople.ToList()[0].Association.Cvr, person.AssociationPeople.ToList()[0].Association.Cvr);
-                        Assert.Equal(result.AssociationPeople.ToList()[0].Association.Name, person.AssociationPeople.ToList()[0].Association.Name);
+                        Assert.Equal(result.OrganisationPeople.ToList()[0].Organisations.Cvr, person.OrganisationPeople.ToList()[0].Organisations.Cvr);
+                        Assert.Equal(result.OrganisationPeople.ToList()[0].Organisations.Name, person.OrganisationPeople.ToList()[0].Organisations.Name);
                     }
                 } 
                 else if(expectedSuccess == false)
@@ -188,87 +188,5 @@ namespace FABS_Test_DataAccess
         {
             Seed();
         }
-        //[Fact]
-        //public void ReadPersonSuccess()
-        //{
-        //    //arrange
-        //    using (var context = new FABSContext())
-        //    {
-        //        context.Database.EnsureDeleted();
-        //        context.Database.EnsureCreated();
-
-        //        ZipcodeCountryCity zipcodeCountryCity1 = new ZipcodeCountryCity("9000", "Danmark", "Aalborg");
-        //        Address address1 = new Address("Sofiendalsvej", "60", null, zipcodeCountryCity1);
-        //        Association association1 = new Association("12341234", "UCN Kajakker", address1);
-        //        Login login1 = new Login("test@test.com", "1234");
-
-        //        Person person1 = new Person("Peter", "Hahn", "20202020", false, address1, login1);
-
-        //        List<AssociationPerson> associationPerson1 = new List<AssociationPerson>();
-        //        AssociationPerson assoPer1 = new AssociationPerson(association1, person1);
-
-        //        associationPerson1.Add(assoPer1);
-        //        association1.AssociationPeople = associationPerson1;
-        //        person1.AssociationPeople = associationPerson1;
-
-        //        context.AddRange(zipcodeCountryCity1, address1, association1, login1, person1, assoPer1);
-        //        context.SaveChanges();
-        //    }
-        //    var peopleRepository = new PeopleRepository();
-
-        //    //act
-        //    Person person = peopleRepository.Get(1);
-
-        //    //assert
-        //    Assert.Equal("Peter", person.FirstName);
-        //    Assert.Equal("Hahn", person.LastName);
-        //    Assert.Equal("20202020", person.TelephoneNumber);
-        //    Assert.False(person.IsAdmin);
-        //    Assert.Equal("Sofiendalsvej", person.Adresses.StreetName);
-        //    Assert.Equal("60", person.Adresses.StreetNumber);
-        //    Assert.Null(person.Adresses.ApartmentNumber);
-        //    Assert.Equal("9000", person.Adresses.Zipcode);
-        //    Assert.Equal("Danmark", person.Adresses.Country);
-        //    Assert.Equal("Aalborg", person.Adresses.ZipcodeCountryCity.City);
-        //    Assert.Equal("test@test.com", person.Logins.Email);
-        //    Assert.Equal("1234", person.Logins.Password);
-        //    Assert.Equal("12341234", person.AssociationPeople.ToList()[0].Association.Cvr);
-        //    Assert.Equal("UCN Kajakker", person.AssociationPeople.ToList()[0].Association.Name);
-        //}
-
-        //[Fact]
-        //public void ReadPersonFail()
-        //{
-        //    //arrange
-        //    using (var context = new FABSContext())
-        //    {
-        //        context.Database.EnsureDeleted();
-        //        context.Database.EnsureCreated();
-
-        //        ZipcodeCountryCity zipcodeCountryCity1 = new ZipcodeCountryCity("9000", "Danmark", "Aalborg");
-        //        Address address1 = new Address("Sofiendalsvej", "60", null, zipcodeCountryCity1);
-        //        Association association1 = new Association("12341234", "UCN Kajakker", address1);
-        //        Login login1 = new Login("test@test.com", "1234");
-
-        //        Person person1 = new Person("Peter", "Hahn", "20202020", false, address1, login1);
-
-        //        List<AssociationPerson> associationPerson1 = new List<AssociationPerson>();
-        //        AssociationPerson assoPer1 = new AssociationPerson(association1, person1);
-
-        //        associationPerson1.Add(assoPer1);
-        //        association1.AssociationPeople = associationPerson1;
-        //        person1.AssociationPeople = associationPerson1;
-
-        //        context.AddRange(zipcodeCountryCity1, address1, association1, login1, person1, assoPer1);
-        //        context.SaveChanges();
-        //    }
-        //    var peopleRepository = new PeopleRepository();
-
-        //    //act
-        //    Person person = peopleRepository.Get(2);
-
-        //    //assert
-        //    Assert.Null(person);
-        //}
     }
 }

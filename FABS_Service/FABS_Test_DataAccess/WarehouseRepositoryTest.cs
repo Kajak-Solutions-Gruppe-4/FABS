@@ -32,10 +32,10 @@ namespace FABS_Test_DataAccess
                 context.AddRange(
                     data[0][0] as ZipcodeCountryCity,
                     data[0][1] as Address,
-                    data[0][2] as Association,
+                    data[0][2] as Organisation,
                     data[0][3] as Address,
                     data[0][4] as Warehouse,
-                    data[0][5] as AssociationWarehouse
+                    data[0][5] as OrganisationWarehouse
                     );
                     context.SaveChanges();
             }
@@ -44,21 +44,21 @@ namespace FABS_Test_DataAccess
         public static IEnumerable<object[]> GetData(string nameOfCaller)
         {
             ZipcodeCountryCity zipcodeCountryCity1 = new ZipcodeCountryCity("9000", "Denmark", "Aalborg");
-            Address associationAddress = new Address("Sofiendalsvej", "60", null, zipcodeCountryCity1);
-            Association association1 = new Association("12341234", "UCN Kajakker", associationAddress);
+            Address organisationAddress = new Address("Sofiendalsvej", "60", null, zipcodeCountryCity1);
+            Organisation organisation1 = new Organisation("12341234", "UCN Kajakker", organisationAddress);
 
             Address warehouseAddress = new Address("Sofiendalsvej", "85", null, zipcodeCountryCity1);
-            Warehouse warehouse1 = new Warehouse("Building A", associationAddress);
+            Warehouse warehouse1 = new Warehouse("Building A", organisationAddress);
             Warehouse warehouse2 = new Warehouse("Building B", 1);
             Warehouse warehouse3 = new Warehouse("Building C", 1);
 
 
 
-            List<AssociationWarehouse> associationWarehouseList = new List<AssociationWarehouse>();
-            AssociationWarehouse associationWarehouse1 = new AssociationWarehouse(association1, warehouse1);
-            associationWarehouseList.Add(associationWarehouse1);
-            association1.AssociationWarehouses = associationWarehouseList;
-            warehouse1.AssociationWarehouses = associationWarehouseList;
+            List<OrganisationWarehouse> organisationWarehouseList = new List<OrganisationWarehouse>();
+            OrganisationWarehouse organisationWarehouse1 = new OrganisationWarehouse(organisation1, warehouse1);
+            organisationWarehouseList.Add(organisationWarehouse1);
+            organisation1.OrganisationWarehouses = organisationWarehouseList;
+            warehouse1.OrganisationWarehouses = organisationWarehouseList;
 
             var allData = new List<object[]>();
             switch (nameOfCaller)
@@ -67,11 +67,11 @@ namespace FABS_Test_DataAccess
                     allData.Add(new object[]
                     {
                         zipcodeCountryCity1,
-                        associationAddress,
-                        association1,
+                        organisationAddress,
+                        organisation1,
                         warehouseAddress,
                         warehouse1,
-                        associationWarehouse1
+                        organisationWarehouse1
                     });
                     break;
                 case "ReadWarehouse":
@@ -111,13 +111,13 @@ namespace FABS_Test_DataAccess
                     Assert.Equal("Aalborg", warehouse.Addresses.ZipcodeCountryCity.City);
                     Assert.Equal("Denmark", warehouse.Addresses.ZipcodeCountryCity.Country);
 
-                    Assert.Equal("12341234", warehouse.AssociationWarehouses.ToList()[0].Associations.Cvr);
-                    Assert.Equal("Sofiendalsvej", warehouse.AssociationWarehouses.ToList()[0].Associations.Addresses.StreetName);
-                    Assert.Equal("60", warehouse.AssociationWarehouses.ToList()[0].Associations.Addresses.StreetNumber);
-                    Assert.Null(warehouse.AssociationWarehouses.ToList()[0].Associations.Addresses.ApartmentNumber);
-                    Assert.Equal("9000", warehouse.AssociationWarehouses.ToList()[0].Associations.Addresses.ZipcodeCountryCity.Zipcode);
-                    Assert.Equal("Aalborg", warehouse.AssociationWarehouses.ToList()[0].Associations.Addresses.ZipcodeCountryCity.City);
-                    Assert.Equal("Denmark", warehouse.AssociationWarehouses.ToList()[0].Associations.Addresses.ZipcodeCountryCity.Country);
+                    Assert.Equal("12341234", warehouse.OrganisationWarehouses.ToList()[0].Organisations.Cvr);
+                    Assert.Equal("Sofiendalsvej", warehouse.OrganisationWarehouses.ToList()[0].Organisations.Addresses.StreetName);
+                    Assert.Equal("60", warehouse.OrganisationWarehouses.ToList()[0].Organisations.Addresses.StreetNumber);
+                    Assert.Null(warehouse.OrganisationWarehouses.ToList()[0].Organisations.Addresses.ApartmentNumber);
+                    Assert.Equal("9000", warehouse.OrganisationWarehouses.ToList()[0].Organisations.Addresses.ZipcodeCountryCity.Zipcode);
+                    Assert.Equal("Aalborg", warehouse.OrganisationWarehouses.ToList()[0].Organisations.Addresses.ZipcodeCountryCity.City);
+                    Assert.Equal("Denmark", warehouse.OrganisationWarehouses.ToList()[0].Organisations.Addresses.ZipcodeCountryCity.Country);
                 }
                 else if(expectedSuccess == false)
                 {
@@ -158,13 +158,13 @@ namespace FABS_Test_DataAccess
                     Assert.Equal(result.Addresses.ZipcodeCountryCity.City, warehouse.Addresses.ZipcodeCountryCity.City);
                     Assert.Equal(result.Addresses.ZipcodeCountryCity.Country, warehouse.Addresses.ZipcodeCountryCity.Country);
 
-                    Assert.Equal(result.AssociationWarehouses.ToList()[0].Associations.Cvr, warehouse.AssociationWarehouses.ToList()[0].Associations.Cvr);
-                    Assert.Equal(result.AssociationWarehouses.ToList()[0].Associations.Addresses.StreetName, warehouse.AssociationWarehouses.ToList()[0].Associations.Addresses.StreetName);
-                    Assert.Equal(result.AssociationWarehouses.ToList()[0].Associations.Addresses.StreetNumber, warehouse.AssociationWarehouses.ToList()[0].Associations.Addresses.StreetNumber);
-                    Assert.Equal(result.AssociationWarehouses.ToList()[0].Associations.Addresses.ApartmentNumber, warehouse.AssociationWarehouses.ToList()[0].Associations.Addresses.ApartmentNumber);
-                    Assert.Equal(result.AssociationWarehouses.ToList()[0].Associations.Addresses.ZipcodeCountryCity.Zipcode, warehouse.AssociationWarehouses.ToList()[0].Associations.Addresses.ZipcodeCountryCity.Zipcode);
-                    Assert.Equal(result.AssociationWarehouses.ToList()[0].Associations.Addresses.ZipcodeCountryCity.City, warehouse.AssociationWarehouses.ToList()[0].Associations.Addresses.ZipcodeCountryCity.City);
-                    Assert.Equal(result.AssociationWarehouses.ToList()[0].Associations.Addresses.ZipcodeCountryCity.Country, warehouse.AssociationWarehouses.ToList()[0].Associations.Addresses.ZipcodeCountryCity.Country);
+                    Assert.Equal(result.OrganisationWarehouses.ToList()[0].Organisations.Cvr, warehouse.OrganisationWarehouses.ToList()[0].Organisations.Cvr);
+                    Assert.Equal(result.OrganisationWarehouses.ToList()[0].Organisations.Addresses.StreetName, warehouse.OrganisationWarehouses.ToList()[0].Organisations.Addresses.StreetName);
+                    Assert.Equal(result.OrganisationWarehouses.ToList()[0].Organisations.Addresses.StreetNumber, warehouse.OrganisationWarehouses.ToList()[0].Organisations.Addresses.StreetNumber);
+                    Assert.Equal(result.OrganisationWarehouses.ToList()[0].Organisations.Addresses.ApartmentNumber, warehouse.OrganisationWarehouses.ToList()[0].Organisations.Addresses.ApartmentNumber);
+                    Assert.Equal(result.OrganisationWarehouses.ToList()[0].Organisations.Addresses.ZipcodeCountryCity.Zipcode, warehouse.OrganisationWarehouses.ToList()[0].Organisations.Addresses.ZipcodeCountryCity.Zipcode);
+                    Assert.Equal(result.OrganisationWarehouses.ToList()[0].Organisations.Addresses.ZipcodeCountryCity.City, warehouse.OrganisationWarehouses.ToList()[0].Organisations.Addresses.ZipcodeCountryCity.City);
+                    Assert.Equal(result.OrganisationWarehouses.ToList()[0].Organisations.Addresses.ZipcodeCountryCity.Country, warehouse.OrganisationWarehouses.ToList()[0].Organisations.Addresses.ZipcodeCountryCity.Country);
 
                 }
                 else if (expectedSuccess == false)

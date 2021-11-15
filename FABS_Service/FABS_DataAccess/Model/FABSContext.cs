@@ -177,7 +177,7 @@ namespace FABS_DataAccess.Model
                     .WithMany(p => p.Items)
                     .HasForeignKey(d => d.OrganisationsId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_items_associations");
+                    .HasConstraintName("FK_items_organisations");
 
                 entity.HasOne(d => d.Statuses)
                     .WithMany(p => p.Items)
@@ -336,7 +336,7 @@ namespace FABS_DataAccess.Model
                     .WithMany(p => p.Organisations)
                     .HasForeignKey(d => d.AddressesId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_associations_addresses");
+                    .HasConstraintName("FK_organisations_addresses");
             });
 
             modelBuilder.Entity<OrganisationPerson>(entity =>
@@ -356,7 +356,7 @@ namespace FABS_DataAccess.Model
                     .WithMany(p => p.OrganisationPeople)
                     .HasForeignKey(d => d.OrganisationsId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_association_person_associations");
+                    .HasConstraintName("FK_association_person_organisations");
 
                 entity.HasOne(d => d.Person)
                     .WithMany(p => p.OrganisationPeople)
@@ -382,7 +382,7 @@ namespace FABS_DataAccess.Model
                     .WithMany(p => p.OrganisationWarehouses)
                     .HasForeignKey(d => d.OrganisationsId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_association_warehouse_associations");
+                    .HasConstraintName("FK_association_warehouse_organisations");
 
                 entity.HasOne(d => d.Warehouses)
                     .WithMany(p => p.OrganisationWarehouses)
