@@ -1,0 +1,90 @@
+﻿<Window x:Class="FABS_Client.Pages.Items.CreateKayak"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FABS_Client.Pages.Items"
+        mc:Ignorable="d"
+        Title="CreateKayak" Height="450" Width="300">
+
+    <Grid Background="White">
+
+        <!--Row/Column Size-->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width ="20" />
+            <ColumnDefinition Width ="auto" />
+            <ColumnDefinition Width ="auto" />
+            <ColumnDefinition Width ="auto" />
+            <ColumnDefinition Width ="auto" />
+            <ColumnDefinition Width ="auto" />
+            <ColumnDefinition Width ="auto" />
+            <ColumnDefinition Width ="auto" />
+            <ColumnDefinition Width ="auto" />
+            <ColumnDefinition Width ="auto" />
+            <ColumnDefinition Width ="*" />
+            <ColumnDefinition Width ="20" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="20"/>
+
+            <RowDefinition Height="Auto"/>
+
+        </Grid.RowDefinitions>
+
+        <!--Headline-->
+        <TextBlock Grid.Column="1" Grid.Row="1" FontSize="20" FontWeight="Bold" Text="Opret Kajak" FontFamily="Segce UI" Grid.ColumnSpan="4" Margin="15"/>
+
+        <!--Create Item label & texfeild-->
+        <TextBlock Grid.Column="1" Grid.Row="3" FontWeight="SemiBold" Text="Kajak Navn: " FontFamily="Segce UI" Margin="3"/>
+        <TextBox x:Name="itemNameText" Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="2" />
+
+        <TextBlock Grid.Column="1" Grid.Row="4" FontWeight="SemiBold" Text="Kajak Type: " FontFamily="Segce UI" Margin="3"/>
+        <TextBox x:Name="itemTypeText" Grid.Column="2" Grid.Row="4" Grid.ColumnSpan="2" />
+
+        <TextBlock Grid.Column="1" Grid.Row="6" FontWeight="SemiBold" Text="Længde: " FontFamily="Segce UI" Margin="3"/>
+        <TextBox x:Name="kayakLengthText" Grid.Column="2" Grid.Row="6" Grid.ColumnSpan="2" />
+
+        <TextBlock Grid.Column="1" Grid.Row="7" FontWeight="SemiBold" Text="Max Vægt (kg): " FontFamily="Segce UI" Margin="3"/>
+        <TextBox x:Name="WeightText" Grid.Column="2" Grid.Row="7" Grid.ColumnSpan="2" />
+
+        <TextBlock Grid.Column="1" Grid.Row="8" FontWeight="SemiBold" Text="Person Kapasitet: " FontFamily="Segce UI" Margin="3"/>
+        <TextBox x:Name="personCapacityText" Grid.Column="2" Grid.Row="8" Grid.ColumnSpan="2" />
+
+        <TextBlock Grid.Column="1" Grid.Row="10" FontWeight="SemiBold" Text="Varehus: " FontFamily="Segce UI" Margin="3"/>
+        <ComboBox x:Name = "warehouse" Grid.Column="2" Grid.Row="10" Grid.ColumnSpan="2">
+            <ComboBoxItem IsSelected="True">Udvælg Varehus</ComboBoxItem>
+            <ComboBoxItem>ComboBox Item #2</ComboBoxItem>
+            <ComboBoxItem>ComboBox Item #3</ComboBoxItem>
+        </ComboBox>
+
+        <TextBlock Grid.Column="1" Grid.Row="11" FontWeight="SemiBold" Text="Lager Plads: " FontFamily="Segce UI" Margin="3"/>
+        <TextBox x:Name="pickitLocationText" Grid.Column="2" Grid.Row="11" Grid.ColumnSpan="2" />
+
+        <TextBlock Grid.Column="1" Grid.Row="12" FontWeight="SemiBold" Text="Beskrivelse: " FontFamily="Segce UI" Margin="3"/>
+        <TextBox x:Name="DecriptionText" Grid.Column="2" Grid.Row="12" Grid.ColumnSpan="2" />
+
+        <Button Content="Tilbage" Grid.Column="2" Grid.Row="14" Width="75" Click="BackButton"/>
+        <Button Content="Opret Kajak" Grid.Column="3" Grid.Row="14" Width="75" Click="CreatKayakButton"/>
+
+        <!--<Frame x:Name="PageCreateKayak" NavigationUIVisibility="Hidden"/>-->
+
+    </Grid>
+</Window>

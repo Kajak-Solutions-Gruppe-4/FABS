@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Pages\Storage\**" />
+    <EmbeddedResource Remove="Pages\Storage\**" />
+    <None Remove="Pages\Storage\**" />
+    <Page Remove="Pages\Storage\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Pages\Kayak.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Pages\Kayak.png" />
+  </ItemGroup>
+
+</Project>
