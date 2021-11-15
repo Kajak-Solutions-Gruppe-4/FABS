@@ -9,8 +9,8 @@ namespace FABS_DataAccess.Model
     {
         public Warehouse()
         {
-            AssociationWarehouses = new HashSet<AssociationWarehouse>();
             Locations = new HashSet<Location>();
+            OrganisationWarehouses = new HashSet<OrganisationWarehouse>();
         }
 
         public int Id { get; set; }
@@ -18,7 +18,7 @@ namespace FABS_DataAccess.Model
         public int AddressesId { get; set; }
 
         public virtual Address Addresses { get; set; }
-        public virtual ICollection<AssociationWarehouse> AssociationWarehouses { get; set; }
         public virtual ICollection<Location> Locations { get; set; }
+        public virtual ICollection<OrganisationWarehouse> OrganisationWarehouses { get; set; }
     }
 }

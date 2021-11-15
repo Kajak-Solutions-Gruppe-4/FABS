@@ -9,9 +9,9 @@ namespace FABS_DataAccess.Model
     {
         public Person()
         {
-            AssociationPeople = new HashSet<AssociationPerson>();
             Bookings = new HashSet<Booking>();
             Locations = new HashSet<Location>();
+            OrganisationPeople = new HashSet<OrganisationPerson>();
         }
 
         public int Id { get; set; }
@@ -24,8 +24,8 @@ namespace FABS_DataAccess.Model
 
         public virtual Address Addresses { get; set; }
         public virtual Login Login { get; set; }
-        public virtual ICollection<AssociationPerson> AssociationPeople { get; set; }
         public virtual ICollection<Booking> Bookings { get; set; }
         public virtual ICollection<Location> Locations { get; set; }
+        public virtual ICollection<OrganisationPerson> OrganisationPeople { get; set; }
     }
 }

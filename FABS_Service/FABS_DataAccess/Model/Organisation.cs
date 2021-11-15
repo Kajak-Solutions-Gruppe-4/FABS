@@ -5,13 +5,13 @@ using System.Collections.Generic;
 
 namespace FABS_DataAccess.Model
 {
-    public partial class Association
+    public partial class Organisation
     {
-        public Association()
+        public Organisation()
         {
-            AssociationPeople = new HashSet<AssociationPerson>();
-            AssociationWarehouses = new HashSet<AssociationWarehouse>();
             Items = new HashSet<Item>();
+            OrganisationPeople = new HashSet<OrganisationPerson>();
+            OrganisationWarehouses = new HashSet<OrganisationWarehouse>();
         }
 
         public int Id { get; set; }
@@ -20,8 +20,8 @@ namespace FABS_DataAccess.Model
         public int AddressesId { get; set; }
 
         public virtual Address Addresses { get; set; }
-        public virtual ICollection<AssociationPerson> AssociationPeople { get; set; }
-        public virtual ICollection<AssociationWarehouse> AssociationWarehouses { get; set; }
         public virtual ICollection<Item> Items { get; set; }
+        public virtual ICollection<OrganisationPerson> OrganisationPeople { get; set; }
+        public virtual ICollection<OrganisationWarehouse> OrganisationWarehouses { get; set; }
     }
 }
