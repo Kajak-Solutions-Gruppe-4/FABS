@@ -29,8 +29,8 @@
             <RowDefinition Height="20"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="20"/>
-            <RowDefinition Height="auto"/>
             <RowDefinition Height="20"/>
+            <RowDefinition Height="100"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
@@ -47,8 +47,25 @@
         <TextBlock Grid.Column="1" Grid.Row="1" FontSize="20" FontWeight="Bold" Text="Medlemmer" FontFamily="Segce UI" Grid.ColumnSpan="4" Margin="15"/>
 
         <TextBlock Grid.Column="1" Grid.Row="3" FontSize="12" FontWeight="Bold" Text="--- Member List ---" FontFamily="Segce UI" Grid.ColumnSpan="4" Margin="15" TextAlignment="Center"/>
+        <ListView Margin="10" Name="Users" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Forenavn" Width="auto" DisplayMemberBinding="{Binding Name}" />
+                    <GridViewColumn Header="Efternavn" Width="auto" DisplayMemberBinding="{Binding Age}" />
+                    <GridViewColumn Header="Tlf." Width="auto" DisplayMemberBinding="{Binding Mail}" />
+                    <GridViewColumn Header="Mail" Width="auto" DisplayMemberBinding="{Binding Mail}" />
+                    <GridViewColumn Header="Gadenavn" Width="auto" DisplayMemberBinding="{Binding Mail}" />
+                    <GridViewColumn Header="Gadenummer" Width="auto" DisplayMemberBinding="{Binding Mail}" />
+                    <GridViewColumn Header="Lejlighed Nummer" Width="auto" DisplayMemberBinding="{Binding Mail}" />
+                    <GridViewColumn Header="Postnummer" Width="auto" DisplayMemberBinding="{Binding Mail}" />
+                    <GridViewColumn Header="By" Width="auto" DisplayMemberBinding="{Binding Mail}" />
 
-        <Button Content="Tilbage" Grid.Column="2" Grid.Row="5" Width="75"/>
-        <Button Content="Opret Person" Grid.Column="3" Grid.Row="5" Width="75" Click="ButtonPerson" />
+
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <Button Content="Tilbage" Grid.Column="1" Grid.Row="6" Width="75"/>
+        <Button Content="Opret Person" Grid.Column="2" Grid.Row="6" Width="75" Click="ButtonPerson" />
     </Grid>
 </Page>

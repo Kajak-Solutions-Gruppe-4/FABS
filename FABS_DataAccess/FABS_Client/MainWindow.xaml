@@ -31,59 +31,6 @@
 
         <Frame x:Name="Main" Background="#FFDDDDDD" Margin="0,140,0,0" NavigationUIVisibility="Hidden"/>
         
-        <!--page elements-->
-        <StackPanel>
-            <Grid>
-
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width ="20" />
-                    <ColumnDefinition Width ="auto" />
-                    <ColumnDefinition Width ="auto" />
-                    <ColumnDefinition Width ="auto" />
-                    <ColumnDefinition Width ="auto" />
-                    <ColumnDefinition Width ="auto" />
-                    <ColumnDefinition Width ="auto" />
-                    <ColumnDefinition Width ="auto" />
-                    <ColumnDefinition Width ="auto" />
-                    <ColumnDefinition Width ="auto" />
-                    <ColumnDefinition Width ="*" />
-                    <ColumnDefinition Width ="20" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="140"/>
-                    <RowDefinition Height="20"/>
-                    <RowDefinition Height="20"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="10"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="10"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="80"/>
-                    <RowDefinition Height="20"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="20"/>
-
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-
-                <TextBlock Grid.Row="3" Grid.Column="2" FontWeight="semibold" Text="brugernavn: " FontFamily="segce ui" Margin="3" Background="Red"/>
-                <TextBox Grid.Row="3" Grid.Column="3" x:Name="usernametext" Margin="5,3,500,3" Background="Red"/>
-
-                <TextBlock Grid.Row="4" Grid.Column="2" FontWeight="semibold" Text="kodeord: " FontFamily="segce ui" Margin="3"/>
-                <TextBox Grid.Row="4" Grid.Column="3" x:Name="passwordtext" Margin="5,3,500,3" />
-
-                <Button x:Name="buttonlogin" Content="login" Width="75"/>
-
-            </Grid>
-
-        </StackPanel>
 
     </Grid>
 </Window>
