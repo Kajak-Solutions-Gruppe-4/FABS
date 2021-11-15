@@ -50,7 +50,7 @@
         <ListView Margin="10" Name="Users" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Forenavn" Width="auto" DisplayMemberBinding="{Binding Path=firstName}" />
+                    <GridViewColumn Header="Fornavn" Width="auto" DisplayMemberBinding="{Binding Path=firstName}" />
                     <!--<GridViewColumn Header="Efternavn" Width="auto" DisplayMemberBinding="{Binding Age}" />-->
                     <GridViewColumn Header="Tlf." Width="auto" DisplayMemberBinding="{Binding Path=telephoneNumber}" />
                     <GridViewColumn Header="Mail" Width="auto" DisplayMemberBinding="{Binding Path=login.email}" />

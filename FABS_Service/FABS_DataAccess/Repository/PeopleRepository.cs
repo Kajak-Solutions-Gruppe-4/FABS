@@ -58,8 +58,8 @@ namespace FABS_DataAccess.Repository
                     .Include(a => a.Addresses)
                     .ThenInclude(z => z.ZipcodeCountryCity)
                     .Include(l => l.Login)
-                    .Include(ap => ap.AssociationPeople)
-                    .ThenInclude(a => a.Association);
+                    .Include(ap => ap.OrganisationPeople)
+                    .ThenInclude(a => a.Organisations);
                 
 
             }
