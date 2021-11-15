@@ -11,7 +11,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace FABS_Client.Pages.Items
+namespace FABS_Client_WPF.Pages.Items
 {
     /// <summary>
     /// Interaction logic for ItemGUI.xaml

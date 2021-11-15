@@ -54,7 +54,12 @@ namespace FABS_DataAccess.Repository
             try
             {
                 
-                    listPerson = _context.People;
+                    listPerson = _context.People
+                    .Include(a => a.Addresses)
+                    .ThenInclude(z => z.ZipcodeCountryCity)
+                    .Include(l => l.Login)
+                    .Include(ap => ap.AssociationPeople)
+                    .ThenInclude(a => a.Association);
                 
 
             }

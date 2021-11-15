@@ -10,7 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace FABS_Client.Pages.Persons
+namespace FABS_Client_WPF.Pages.Persons
 {
     /// <summary>
     /// Interaction logic for CreatePersonWindow.xaml

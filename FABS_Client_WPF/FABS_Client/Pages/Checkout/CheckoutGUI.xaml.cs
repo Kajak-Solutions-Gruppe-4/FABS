@@ -11,7 +11,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace FABS_Client.Pages.Checkout
+namespace FABS_Client_WPF.Pages.Checkout
 {
     /// <summary>
     /// Interaction logic for CheckoutGUI.xaml

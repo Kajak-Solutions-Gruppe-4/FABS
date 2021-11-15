@@ -11,7 +11,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace FABS_Client
+namespace FABS_Client_WPF
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
