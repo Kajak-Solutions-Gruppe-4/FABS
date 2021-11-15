@@ -54,11 +54,11 @@
                     <!--<GridViewColumn Header="Efternavn" Width="auto" DisplayMemberBinding="{Binding Age}" />-->
                     <GridViewColumn Header="Tlf." Width="auto" DisplayMemberBinding="{Binding Path=telephoneNumber}" />
                     <GridViewColumn Header="Mail" Width="auto" DisplayMemberBinding="{Binding Path=login.email}" />
-                    <GridViewColumn Header="Gadenavn" Width="auto" DisplayMemberBinding="{Binding Path}" />
-                    <GridViewColumn Header="Gadenummer" Width="auto" DisplayMemberBinding="{Binding Mail}" />
-                    <GridViewColumn Header="Lejlighed Nummer" Width="auto" DisplayMemberBinding="{Binding Mail}" />
-                    <GridViewColumn Header="Postnummer" Width="auto" DisplayMemberBinding="{Binding Mail}" />
-                    <GridViewColumn Header="By" Width="auto" DisplayMemberBinding="{Binding Mail}" />
+                    <GridViewColumn Header="Gadenavn" Width="auto" DisplayMemberBinding="{Binding Path=addresses.StreetName}" />
+                    <GridViewColumn Header="Gadenummer" Width="auto" DisplayMemberBinding="{Binding Path=addresses.StreetNumber}" />
+                    <GridViewColumn Header="Lejlighed Nummer" Width="auto" DisplayMemberBinding="{Binding Path=addresses.ApartmentNumber}" />
+                    <GridViewColumn Header="Postnummer" Width="auto" DisplayMemberBinding="{Binding Path=addresses.ZipcodeCountryCity.Zipcode}" />
+                    <GridViewColumn Header="By" Width="auto" DisplayMemberBinding="{Binding Path=addresses.ZipcodeCountryCity.City}" />
 
 
                 </GridView>
