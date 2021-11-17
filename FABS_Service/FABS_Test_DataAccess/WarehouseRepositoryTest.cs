@@ -28,14 +28,22 @@ namespace FABS_Test_DataAccess
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
+                //Populate database before each test
                 List<object[]> data = GetData("Seed").ToList();
                 context.AddRange(
+
+                    //Populate Wearhouse
                     data[0][0] as ZipcodeCountryCity,
                     data[0][1] as Address,
                     data[0][2] as Organisation,
                     data[0][3] as Address,
                     data[0][4] as Warehouse,
-                    data[0][5] as OrganisationWarehouse
+                    data[0][5] as OrganisationWarehouse,
+
+                    ////Populate Location
+                    //data[0][6] as Location
+
+
                     );
                     context.SaveChanges();
             }
@@ -43,6 +51,7 @@ namespace FABS_Test_DataAccess
 
         public static IEnumerable<object[]> GetData(string nameOfCaller)
         {
+            //Create Warehouse test objects 
             ZipcodeCountryCity zipcodeCountryCity1 = new ZipcodeCountryCity("9000", "Denmark", "Aalborg");
             Address organisationAddress = new Address("Sofiendalsvej", "60", null, zipcodeCountryCity1);
             Organisation organisation1 = new Organisation("12341234", "UCN Kajakker", organisationAddress);
@@ -52,8 +61,12 @@ namespace FABS_Test_DataAccess
             Warehouse warehouse2 = new Warehouse("Building B", 1);
             Warehouse warehouse3 = new Warehouse("Building C", 1);
 
+            ////Create Location test objects
+            //Location location1 = new Location("1.2.3", false, "This location is cool");
+            //Location location2 = new Location("1.2.4", false, "This location is cooler");
+            //Location location3 = new Location("1.2.5", false, "This location is coolest");
 
-
+            //new OrganisationWarehouse
             List<OrganisationWarehouse> organisationWarehouseList = new List<OrganisationWarehouse>();
             OrganisationWarehouse organisationWarehouse1 = new OrganisationWarehouse(organisation1, warehouse1);
             organisationWarehouseList.Add(organisationWarehouse1);
@@ -178,6 +191,7 @@ namespace FABS_Test_DataAccess
 
             }
         }
+
 
         public void Dispose()
         {
