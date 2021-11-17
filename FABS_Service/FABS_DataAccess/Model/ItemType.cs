@@ -5,19 +5,17 @@ using System.Collections.Generic;
 
 namespace FABS_DataAccess.Model
 {
-    public partial class Status
+    public partial class ItemType
     {
-        public Status()
+        public ItemType()
         {
-            Bookings = new HashSet<Booking>();
             Items = new HashSet<Item>();
         }
 
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Category { get; set; }
 
-        public virtual ICollection<Booking> Bookings { get; set; }
+        public virtual KayakType IdNavigation { get; set; }
         public virtual ICollection<Item> Items { get; set; }
     }
 }

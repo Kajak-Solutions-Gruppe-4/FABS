@@ -16,8 +16,9 @@ namespace FABS_DataAccess.Model
         public int OrganisationsId { get; set; }
         public int StatusesId { get; set; }
         public int? LocationsId { get; set; }
+        public int? ItemTypesId { get; set; }
 
-        public virtual Kayak IdNavigation { get; set; }
+        public virtual ItemType ItemTypes { get; set; }
         public virtual Location Locations { get; set; }
         public virtual Organisation Organisations { get; set; }
         public virtual Status Statuses { get; set; }

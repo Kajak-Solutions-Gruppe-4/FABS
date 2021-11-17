@@ -22,7 +22,7 @@ namespace FABS_DataAccess.Model
         public virtual DbSet<Booking> Bookings { get; set; }
         public virtual DbSet<BookingLine> BookingLines { get; set; }
         public virtual DbSet<Item> Items { get; set; }
-        public virtual DbSet<Kayak> Kayaks { get; set; }
+        public virtual DbSet<ItemType> ItemTypes { get; set; }
         public virtual DbSet<KayakType> KayakTypes { get; set; }
         public virtual DbSet<Location> Locations { get; set; }
         public virtual DbSet<Login> Logins { get; set; }
@@ -156,11 +156,15 @@ namespace FABS_DataAccess.Model
 
                 entity.HasIndex(e => e.OrganisationsId, "IX_items_association_id");
 
+                entity.HasIndex(e => e.LocationsId, "IX_items_locations_id");
+
                 entity.HasIndex(e => e.StatusesId, "IX_items_statuses_id");
 
                 entity.Property(e => e.Id)
                     .ValueGeneratedNever()
                     .HasColumnName("id");
+
+                entity.Property(e => e.ItemTypesId).HasColumnName("item_types_id");
 
                 entity.Property(e => e.LocationsId).HasColumnName("locations_id");
 
@@ -168,11 +172,10 @@ namespace FABS_DataAccess.Model
 
                 entity.Property(e => e.StatusesId).HasColumnName("statuses_id");
 
-                entity.HasOne(d => d.IdNavigation)
-                    .WithOne(p => p.Item)
-                    .HasForeignKey<Item>(d => d.Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_items_kayaks");
+                entity.HasOne(d => d.ItemTypes)
+                    .WithMany(p => p.Items)
+                    .HasForeignKey(d => d.ItemTypesId)
+                    .HasConstraintName("FK_items_item_types");
 
                 entity.HasOne(d => d.Locations)
                     .WithMany(p => p.Items)
@@ -192,38 +195,34 @@ namespace FABS_DataAccess.Model
                     .HasConstraintName("FK_items_statuses");
             });
 
-            modelBuilder.Entity<Kayak>(entity =>
+            modelBuilder.Entity<ItemType>(entity =>
             {
-                entity.HasKey(e => e.ItemsId);
+                entity.ToTable("item_types");
 
-                entity.ToTable("kayaks");
+                entity.Property(e => e.Id)
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("id");
 
-                entity.HasIndex(e => e.KayakTypesId, "IX_kayaks_kayak_types_id");
-
-                entity.Property(e => e.ItemsId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("items_id");
-
-                entity.Property(e => e.KayakTypesId).HasColumnName("kayak_types_id");
-
-                entity.Property(e => e.Serial)
+                entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false)
-                    .HasColumnName("serial");
+                    .HasColumnName("name");
 
-                entity.HasOne(d => d.KayakTypes)
-                    .WithMany(p => p.Kayaks)
-                    .HasForeignKey(d => d.KayakTypesId)
+                entity.HasOne(d => d.IdNavigation)
+                    .WithOne(p => p.ItemType)
+                    .HasForeignKey<ItemType>(d => d.Id)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_kayaks_kayak_types");
+                    .HasConstraintName("FK_item_types_kayak_types");
             });
 
             modelBuilder.Entity<KayakType>(entity =>
             {
                 entity.ToTable("kayak_types");
 
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Id)
+                    .ValueGeneratedNever()
+                    .HasColumnName("id");
 
                 entity.Property(e => e.Description)
                     .IsUnicode(false)
@@ -247,6 +246,8 @@ namespace FABS_DataAccess.Model
             modelBuilder.Entity<Location>(entity =>
             {
                 entity.ToTable("locations");
+
+                entity.HasIndex(e => e.OrganisationsId, "IX_locations_organisations_id");
 
                 entity.HasIndex(e => e.PeopleId, "IX_locations_people_id");
 
@@ -422,17 +423,17 @@ namespace FABS_DataAccess.Model
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
+                entity.Property(e => e.Category)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("category");
+
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("name");
-
-                entity.Property(e => e.Type)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("type");
             });
 
             modelBuilder.Entity<Warehouse>(entity =>
