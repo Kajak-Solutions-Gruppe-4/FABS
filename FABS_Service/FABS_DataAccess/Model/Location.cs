@@ -9,18 +9,20 @@ namespace FABS_DataAccess.Model
     {
         public Location()
         {
-            Kayaks = new HashSet<Kayak>();
+            Items = new HashSet<Item>();
         }
 
         public int Id { get; set; }
         public string PickLocation { get; set; }
         public bool IsInUse { get; set; }
         public string Description { get; set; }
-        public int WarehousesId { get; set; }
+        public int? WarehousesId { get; set; }
         public int? PeopleId { get; set; }
+        public int OrganisationsId { get; set; }
 
+        public virtual Organisation Organisations { get; set; }
         public virtual Person People { get; set; }
         public virtual Warehouse Warehouses { get; set; }
-        public virtual ICollection<Kayak> Kayaks { get; set; }
+        public virtual ICollection<Item> Items { get; set; }
     }
 }

@@ -28,7 +28,6 @@ namespace FABS_DataAccess.Model
         public virtual DbSet<Login> Logins { get; set; }
         public virtual DbSet<Organisation> Organisations { get; set; }
         public virtual DbSet<OrganisationPerson> OrganisationPeople { get; set; }
-        public virtual DbSet<OrganisationWarehouse> OrganisationWarehouses { get; set; }
         public virtual DbSet<Person> People { get; set; }
         public virtual DbSet<Status> Statuses { get; set; }
         public virtual DbSet<Warehouse> Warehouses { get; set; }
@@ -163,6 +162,8 @@ namespace FABS_DataAccess.Model
                     .ValueGeneratedNever()
                     .HasColumnName("id");
 
+                entity.Property(e => e.LocationsId).HasColumnName("locations_id");
+
                 entity.Property(e => e.OrganisationsId).HasColumnName("organisations_id");
 
                 entity.Property(e => e.StatusesId).HasColumnName("statuses_id");
@@ -172,6 +173,11 @@ namespace FABS_DataAccess.Model
                     .HasForeignKey<Item>(d => d.Id)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_items_kayaks");
+
+                entity.HasOne(d => d.Locations)
+                    .WithMany(p => p.Items)
+                    .HasForeignKey(d => d.LocationsId)
+                    .HasConstraintName("FK_items_locations");
 
                 entity.HasOne(d => d.Organisations)
                     .WithMany(p => p.Items)
@@ -194,15 +200,11 @@ namespace FABS_DataAccess.Model
 
                 entity.HasIndex(e => e.KayakTypesId, "IX_kayaks_kayak_types_id");
 
-                entity.HasIndex(e => e.LocationsId, "IX_kayaks_locations_id");
-
                 entity.Property(e => e.ItemsId)
                     .ValueGeneratedNever()
                     .HasColumnName("items_id");
 
                 entity.Property(e => e.KayakTypesId).HasColumnName("kayak_types_id");
-
-                entity.Property(e => e.LocationsId).HasColumnName("locations_id");
 
                 entity.Property(e => e.Serial)
                     .IsRequired()
@@ -215,12 +217,6 @@ namespace FABS_DataAccess.Model
                     .HasForeignKey(d => d.KayakTypesId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_kayaks_kayak_types");
-
-                entity.HasOne(d => d.Locations)
-                    .WithMany(p => p.Kayaks)
-                    .HasForeignKey(d => d.LocationsId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_kayaks_locations");
             });
 
             modelBuilder.Entity<KayakType>(entity =>
@@ -264,6 +260,8 @@ namespace FABS_DataAccess.Model
 
                 entity.Property(e => e.IsInUse).HasColumnName("is_in_use");
 
+                entity.Property(e => e.OrganisationsId).HasColumnName("organisations_id");
+
                 entity.Property(e => e.PeopleId).HasColumnName("people_id");
 
                 entity.Property(e => e.PickLocation)
@@ -274,6 +272,12 @@ namespace FABS_DataAccess.Model
 
                 entity.Property(e => e.WarehousesId).HasColumnName("warehouses_id");
 
+                entity.HasOne(d => d.Organisations)
+                    .WithMany(p => p.Locations)
+                    .HasForeignKey(d => d.OrganisationsId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_locations_organisations");
+
                 entity.HasOne(d => d.People)
                     .WithMany(p => p.Locations)
                     .HasForeignKey(d => d.PeopleId)
@@ -282,7 +286,6 @@ namespace FABS_DataAccess.Model
                 entity.HasOne(d => d.Warehouses)
                     .WithMany(p => p.Locations)
                     .HasForeignKey(d => d.WarehousesId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_locations_warehouses");
             });
 
@@ -363,32 +366,6 @@ namespace FABS_DataAccess.Model
                     .HasForeignKey(d => d.PersonId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_association_person_people");
-            });
-
-            modelBuilder.Entity<OrganisationWarehouse>(entity =>
-            {
-                entity.HasKey(e => new { e.OrganisationsId, e.WarehousesId })
-                    .HasName("PK_association_warehouse");
-
-                entity.ToTable("organisation_warehouse");
-
-                entity.HasIndex(e => e.WarehousesId, "IX_association_warehouse_warehouses_id");
-
-                entity.Property(e => e.OrganisationsId).HasColumnName("organisations_id");
-
-                entity.Property(e => e.WarehousesId).HasColumnName("warehouses_id");
-
-                entity.HasOne(d => d.Organisations)
-                    .WithMany(p => p.OrganisationWarehouses)
-                    .HasForeignKey(d => d.OrganisationsId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_association_warehouse_organisations");
-
-                entity.HasOne(d => d.Warehouses)
-                    .WithMany(p => p.OrganisationWarehouses)
-                    .HasForeignKey(d => d.WarehousesId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_association_warehouse_warehouses");
             });
 
             modelBuilder.Entity<Person>(entity =>
