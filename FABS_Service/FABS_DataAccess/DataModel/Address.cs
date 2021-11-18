@@ -6,6 +6,7 @@ namespace FABS_DataAccess.Model
 {
     public partial class Address
     {
+
         public Address(string streetName, string streetNumber, string apartmentNumber, ZipcodeCountryCity zipcodeCountryCity) : this()
         {
             StreetName = streetName;

@@ -395,13 +395,13 @@ namespace FABS_DataAccess.Model
             {
                 entity.ToTable("people");
 
-                entity.HasIndex(e => e.AdressesId, "IX_people_adresses_id");
+                entity.HasIndex(e => e.AddressesId, "IX_people_adresses_id");
 
                 entity.Property(e => e.Id)
                     .ValueGeneratedNever()
                     .HasColumnName("id");
 
-                entity.Property(e => e.AdressesId).HasColumnName("adresses_id");
+                entity.Property(e => e.AddressesId).HasColumnName("adresses_id");
 
                 entity.Property(e => e.FirstName)
                     .IsRequired()
@@ -424,7 +424,7 @@ namespace FABS_DataAccess.Model
 
                 entity.HasOne(d => d.Addresses)
                     .WithMany(p => p.People)
-                    .HasForeignKey(d => d.AdressesId)
+                    .HasForeignKey(d => d.AddressesId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_people_addresses");
 
