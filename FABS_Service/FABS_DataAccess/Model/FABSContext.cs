@@ -203,7 +203,7 @@ namespace FABS_DataAccess.Model
                 entity.ToTable("item_types");
 
                 entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
+                    .ValueGeneratedOnAdd()
                     .HasColumnName("id");
 
                 entity.Property(e => e.Name)
