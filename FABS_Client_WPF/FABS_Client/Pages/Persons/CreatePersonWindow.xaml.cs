@@ -40,8 +40,7 @@ namespace FABS_Client_WPF.Pages.Persons
             Address address = new Address(streetnameText.Text.ToString(), streetNoText.Text.ToString(),
                 apartmentNoText.Text.ToString(),
                 zipcodeText.Text.ToString(),
-                //cityText.Text.ToString(),
-                "Danmark");
+                1); // 1 in the DB is Danmark. This is hardcoded for now.
             Person person = new Person()
             {
 

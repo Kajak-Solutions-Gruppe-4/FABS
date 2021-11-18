@@ -19,7 +19,7 @@ namespace FABS_Client_WPF.Model
         public string StreetNumber { get; set; }
         public string ApartmentNumber { get; set; }
         public string Zipcode { get; set; }
-        public string Country { get; set; }
+        public int CountriesId { get; set; }
 
         public virtual ZipcodeCountryCity ZipcodeCountryCity { get; set; }
         public virtual ICollection<Association> Associations { get; set; }

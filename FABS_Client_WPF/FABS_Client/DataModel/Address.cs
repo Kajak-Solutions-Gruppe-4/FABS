@@ -14,13 +14,13 @@ namespace FABS_Client_WPF.Model
             ZipcodeCountryCity = zipcodeCountryCity;
         }
 
-        public Address(string streetName, string streetNumber, string apartmentNumber, string zipcode, string country)
+        public Address(string streetName, string streetNumber, string apartmentNumber, string zipcode, int countryId)
         {
             StreetName = streetName;
             StreetNumber = streetNumber;
             ApartmentNumber = apartmentNumber;
             Zipcode = zipcode;
-            Country = country;
+            CountriesId = countryId;
         }
     }
 }

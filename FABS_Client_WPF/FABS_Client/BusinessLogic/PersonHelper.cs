@@ -18,7 +18,7 @@ namespace FABS_Client_WPF.BusinessLogic
              
                 
                 var request = new RestRequest("people", Method.POST, DataFormat.Json);
-                request.AddJsonBody(person);
+                request.AddJsonBody(JsonSerializer.Serialize(person));
 
                 var response = _clientPeople.Execute(request);
 
