@@ -18,7 +18,7 @@ namespace FABS_DataAccess.Model
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string TelephoneNumber { get; set; }
-        public int AdressesId { get; set; }
+        public int AddressesId { get; set; }
         public bool IsAdmin { get; set; }
 
         public virtual Address Addresses { get; set; }

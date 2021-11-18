@@ -130,7 +130,7 @@ namespace FABS_DataAccess.Repository
                     personResultEntity.FirstName = p.FirstName;
                     personResultEntity.LastName = p.LastName;
                     personResultEntity.TelephoneNumber = p.TelephoneNumber;
-                    personResultEntity.AdressesId = p.AdressesId;
+                    personResultEntity.AddressesId = p.AddressesId;
                     personResultEntity.IsAdmin = p.IsAdmin;
                     personResultEntity.Addresses = p.Addresses;
                     personResultEntity.Login = p.Login;

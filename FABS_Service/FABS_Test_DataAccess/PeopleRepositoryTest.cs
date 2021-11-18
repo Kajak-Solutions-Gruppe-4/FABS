@@ -144,7 +144,7 @@ namespace FABS_Test_DataAccess
                 {
                     person.Addresses = context.Addresses
                                               .Include(z => z.ZipcodeCountryCity)
-                                              .Single(x => x.Id == person.AdressesId);
+                                              .Single(x => x.Id == person.AddressesId);
                 }
 
                 //assert
