@@ -7,7 +7,7 @@ namespace FABS_DataAccess.Model
 {
     public partial class KayakType
     {
-        public int Id { get; set; }
+        public int ItemTypesId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public int WeightLimit { get; set; }
