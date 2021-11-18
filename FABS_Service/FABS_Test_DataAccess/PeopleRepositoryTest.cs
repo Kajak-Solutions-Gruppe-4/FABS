@@ -146,11 +146,6 @@ namespace FABS_Test_DataAccess
                                               .Include(z => z.ZipcodeCountryCity)
                                               .Single(x => x.Id == person.AdressesId);
                 }
-                if (person.Login == null)
-                {
-                    person.Login = context.Logins
-                                          .Single(x => x.PeopleId == person.LoginsId);
-                }
 
                 //assert
                 if (expectedSuccess == true && returnedID > 0)
