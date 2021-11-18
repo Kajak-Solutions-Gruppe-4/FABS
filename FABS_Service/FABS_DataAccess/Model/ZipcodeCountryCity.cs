@@ -13,9 +13,10 @@ namespace FABS_DataAccess.Model
         }
 
         public string Zipcode { get; set; }
-        public string Country { get; set; }
+        public int CountriesId { get; set; }
         public string City { get; set; }
 
+        public virtual Country Countries { get; set; }
         public virtual ICollection<Address> Addresses { get; set; }
     }
 }

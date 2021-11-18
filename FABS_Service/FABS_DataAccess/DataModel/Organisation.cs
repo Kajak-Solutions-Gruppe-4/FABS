@@ -12,5 +12,12 @@ namespace FABS_DataAccess.Model
             Name = name;
             Addresses = addresses;
         }
+
+        public Organisation(string cvr, string name, int addressesId)
+        {
+            Cvr = cvr;
+            Name = name;
+            AddressesId = addressesId;
+        }
     }
 }

@@ -33,8 +33,9 @@ namespace FABS_DataAccess.Repository
                     foundPerson = _context.People
                     .Include(a => a.Addresses)
                     .ThenInclude(z => z.ZipcodeCountryCity)
+                    .ThenInclude(c => c.Countries)
                     .Include(l => l.Login)
-                    .Include(ap => ap.OrganisationPeople)
+                    .Include(op => op.OrganisationPeople)
                     .ThenInclude(a => a.Organisations)
                     .FirstOrDefault(x => x.Id == id);
                 

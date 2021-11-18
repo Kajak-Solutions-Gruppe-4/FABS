@@ -13,5 +13,14 @@ namespace FABS_DataAccess.Model
             ApartmentNumber = apartmentNumber;
             ZipcodeCountryCity = zipcodeCountryCity;
         }
+
+        public Address(string streetName, string streetNumber, string apartmentNumber, string zipcode, int countryId)
+        {
+            StreetName = streetName;
+            StreetNumber = streetNumber;
+            ApartmentNumber = apartmentNumber;
+            Zipcode = zipcode;
+            CountriesId = countryId;
+        }
     }
 }
