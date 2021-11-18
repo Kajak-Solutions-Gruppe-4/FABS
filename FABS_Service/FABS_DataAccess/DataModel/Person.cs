@@ -6,6 +6,7 @@ namespace FABS_DataAccess.Model
 {
     public partial class Person
     {
+
         public Person(string firstName, string lastName, string telephoneNumber, bool isAdmin, Address adresses, Login logins) : this()
         {
             FirstName = firstName;
