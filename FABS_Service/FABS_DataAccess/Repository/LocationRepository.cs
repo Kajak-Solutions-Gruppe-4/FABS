@@ -10,9 +10,23 @@ namespace FABS_DataAccess.Repository
 {
     public class LocationRepository : IRepository<Location>
     {
-        public int Create(Location t)
+        private readonly FABSContext _context;
+
+        public int Create(Location l)
         {
-            throw new NotImplementedException();
+            int insertId;
+            try
+            {
+                var res = _context.Locations.Add(l);
+                _context.SaveChanges();
+                insertId = res.Entity.Id;
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+                insertId = -1;
+            }
+            return insertId;
         }
 
         public bool Delete(int id)
