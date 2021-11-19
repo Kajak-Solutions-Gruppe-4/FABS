@@ -10,7 +10,6 @@ namespace FABS_DataAccess.Model
     {
         public FABSContext()
         {
-            Initialize();
         }
 
         public FABSContext(DbContextOptions<FABSContext> options)
@@ -39,7 +38,7 @@ namespace FABS_DataAccess.Model
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer(_connectionString);
+                optionsBuilder.UseSqlServer("Server=.\\SQLExpress;Database=FABS;Integrated Security=True;");
             }
         }
 
@@ -197,6 +196,7 @@ namespace FABS_DataAccess.Model
                 entity.HasOne(d => d.ItemTypes)
                     .WithMany(p => p.Items)
                     .HasForeignKey(d => d.ItemTypesId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_items_item_types");
 
                 entity.HasOne(d => d.Locations)
@@ -213,7 +213,6 @@ namespace FABS_DataAccess.Model
                 entity.HasOne(d => d.Statuses)
                     .WithMany(p => p.Items)
                     .HasForeignKey(d => d.StatusesId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_items_statuses");
             });
 
