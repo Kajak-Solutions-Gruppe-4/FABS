@@ -219,21 +219,13 @@ namespace FABS_DataAccess.Model
             {
                 entity.ToTable("item_types");
 
-                entity.Property(e => e.Id)
-                    .ValueGeneratedOnAdd()
-                    .HasColumnName("id");
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("name");
-
-                entity.HasOne(d => d.KayakType)
-                    .WithOne(p => p.ItemType)
-                    .HasForeignKey<ItemType>(d => d.Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_item_types_kayak_types");
             });
 
             modelBuilder.Entity<KayakType>(entity =>
@@ -257,6 +249,12 @@ namespace FABS_DataAccess.Model
                 entity.Property(e => e.PersonCapacity).HasColumnName("person_capacity");
 
                 entity.Property(e => e.WeightLimit).HasColumnName("weight_limit");
+
+                entity.HasOne(d => d.ItemType)
+                    .WithOne(p => p.KayakType)
+                    .HasForeignKey<KayakType>(d => d.ItemTypesId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_kayak_types_item_types");
             });
 
             modelBuilder.Entity<Location>(entity =>

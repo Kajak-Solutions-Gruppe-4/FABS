@@ -33,12 +33,7 @@ namespace FABS_Test_DataAccess
 
                 List<object[]> data = GetData("Seed").ToList();
 
-                context.AddRange(data[0][0] as Country, 
-                                 data[0][1] as ZipcodeCountryCity,
-                                 data[0][2] as Address,
-                                 data[0][3] as Organisation,
-                                 data[0][4] as Login,
-                                 data[0][5] as Person);
+                context.AddRange(data[0][0] as Organisation);
                 context.SaveChanges();
             }
         }
@@ -60,22 +55,14 @@ namespace FABS_Test_DataAccess
             Person person2 = new Person("Lars", "Andersen", "29292929", false, 1, login1);
             Person person3 = new Person("Rasmus", "Larsen", "28282828", false, 1, login2);
 
-            List<OrganisationPerson> organisationPersonList = new List<OrganisationPerson>();
             OrganisationPerson organisationPerson1 = new OrganisationPerson(organisation1, person1);
-            organisationPersonList.Add(organisationPerson1);
-            organisation1.OrganisationPeople = organisationPersonList;
-            person1.OrganisationPeople.Add(organisationPerson1);
+            organisation1.OrganisationPeople.Add(organisationPerson1);
 
             var allData = new List<object[]>();
             switch (nameOfCaller)
             {
                 case "Seed":
-                    allData.Add(new object[] { country1,
-                                               zipcodeCountryCity1,
-                                               address1,
-                                               organisation1,
-                                               login1,
-                                               person1});
+                    allData.Add(new object[] { organisation1 });
                     break;
                 case "ReadPerson":
                     allData.Add(new object[] { 1, true });

@@ -15,5 +15,13 @@ namespace FABS_DataAccess.Model
             Organisations = organisation;
 
         }
+
+        public Location(string pickLocation, Organisation organisations) : this()
+        {
+            PickLocation = pickLocation;
+            Organisations = organisations;
+        }
+
+
     }
 }
