@@ -277,8 +277,6 @@ namespace FABS_DataAccess.Model
                     .IsUnicode(false)
                     .HasColumnName("description");
 
-                entity.Property(e => e.IsInUse).HasColumnName("is_in_use");
-
                 entity.Property(e => e.OrganisationsId).HasColumnName("organisations_id");
 
                 entity.Property(e => e.PeopleId).HasColumnName("people_id");
