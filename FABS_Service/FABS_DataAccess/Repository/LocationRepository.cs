@@ -36,6 +36,7 @@ namespace FABS_DataAccess.Repository
 
         public Location Get(int id)
         {
+            throw new NotImplementedException();
             //Location foundLocation;
             //try
             //{
