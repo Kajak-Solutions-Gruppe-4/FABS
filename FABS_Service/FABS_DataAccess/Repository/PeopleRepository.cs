@@ -128,6 +128,7 @@ namespace FABS_DataAccess.Repository
                     //Get the context entity form DB so we can change it.
                     var personResultEntity = _context.People.Find(id);
                     //Update the context entity with the date recieved from the update object
+                        //Person
                     personResultEntity.FirstName = p.FirstName;
                     personResultEntity.LastName = p.LastName;
                     personResultEntity.TelephoneNumber = p.TelephoneNumber;
@@ -135,6 +136,7 @@ namespace FABS_DataAccess.Repository
                     personResultEntity.IsAdmin = p.IsAdmin;
                     personResultEntity.Addresses = p.Addresses;
                     personResultEntity.Login = p.Login;
+                        //Other
                     personResultEntity.OrganisationPeople = p.OrganisationPeople;
                     personResultEntity.Bookings = p.Bookings;
                     personResultEntity.Locations = p.Locations;
