@@ -53,6 +53,7 @@ namespace FABS_DataAccess.Repository
             try
             {
                 listLocation = _context.Locations
+                //Location
                 .Include(w => w.Warehouses)
                 .ThenInclude(a1 => a1.Addresses)
                 .ThenInclude(z => z.ZipcodeCountryCity)
