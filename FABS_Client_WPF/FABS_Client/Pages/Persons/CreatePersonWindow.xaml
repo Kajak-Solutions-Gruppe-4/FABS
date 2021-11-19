@@ -50,7 +50,7 @@
         <TextBlock Grid.Column="1" Grid.Row="1" FontSize="20" FontWeight="Bold" Text="Create Person" FontFamily="Segce UI" Grid.ColumnSpan="4" Margin="15"/>
 
         <!--Create Person label & texfeild-->
-        <TextBlock Grid.Column="1" Grid.Row="3" FontWeight="SemiBold" Text="Forenavn: " FontFamily="Segce UI" Margin="3"/>
+        <TextBlock Grid.Column="1" Grid.Row="3" FontWeight="SemiBold" Text="Fornavn: " FontFamily="Segce UI" Margin="3"/>
         <TextBox x:Name="firstNameText" Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="2" />
 
         <TextBlock Grid.Column="1" Grid.Row="4" FontWeight="SemiBold" Text="Efternavn: " FontFamily="Segce UI" Margin="3"/>
@@ -65,10 +65,10 @@
         <TextBlock Grid.Column="1" Grid.Row="8" FontWeight="SemiBold" Text="Gadenavn: " FontFamily="Segce UI" Margin="3"/>
         <TextBox x:Name="streetnameText" Grid.Column="2" Grid.Row="8" Grid.ColumnSpan="2"  />
 
-        <TextBlock Grid.Column="1" Grid.Row="9" FontWeight="SemiBold" Text="Gade Nummer: " FontFamily="Segce UI" Margin="3"/>
+        <TextBlock Grid.Column="1" Grid.Row="9" FontWeight="SemiBold" Text="Husnummer: " FontFamily="Segce UI" Margin="3"/>
         <TextBox x:Name="streetNoText" Grid.Column="2" Grid.Row="9" Grid.ColumnSpan="2"  />
 
-        <TextBlock Grid.Column="1" Grid.Row="10" FontWeight="SemiBold" Text="Lejlighed No.: " FontFamily="Segce UI" Margin="3"/>
+        <TextBlock Grid.Column="1" Grid.Row="10" FontWeight="SemiBold" Text="Lejlighedsnummer.: " FontFamily="Segce UI" Margin="3"/>
         <TextBox x:Name="apartmentNoText" Grid.Column="2" Grid.Row="10" Grid.ColumnSpan="2" />
 
         <TextBlock Grid.Column="1" Grid.Row="11" FontWeight="SemiBold" Text="By: " FontFamily="Segce UI" Margin="3"/>

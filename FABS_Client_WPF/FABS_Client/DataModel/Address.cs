@@ -12,15 +12,24 @@ namespace FABS_Client_WPF.Model
             StreetNumber = streetNumber;
             ApartmentNumber = apartmentNumber;
             ZipcodeCountryCity = zipcodeCountryCity;
+            
         }
 
-        public Address(string streetName, string streetNumber, string apartmentNumber, string zipcode, int countryId)
+        public Address(string streetName, string streetNumber, string apartmentNumber, string zipcode, int countryId) :this()
         {
             StreetName = streetName;
             StreetNumber = streetNumber;
             ApartmentNumber = apartmentNumber;
             Zipcode = zipcode;
             CountriesId = countryId;
+    
+
+        }
+
+        public override string ToString()
+        {
+            //return base.ToString();
+            return StreetName + " " + StreetNumber + ", " + ApartmentNumber;
         }
     }
 }

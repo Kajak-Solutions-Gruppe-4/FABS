@@ -22,8 +22,11 @@ namespace FABS_Client_WPF.Pages.Persons
     /// </summary>
     public partial class CreatePersonWindow : Window
     {
-        public CreatePersonWindow()
+        private PersonsGUI _parentWindow;
+
+        public CreatePersonWindow(PersonsGUI parentWindow)
         {
+            _parentWindow = parentWindow;
             InitializeComponent();
         }
 
@@ -54,10 +57,10 @@ namespace FABS_Client_WPF.Pages.Persons
 
             helper.PostPerson(person);
 
+            _parentWindow.RefreshList();
 
-
-
-            //PersonsGUI.RefreshList();
+            //var instanceOfPersonGUI = new PersonsGUI();
+            //instanceOfPersonGUI.RefreshList();
 
             Close();
         }

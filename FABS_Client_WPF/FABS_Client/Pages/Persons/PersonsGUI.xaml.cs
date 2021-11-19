@@ -24,7 +24,7 @@ namespace FABS_Client_WPF.Pages.Persons
 
         private void ButtonPerson(object sender, RoutedEventArgs e)
         {
-            CreatePersonWindow createPersonWindow = new CreatePersonWindow();
+            CreatePersonWindow createPersonWindow = new CreatePersonWindow(this);
             //this.Visibility = Visibility.Hidden //Hides Main window while usng second window
             createPersonWindow.Show();
         }
