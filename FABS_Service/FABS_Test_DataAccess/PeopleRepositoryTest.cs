@@ -33,12 +33,12 @@ namespace FABS_Test_DataAccess
 
                 List<object[]> data = GetData("Seed").ToList();
 
-                context.AddRange(data[0][0] as ZipcodeCountryCity,
-                                 data[0][1] as Address,
-                                 data[0][2] as Organisation,
-                                 data[0][3] as Login,
-                                 data[0][4] as Person,
-                                 data[0][5] as OrganisationPerson);
+                context.AddRange(data[0][0] as Country, 
+                                 data[0][1] as ZipcodeCountryCity,
+                                 data[0][2] as Address,
+                                 data[0][3] as Organisation,
+                                 data[0][4] as Login,
+                                 data[0][5] as Person);
                 context.SaveChanges();
             }
         }
@@ -49,7 +49,8 @@ namespace FABS_Test_DataAccess
         /// <param name="nameOfCaller">Name of the method calling</param>
         public static IEnumerable<object[]> GetData(string nameOfCaller)
         {
-            ZipcodeCountryCity zipcodeCountryCity1 = new ZipcodeCountryCity("9000", "Danmark", "Aalborg");
+            Country country1 = new Country("Danmark");
+            ZipcodeCountryCity zipcodeCountryCity1 = new ZipcodeCountryCity("9000", country1, "Aalborg");
             Address address1 = new Address("Sofiendalsvej", "60", null, zipcodeCountryCity1);
             Organisation organisation1 = new Organisation("12341234", "UCN Kajakker", address1);
             Login login1 = new Login("test1@test.com", "1234");
@@ -63,18 +64,18 @@ namespace FABS_Test_DataAccess
             OrganisationPerson organisationPerson1 = new OrganisationPerson(organisation1, person1);
             organisationPersonList.Add(organisationPerson1);
             organisation1.OrganisationPeople = organisationPersonList;
-            person1.OrganisationPeople = organisationPersonList;
+            person1.OrganisationPeople.Add(organisationPerson1);
 
             var allData = new List<object[]>();
             switch (nameOfCaller)
             {
                 case "Seed":
-                    allData.Add(new object[] { zipcodeCountryCity1,
+                    allData.Add(new object[] { country1,
+                                               zipcodeCountryCity1,
                                                address1,
                                                organisation1,
                                                login1,
-                                               person1,
-                                               organisationPerson1 });
+                                               person1});
                     break;
                 case "ReadPerson":
                     allData.Add(new object[] { 1, true });
@@ -111,7 +112,7 @@ namespace FABS_Test_DataAccess
                     Assert.Equal("60", person.Addresses.StreetNumber);
                     Assert.Null(person.Addresses.ApartmentNumber);
                     Assert.Equal("9000", person.Addresses.Zipcode);
-                    Assert.Equal("Danmark", person.Addresses.Country);
+                    Assert.Equal("Danmark", person.Addresses.ZipcodeCountryCity.Countries.Name);
                     Assert.Equal("Aalborg", person.Addresses.ZipcodeCountryCity.City);
                     Assert.Equal("test1@test.com", person.Login.Email);
                     Assert.Equal("1234", person.Login.Password);
@@ -144,7 +145,7 @@ namespace FABS_Test_DataAccess
                 {
                     person.Addresses = context.Addresses
                                               .Include(z => z.ZipcodeCountryCity)
-                                              .Single(x => x.Id == person.AdressesId);
+                                              .Single(x => x.Id == person.AddressesId);
                 }
 
                 //assert
@@ -158,7 +159,7 @@ namespace FABS_Test_DataAccess
                     Assert.Equal(result.Addresses.StreetNumber, person.Addresses.StreetNumber);
                     Assert.Equal(result.Addresses.ApartmentNumber, person.Addresses.ApartmentNumber);
                     Assert.Equal(result.Addresses.Zipcode, person.Addresses.Zipcode);
-                    Assert.Equal(result.Addresses.Country, person.Addresses.Country);
+                    Assert.Equal(result.Addresses.Countries, person.Addresses.Countries);
                     Assert.Equal(result.Addresses.ZipcodeCountryCity.City, person.Addresses.ZipcodeCountryCity.City);
                     Assert.Equal(result.Login.Email, person.Login.Email);
                     Assert.Equal(result.Login.Password, person.Login.Password);

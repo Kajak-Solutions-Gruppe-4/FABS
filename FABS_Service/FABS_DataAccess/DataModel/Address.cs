@@ -15,13 +15,13 @@ namespace FABS_DataAccess.Model
             ZipcodeCountryCity = zipcodeCountryCity;
         }
 
-        public Address( string streetName, string streetNumber, string apartmentNumber, string zipcode, string country)
+        public Address(string streetName, string streetNumber, string apartmentNumber, string zipcode, int countryId) :this()
         {
             StreetName = streetName;
             StreetNumber = streetNumber;
             ApartmentNumber = apartmentNumber;
             Zipcode = zipcode;
-            Country = country;
+            CountriesId = countryId;
         }
     }
 }

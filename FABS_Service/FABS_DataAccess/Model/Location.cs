@@ -14,7 +14,6 @@ namespace FABS_DataAccess.Model
 
         public int Id { get; set; }
         public string PickLocation { get; set; }
-        public bool IsInUse { get; set; }
         public string Description { get; set; }
         public int? WarehousesId { get; set; }
         public int? PeopleId { get; set; }

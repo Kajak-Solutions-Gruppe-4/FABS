@@ -7,22 +7,22 @@ namespace FABS_DataAccess.Model
     public partial class Person
     {
 
-        public Person(string firstName, string lastName, string telephoneNumber, bool isAdmin, Address adresses, Login logins) : this()
+        public Person(string firstName, string lastName, string telephoneNumber, bool isAdmin, Address addresses, Login logins) : this()
         {
             FirstName = firstName;
             LastName = lastName;
             TelephoneNumber = telephoneNumber;
             IsAdmin = isAdmin;
-            Addresses = adresses;
+            Addresses = addresses;
             Login = logins;
         }
 
-        public Person(string firstName, string lastName, string telephoneNumber, bool isAdmin, int adressesId, Login login) : this()
+        public Person(string firstName, string lastName, string telephoneNumber, bool isAdmin, int addressesId, Login login) : this()
         {
             FirstName = firstName;
             LastName = lastName;
             TelephoneNumber = telephoneNumber;
-            AdressesId = adressesId;
+            AddressesId = addressesId;
             Login = login;
             IsAdmin = isAdmin;
         }

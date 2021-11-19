@@ -9,7 +9,6 @@ namespace FABS_DataAccess.Model
         public Location(string pickLocation, bool isInUse, string description, Warehouse warehouse, Person person, Organisation organisation)
         {
             PickLocation = pickLocation;
-            IsInUse = isInUse;
             Description = description;
             Warehouses = warehouse;
             People = person;

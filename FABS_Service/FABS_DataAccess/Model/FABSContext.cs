@@ -10,7 +10,6 @@ namespace FABS_DataAccess.Model
     {
         public FABSContext()
         {
-            Initialize();
         }
 
         public FABSContext(DbContextOptions<FABSContext> options)
@@ -21,6 +20,7 @@ namespace FABS_DataAccess.Model
         public virtual DbSet<Address> Addresses { get; set; }
         public virtual DbSet<Booking> Bookings { get; set; }
         public virtual DbSet<BookingLine> BookingLines { get; set; }
+        public virtual DbSet<Country> Countries { get; set; }
         public virtual DbSet<Item> Items { get; set; }
         public virtual DbSet<ItemType> ItemTypes { get; set; }
         public virtual DbSet<KayakType> KayakTypes { get; set; }
@@ -29,7 +29,6 @@ namespace FABS_DataAccess.Model
         public virtual DbSet<Organisation> Organisations { get; set; }
         public virtual DbSet<OrganisationPerson> OrganisationPeople { get; set; }
         public virtual DbSet<Person> People { get; set; }
-        public virtual DbSet<PersonView> PersonViews { get; set; }
         public virtual DbSet<Status> Statuses { get; set; }
         public virtual DbSet<Warehouse> Warehouses { get; set; }
         public virtual DbSet<ZipcodeCountryCity> ZipcodeCountryCities { get; set; }
@@ -39,7 +38,7 @@ namespace FABS_DataAccess.Model
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer(_connectionString);
+                optionsBuilder.UseSqlServer("Server=.\\SQLExpress;Database=FABS;Integrated Security=True;");
             }
         }
 
@@ -51,7 +50,9 @@ namespace FABS_DataAccess.Model
             {
                 entity.ToTable("addresses");
 
-                entity.HasIndex(e => new { e.Zipcode, e.Country }, "IX_addresses_zipcode_country");
+                entity.HasIndex(e => e.CountriesId, "IX_addresses_countries_id");
+
+                entity.HasIndex(e => new { e.Zipcode, e.CountriesId }, "IX_addresses_zipcode_country");
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
@@ -60,11 +61,7 @@ namespace FABS_DataAccess.Model
                     .IsUnicode(false)
                     .HasColumnName("apartment_number");
 
-                entity.Property(e => e.Country)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("country");
+                entity.Property(e => e.CountriesId).HasColumnName("countries_id");
 
                 entity.Property(e => e.StreetName)
                     .IsRequired()
@@ -79,14 +76,22 @@ namespace FABS_DataAccess.Model
                     .HasColumnName("street_number");
 
                 entity.Property(e => e.Zipcode)
+                    .IsRequired()
                     .HasMaxLength(15)
                     .IsUnicode(false)
                     .HasColumnName("zipcode");
 
+                entity.HasOne(d => d.Countries)
+                    .WithMany(p => p.Addresses)
+                    .HasForeignKey(d => d.CountriesId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_addresses_countries");
+
                 entity.HasOne(d => d.ZipcodeCountryCity)
                     .WithMany(p => p.Addresses)
-                    .HasForeignKey(d => new { d.Zipcode, d.Country })
-                    .HasConstraintName("FK_addresses_zipcode_country_city");
+                    .HasForeignKey(d => new { d.Zipcode, d.CountriesId })
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_addresses_zipcode_country_city1");
             });
 
             modelBuilder.Entity<Booking>(entity =>
@@ -151,6 +156,19 @@ namespace FABS_DataAccess.Model
                     .HasConstraintName("FK_booking_line_items");
             });
 
+            modelBuilder.Entity<Country>(entity =>
+            {
+                entity.ToTable("countries");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("name");
+            });
+
             modelBuilder.Entity<Item>(entity =>
             {
                 entity.ToTable("items");
@@ -178,6 +196,7 @@ namespace FABS_DataAccess.Model
                 entity.HasOne(d => d.ItemTypes)
                     .WithMany(p => p.Items)
                     .HasForeignKey(d => d.ItemTypesId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_items_item_types");
 
                 entity.HasOne(d => d.Locations)
@@ -194,7 +213,6 @@ namespace FABS_DataAccess.Model
                 entity.HasOne(d => d.Statuses)
                     .WithMany(p => p.Items)
                     .HasForeignKey(d => d.StatusesId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_items_statuses");
             });
 
@@ -203,7 +221,7 @@ namespace FABS_DataAccess.Model
                 entity.ToTable("item_types");
 
                 entity.Property(e => e.Id)
-                    .ValueGeneratedOnAdd()
+                    .ValueGeneratedNever()
                     .HasColumnName("id");
 
                 entity.Property(e => e.Name)
@@ -212,7 +230,7 @@ namespace FABS_DataAccess.Model
                     .IsUnicode(false)
                     .HasColumnName("name");
 
-                entity.HasOne(d => d.IdNavigation)
+                entity.HasOne(d => d.KayakType)
                     .WithOne(p => p.ItemType)
                     .HasForeignKey<ItemType>(d => d.Id)
                     .OnDelete(DeleteBehavior.ClientSetNull)
@@ -237,12 +255,6 @@ namespace FABS_DataAccess.Model
                     .HasColumnType("decimal(4, 2)")
                     .HasColumnName("length_meter");
 
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("name");
-
                 entity.Property(e => e.PersonCapacity).HasColumnName("person_capacity");
 
                 entity.Property(e => e.WeightLimit).HasColumnName("weight_limit");
@@ -263,8 +275,6 @@ namespace FABS_DataAccess.Model
                 entity.Property(e => e.Description)
                     .IsUnicode(false)
                     .HasColumnName("description");
-
-                entity.Property(e => e.IsInUse).HasColumnName("is_in_use");
 
                 entity.Property(e => e.OrganisationsId).HasColumnName("organisations_id");
 
@@ -378,13 +388,13 @@ namespace FABS_DataAccess.Model
             {
                 entity.ToTable("people");
 
-                entity.HasIndex(e => e.AdressesId, "IX_people_adresses_id");
+                entity.HasIndex(e => e.AddressesId, "IX_people_adresses_id");
 
                 entity.Property(e => e.Id)
                     .ValueGeneratedNever()
                     .HasColumnName("id");
 
-                entity.Property(e => e.AdressesId).HasColumnName("adresses_id");
+                entity.Property(e => e.AddressesId).HasColumnName("adresses_id");
 
                 entity.Property(e => e.FirstName)
                     .IsRequired()
@@ -407,7 +417,7 @@ namespace FABS_DataAccess.Model
 
                 entity.HasOne(d => d.Addresses)
                     .WithMany(p => p.People)
-                    .HasForeignKey(d => d.AdressesId)
+                    .HasForeignKey(d => d.AddressesId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_people_addresses");
 
@@ -416,91 +426,6 @@ namespace FABS_DataAccess.Model
                     .HasForeignKey<Person>(d => d.Id)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_people_logins1");
-            });
-
-            modelBuilder.Entity<PersonView>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToView("person_view");
-
-                entity.Property(e => e.AdressesId).HasColumnName("adresses_id");
-
-                entity.Property(e => e.ApartmentNumber)
-                    .HasMaxLength(10)
-                    .IsUnicode(false)
-                    .HasColumnName("apartment_number");
-
-                entity.Property(e => e.City)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("city");
-
-                entity.Property(e => e.Country)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("country");
-
-                entity.Property(e => e.Email)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("email");
-
-                entity.Property(e => e.FirstName)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("first_name");
-
-                entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.IsAdmin).HasColumnName("is_admin");
-
-                entity.Property(e => e.LastName)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("last_name");
-
-                entity.Property(e => e.OrganisationCvr)
-                    .IsRequired()
-                    .HasMaxLength(8)
-                    .IsUnicode(false)
-                    .HasColumnName("organisation_cvr");
-
-                entity.Property(e => e.OrganisationName)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("organisation_name");
-
-                entity.Property(e => e.OrganisationsId).HasColumnName("organisations_id");
-
-                entity.Property(e => e.StreetName)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("street_name");
-
-                entity.Property(e => e.StreetNumber)
-                    .IsRequired()
-                    .HasMaxLength(10)
-                    .IsUnicode(false)
-                    .HasColumnName("street_number");
-
-                entity.Property(e => e.TelephoneNumber)
-                    .HasMaxLength(20)
-                    .IsUnicode(false)
-                    .HasColumnName("telephone_number");
-
-                entity.Property(e => e.Zipcode)
-                    .IsRequired()
-                    .HasMaxLength(15)
-                    .IsUnicode(false)
-                    .HasColumnName("zipcode");
             });
 
             modelBuilder.Entity<Status>(entity =>
@@ -547,25 +472,30 @@ namespace FABS_DataAccess.Model
 
             modelBuilder.Entity<ZipcodeCountryCity>(entity =>
             {
-                entity.HasKey(e => new { e.Zipcode, e.Country });
+                entity.HasKey(e => new { e.Zipcode, e.CountriesId });
 
                 entity.ToTable("zipcode_country_city");
+
+                entity.HasIndex(e => e.CountriesId, "IX_zipcode_country_city_countries_id");
 
                 entity.Property(e => e.Zipcode)
                     .HasMaxLength(15)
                     .IsUnicode(false)
                     .HasColumnName("zipcode");
 
-                entity.Property(e => e.Country)
-                    .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("country");
+                entity.Property(e => e.CountriesId).HasColumnName("countries_id");
 
                 entity.Property(e => e.City)
                     .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("city");
+
+                entity.HasOne(d => d.Countries)
+                    .WithMany(p => p.ZipcodeCountryCities)
+                    .HasForeignKey(d => d.CountriesId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_zipcode_country_city_countries");
             });
 
             OnModelCreatingPartial(modelBuilder);
