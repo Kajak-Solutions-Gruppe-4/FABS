@@ -51,6 +51,8 @@ namespace FABS_DataAccess.Model
             {
                 entity.ToTable("addresses");
 
+                entity.HasIndex(e => e.CountriesId, "IX_addresses_countries_id");
+
                 entity.HasIndex(e => new { e.Zipcode, e.CountriesId }, "IX_addresses_zipcode_country");
 
                 entity.Property(e => e.Id).HasColumnName("id");
@@ -229,7 +231,7 @@ namespace FABS_DataAccess.Model
                     .IsUnicode(false)
                     .HasColumnName("name");
 
-                entity.HasOne(d => d.IdNavigation)
+                entity.HasOne(d => d.KayakType)
                     .WithOne(p => p.ItemType)
                     .HasForeignKey<ItemType>(d => d.Id)
                     .OnDelete(DeleteBehavior.ClientSetNull)
@@ -253,12 +255,6 @@ namespace FABS_DataAccess.Model
                 entity.Property(e => e.LengthMeter)
                     .HasColumnType("decimal(4, 2)")
                     .HasColumnName("length_meter");
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("name");
 
                 entity.Property(e => e.PersonCapacity).HasColumnName("person_capacity");
 
@@ -482,6 +478,8 @@ namespace FABS_DataAccess.Model
                 entity.HasKey(e => new { e.Zipcode, e.CountriesId });
 
                 entity.ToTable("zipcode_country_city");
+
+                entity.HasIndex(e => e.CountriesId, "IX_zipcode_country_city_countries_id");
 
                 entity.Property(e => e.Zipcode)
                     .HasMaxLength(15)
