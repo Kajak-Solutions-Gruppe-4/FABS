@@ -36,7 +36,12 @@ namespace FABS_DataAccess.Repository
 
         public Location Get(int id)
         {
-            throw new NotImplementedException();
+            //Location foundLocation;
+            //try
+            //{
+            //    foundLocation = _context.Locations
+            //    .Include(c => c.)
+            //}
         }
 
         public IEnumerable<Location> GetAll()

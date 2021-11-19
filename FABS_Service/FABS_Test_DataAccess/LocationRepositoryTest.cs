@@ -68,7 +68,7 @@ namespace FABS_Test_DataAccess
             Address personAddress1 = new Address("Sofiendalsvej", "60", null, zipcodeCountryCity1);
             Person person1 = new Person("Peter", "Hahn", "20202020", false, personAddress1, login1);
             //Warehouse test objects
-            Address WarehouseAddress1 = new Address("Sofiendalsvej", "60A", null, zipcodeCountryCity1);
+            Address warehouseAddress1 = new Address("Sofiendalsvej", "60A", null, zipcodeCountryCity1);
             Warehouse warehouse1 = new Warehouse("Building A", organisationAddress1);
             //Location test objects
             Location location1 = new Location("1.2.3", "This is an awesome location spot 1", warehouse1, person1, organisation1);
@@ -89,15 +89,21 @@ namespace FABS_Test_DataAccess
                 case "Seed":
                     allData.Add(new object[]
                     {
+                        //Support Classes
+                        country1,
                         zipcodeCountryCity1,
                         organisationAddress1,
                         organisation1,
+                        //Person Classes
                         login1,
                         personAddress1,
                         person1,
+                        organisationPerson1,
+                        //Warehouse Classes
+                        warehouseAddress1,
                         warehouse1,
+                        //Location Classes
                         location1,
-                        organisationPerson1
                     });
                     break;
 
