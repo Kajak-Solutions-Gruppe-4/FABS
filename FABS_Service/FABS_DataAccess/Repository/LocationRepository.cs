@@ -26,7 +26,7 @@ namespace FABS_DataAccess.Repository
                 foundLocation = _context.Locations
                     //Warehouse
                 .Include(w => w.Warehouses)
-                .ThenInclude(a1 => a1.Addresses)
+                .ThenInclude(a => a.Addresses)
                 .ThenInclude(z => z.ZipcodeCountryCity)
                 .ThenInclude(c => c.Countries)
                     //Person
@@ -53,15 +53,16 @@ namespace FABS_DataAccess.Repository
             try
             {
                 listLocation = _context.Locations
-                //Location
+                    //Warehouse
                 .Include(w => w.Warehouses)
-                .ThenInclude(a1 => a1.Addresses)
+                    //Location
+                .ThenInclude(a => a.Addresses)
                 .ThenInclude(z => z.ZipcodeCountryCity)
                 .ThenInclude(c => c.Countries)
-                //Person
+                    //Person
                 .Include(p => p.People)
                 .ThenInclude(l => l.Login)
-                //Organisation
+                    //Organisation
                 .Include(o1 => o1.Organisations)
                 .ThenInclude(o2 => o2.OrganisationPeople);
             }
@@ -146,5 +147,4 @@ namespace FABS_DataAccess.Repository
             return wasUpdated;
         }
     }
-
 }

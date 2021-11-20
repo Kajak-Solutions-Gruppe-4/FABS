@@ -6,9 +6,27 @@ namespace FABS_DataAccess.Model
 {
     public partial class Item
     {
-        public Item(int organisationsId, int itemTypesId) : this()
+       
+
+        public Item(Organisation organisation, Status status, Location location, ItemType itemType) : this()
         {
-            OrganisationsId = organisationsId;
+            Organisations = organisation;
+            Statuses = status;
+            Locations = location;
+            ItemTypes = itemType;
+        }        
+        
+        public Item(Organisation organisation, int statusId, Location location, ItemType itemType) : this()
+        {
+            Organisations = organisation;
+            StatusesId = statusId;
+            Locations = location;
+            ItemTypes = itemType;
+        }
+
+        public Item(Organisation organisations, int itemTypesId) : this()
+        {
+            Organisations = organisations;
             ItemTypesId = itemTypesId;
         }
 
@@ -18,15 +36,9 @@ namespace FABS_DataAccess.Model
             ItemTypes = itemTypes;
         }
 
-        public Item(Organisation organisations, ItemType itemTypes) : this()
+        public Item(int organisationsId, int itemTypesId) : this()
         {
-            Organisations = organisations;
-            ItemTypes = itemTypes;
-        }
-
-        public Item(Organisation organisations, int itemTypesId) : this()
-        {
-            Organisations = organisations;
+            OrganisationsId = organisationsId;
             ItemTypesId = itemTypesId;
         }
     }
