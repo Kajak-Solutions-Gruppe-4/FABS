@@ -107,9 +107,9 @@ namespace FABS_Test_DataAccess
                     Assert.Equal("UCN Kajakker", person.OrganisationPeople.ToList()[0].Organisations.Name);
                 }
                 else if(expectedSuccess == false)
-                {
-                    Assert.Null(person);
-                }
+                    {
+                        Assert.Null(person);
+                    }
 
             }
         }

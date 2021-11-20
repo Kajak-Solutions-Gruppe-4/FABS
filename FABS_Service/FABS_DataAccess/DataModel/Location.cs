@@ -16,6 +16,16 @@ namespace FABS_DataAccess.Model
 
         }
 
+        public Location(string pickLocation, string description, Warehouse warehouse, int personId, Organisation organisation) : this()
+        {
+            PickLocation = pickLocation;
+            Description = description;
+            Warehouses = warehouse;
+            PeopleId = personId;
+            Organisations = organisation;
+
+        }
+
         public Location(string pickLocation, Organisation organisations) : this()
         {
             PickLocation = pickLocation;

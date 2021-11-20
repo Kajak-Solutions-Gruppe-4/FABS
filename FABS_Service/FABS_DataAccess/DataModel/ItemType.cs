@@ -6,9 +6,10 @@ namespace FABS_DataAccess.Model
 {
     public partial class ItemType
     {
-        public ItemType(string name) : this()
+        public ItemType(string name, KayakType kayakType) : this()
         {
             Name = name;
+            KayakType = kayakType;
         }
     }
 }

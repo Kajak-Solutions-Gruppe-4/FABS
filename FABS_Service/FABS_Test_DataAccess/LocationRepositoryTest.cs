@@ -47,7 +47,7 @@ namespace FABS_Test_DataAccess
                     //Warehouse classes
                     data[0][8] as Address,
                     data[0][9] as Warehouse,
-                    //Location
+                    //Location classes
                     data[0][10] as Location
                     );
 
@@ -58,24 +58,26 @@ namespace FABS_Test_DataAccess
         public static IEnumerable<object[]> GetData(string nameOfCaller)
         {
             //Create Location test objects
-            //Spupport test objects
+
+            //Zipcode/Country test objects
             Country country1 = new Country("Denmark");
             ZipcodeCountryCity zipcodeCountryCity1 = new ZipcodeCountryCity("9000", country1, "Aalborg");
+                //Organisation test objects
             Address organisationAddress1 = new Address("Sofiendalsvej", "60", null, zipcodeCountryCity1);
             Organisation organisation1 = new Organisation("12341234", "UCN Kajakker", organisationAddress1);
-            //Person test objects
+                //Person test objects
             Login login1 = new Login("test1@test.com", "1234");
             Address personAddress1 = new Address("Sofiendalsvej", "60", null, zipcodeCountryCity1);
             Person person1 = new Person("Peter", "Hahn", "20202020", false, personAddress1, login1);
-            //Warehouse test objects
+                //Warehouse test objects
             Address warehouseAddress1 = new Address("Sofiendalsvej", "60A", null, zipcodeCountryCity1);
             Warehouse warehouse1 = new Warehouse("Building A", organisationAddress1);
-            //Location test objects
+                //Location test objects
             Location location1 = new Location("1.2.3", "This is an awesome location spot 1", warehouse1, person1, organisation1);
             Location location2 = new Location("1.2.4", "This is an awesome location spot 2", warehouse1, person1, organisation1);
             Location location3 = new Location("1.2.5", "This is an awesome location spot 3", warehouse1, person1, organisation1);
 
-            //Join tables test objects
+                //Join tables test objects
             List<OrganisationPerson> organisationPersonList = new List<OrganisationPerson>();
             OrganisationPerson organisationPerson1 = new OrganisationPerson(organisation1, person1);
             organisationPersonList.Add(organisationPerson1);
@@ -103,7 +105,7 @@ namespace FABS_Test_DataAccess
                         warehouseAddress1,
                         warehouse1,
                         //Location Classes
-                        location1,
+                        location1
                     });
                     break;
 
