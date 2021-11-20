@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FABS_Client_WPF.Pages.Persons"
         mc:Ignorable="d"
-        Title="CreatePersonWindow" Height="410" Width="290">
+        Title="CreatePersonWindow" Height="410" Width="340">
     <Grid Background="White">
 
         <Grid.ColumnDefinitions>
@@ -77,8 +77,8 @@
         <TextBlock Grid.Column="1" Grid.Row="12" FontWeight="SemiBold" Text="Postnummer: " FontFamily="Segce UI" Margin="3"/>
         <TextBox x:Name="zipcodeText" Grid.Column="2" Grid.Row="12" Grid.ColumnSpan="2" />
 
-        <Button Content="Tilbage" Grid.Column="2" Grid.Row="14" Width="75" Click="BackButton"/>
-        <Button Content="Opret Medlem" Grid.Column="3" Grid.Row="14" Width="75" Click="CreatePersonButton"/>
+        <Button Content="Tilbage" Grid.Column="2" Grid.Row="14" Width="85" Click="BackButton"/>
+        <Button Content="Opret Medlem" Grid.Column="3" Grid.Row="14" Width="85" Click="CreatePersonButton"/>
 
     </Grid>
 </Window>
