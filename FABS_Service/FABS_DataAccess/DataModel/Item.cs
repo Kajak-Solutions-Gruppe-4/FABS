@@ -41,5 +41,11 @@ namespace FABS_DataAccess.Model
             OrganisationsId = organisationsId;
             ItemTypesId = itemTypesId;
         }
+
+        public Item(ItemType itemTypes, Organisation organisations) : this()
+        {
+            ItemTypes = itemTypes;
+            Organisations = organisations;
+        }
     }
 }
