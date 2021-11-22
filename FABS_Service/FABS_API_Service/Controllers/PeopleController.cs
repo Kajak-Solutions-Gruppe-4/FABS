@@ -8,6 +8,7 @@ using FABS_DataAccess.Repository;
 using FABS_DataAccess.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using FABS_API_Service.DTO;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -24,17 +25,23 @@ namespace FABS_API_Service.Controllers
         {
             _peopleRepository = new PeopleRepository();
         }
-            // GET: api/<PeopleController>
-            [HttpGet]
+        // GET: api/<PeopleController>
+        [HttpGet]
         public ActionResult<IEnumerable<Person>> Get()
         {
             IEnumerable<Person> listPeople = _peopleRepository.GetAll();
-            int c = listPeople.Count();
+            List<PersonDto> people = new List<PersonDto>();
+            foreach (Person person in listPeople)
+            {
+                people.Add(convertModelToDto(person));
+            }
+
+            int c = people.Count();
             if (c < 0)
             {
                 return NotFound();
             }
-            return Ok(listPeople);
+            return Ok(people);
         }
 
         // GET api/<PeopleController>/5
@@ -103,6 +110,28 @@ namespace FABS_API_Service.Controllers
             {
                 return new StatusCodeResult(500);
             }
+        }
+
+        private PersonDto convertModelToDto(Person model)
+        {
+            AddressDto addressDto = new AddressDto(
+                model.Addresses.Id,
+                model.Addresses.StreetName,
+                model.Addresses.StreetNumber,
+                model.Addresses.ApartmentNumber,
+                model.Addresses.ZipcodeCountryCity.Zipcode,
+                model.Addresses.ZipcodeCountryCity.Countries.Name,
+                model.Addresses.ZipcodeCountryCity.City
+                );
+            PersonDto personDto = new PersonDto(
+                model.Id,
+                model.FirstName,
+                model.LastName,
+                model.TelephoneNumber,
+                addressDto,
+                model.Login.Email
+                );
+            return personDto;
         }
     }
 }

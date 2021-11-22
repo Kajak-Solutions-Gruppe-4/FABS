@@ -54,14 +54,15 @@ namespace FABS_DataAccess.Repository
            
             try
             {
-                
-                    listPerson = _context.People
-                    .Include(a => a.Addresses)
-                    .ThenInclude(z => z.ZipcodeCountryCity)
-                    .Include(l => l.Login)
-                    .Include(ap => ap.OrganisationPeople)
-                    .ThenInclude(a => a.Organisations);
-                
+
+                listPerson = _context.People
+                .Include(a => a.Addresses)
+                .ThenInclude(z => z.ZipcodeCountryCity)
+                .ThenInclude(c => c.Countries)
+                .Include(l => l.Login)
+                .Include(op => op.OrganisationPeople)
+                .ThenInclude(a => a.Organisations);
+
 
             }
             catch
