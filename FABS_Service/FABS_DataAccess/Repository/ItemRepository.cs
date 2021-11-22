@@ -17,7 +17,7 @@ namespace FABS_DataAccess.Repository
             _context = new FABSContext();
         }
 
-        public Item Get(int id)
+        public Item Get(int id, int organisationId)
         {
             Item foundItem;
             try
@@ -49,7 +49,7 @@ namespace FABS_DataAccess.Repository
             return foundItem;
         }
 
-        public IEnumerable<Item> GetAll()
+        public IEnumerable<Item> GetAll(int organisationId)
         {
             IEnumerable<Item> listItem;
             try

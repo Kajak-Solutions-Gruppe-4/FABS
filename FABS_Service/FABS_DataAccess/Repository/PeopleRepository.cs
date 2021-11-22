@@ -23,7 +23,7 @@ namespace FABS_DataAccess.Repository
         /// </summary>
         /// <param name="id">The id of the person to find in database.</param>
         /// <returns>Returns the person object or NULL if nothing was found.</returns>
-        public Person Get(int id)
+        public Person Get(int id, int organisationId)
         {
             Person foundPerson;
             try
@@ -48,7 +48,7 @@ namespace FABS_DataAccess.Repository
             return foundPerson;
         }
 
-        public IEnumerable<Person> GetAll()
+        public IEnumerable<Person> GetAll(int organisationId)
         {
             IEnumerable<Person> listPerson;
            
@@ -56,6 +56,7 @@ namespace FABS_DataAccess.Repository
             {
 
                 listPerson = _context.People
+                .Where(p => p.OrganisationPeople.Any(op => op.OrganisationsId == organisationId))
                 .Include(a => a.Addresses)
                 .ThenInclude(z => z.ZipcodeCountryCity)
                 .ThenInclude(c => c.Countries)

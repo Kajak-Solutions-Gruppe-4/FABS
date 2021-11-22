@@ -6,9 +6,11 @@ namespace FABS_DataAccess.Repository
 {
     public interface IRepository<T>
     {
-        IEnumerable<T> GetAll();
-        T Get(int id);
+        IEnumerable<T> GetAll(int organisationId);
+        T Get(int id, int organisationId);
         int Create(T t);
+        
+        // out of scope, regarding lack of time to implement
         bool Update(int id, T t);
         bool Delete(int id);
     }

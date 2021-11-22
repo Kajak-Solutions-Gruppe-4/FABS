@@ -87,7 +87,7 @@ namespace FABS_Test_DataAccess
             {
                 var peopleRepository = new PeopleRepository();
 
-                Person person = peopleRepository.Get(id);
+                Person person = peopleRepository.Get(id, 1);
 
                 if (expectedSuccess == true)
                 {
@@ -125,7 +125,7 @@ namespace FABS_Test_DataAccess
 
                 //act
                 int returnedID = peopleRepository.Create(person);
-                var result = peopleRepository.Get(returnedID);
+                var result = peopleRepository.Get(returnedID, 1);
 
                 //more arranging after creating
                 if (person.Addresses == null)

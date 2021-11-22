@@ -10,12 +10,12 @@ namespace FABS_DataAccess.Repository
 {
     public class WarehouseRepository : IRepository<Warehouse>
     {
-        public IEnumerable<Warehouse> GetAll()
+        public IEnumerable<Warehouse> GetAll(int organisationId)
         {
             throw new NotImplementedException();
         }
 
-        public Warehouse Get(int id)
+        public Warehouse Get(int id, int organisationId)
         {
             throw new NotImplementedException();
         }

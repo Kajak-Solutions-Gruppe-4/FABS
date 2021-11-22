@@ -27,13 +27,17 @@ namespace FABS_API_Service.Controllers
         }
         // GET: api/<PeopleController>
         [HttpGet]
-        public ActionResult<IEnumerable<Person>> Get()
+        public ActionResult<IEnumerable<Person>> Get(int organisationId)
         {
-            IEnumerable<Person> listPeople = _peopleRepository.GetAll();
+            if(organisationId <= 0)
+            {
+                return new StatusCodeResult(422);
+            }
+            IEnumerable<Person> listPeople = _peopleRepository.GetAll(organisationId);
             List<PersonDto> people = new List<PersonDto>();
             foreach (Person person in listPeople)
             {
-                people.Add(convertModelToDto(person));
+                people.Add(ConvertModelToDto(person));
             }
 
             int c = people.Count();
@@ -46,12 +50,17 @@ namespace FABS_API_Service.Controllers
 
         // GET api/<PeopleController>/5
         [HttpGet("{id}")]
-        public ActionResult<Person> Get(int id)
+        public ActionResult<PersonDto> Get(int id, int organisationId)
         {
-            ActionResult<Person> foundPerson = _peopleRepository.Get(id);
-            if (foundPerson.Value != null)
+            if (organisationId <= 0)
             {
-                return Ok(foundPerson);
+                return new StatusCodeResult(422);
+            }
+            Person foundPerson = _peopleRepository.Get(id, organisationId);
+            if (foundPerson != null)
+            {
+                PersonDto personDto = ConvertModelToDto(foundPerson);
+                return Ok(personDto);
             }
             else
             {
@@ -65,8 +74,9 @@ namespace FABS_API_Service.Controllers
 
         // POST api/<PeopleController>
         [HttpPost]
-        public ActionResult<int> Post(Person p)
+        public ActionResult<int> Post(PersonDto pDto, int organisationId)
         {
+            Person p = ConvertDtoToModel(pDto, organisationId);
             int newPersonId = _peopleRepository.Create(p);
             if (newPersonId > -1)
             {
@@ -112,7 +122,7 @@ namespace FABS_API_Service.Controllers
             }
         }
 
-        private PersonDto convertModelToDto(Person model)
+        private PersonDto ConvertModelToDto(Person model)
         {
             AddressDto addressDto = new AddressDto(
                 model.Addresses.Id,
@@ -120,6 +130,7 @@ namespace FABS_API_Service.Controllers
                 model.Addresses.StreetNumber,
                 model.Addresses.ApartmentNumber,
                 model.Addresses.ZipcodeCountryCity.Zipcode,
+                model.Addresses.ZipcodeCountryCity.Countries.Id,
                 model.Addresses.ZipcodeCountryCity.Countries.Name,
                 model.Addresses.ZipcodeCountryCity.City
                 );
@@ -132,6 +143,38 @@ namespace FABS_API_Service.Controllers
                 model.Login.Email
                 );
             return personDto;
+        }
+
+        private Person ConvertDtoToModel(PersonDto dto, int organisationId)
+        {
+            ZipcodeCountryCity zipcodeCountryCity = new ZipcodeCountryCity(
+                dto.Address.Zipcode,
+                dto.Address.CountryId,
+                dto.Address.City
+                );
+            Address address = new Address(
+                dto.Address.StreetName,
+                dto.Address.StreetNumber,
+                dto.Address.ApartmentNumber,
+                zipcodeCountryCity
+                );
+            OrganisationPerson organisationPerson = new OrganisationPerson(
+                organisationId,
+                dto.Id
+                );
+            Login login = new Login(
+                dto.Email,
+                "1234"
+                );
+            Person person = new Person(
+                dto.FirstName,
+                dto.LastName,
+                dto.TelephoneNumber,
+                false,
+                address,
+                login
+                );
+            return person;
         }
     }
 }

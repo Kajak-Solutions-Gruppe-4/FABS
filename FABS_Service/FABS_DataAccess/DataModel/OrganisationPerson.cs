@@ -12,6 +12,12 @@ namespace FABS_DataAccess.Model
             Person = people;
         }
 
+        public OrganisationPerson(int organisationsId, int personId) : this()
+        {
+            OrganisationsId = organisationsId;
+            PersonId = personId;
+        }
+
         public OrganisationPerson()
         {
         }

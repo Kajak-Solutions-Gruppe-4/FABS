@@ -4,7 +4,7 @@ using System.Text;
 
 namespace FABS_API_Service.DTO
 {
-    class PersonDto
+    public class PersonDto
     {
         public int Id { get; set; }
         public string FirstName { get; set; }

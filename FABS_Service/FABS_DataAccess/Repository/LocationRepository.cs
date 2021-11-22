@@ -17,7 +17,7 @@ namespace FABS_DataAccess.Repository
             _context = new FABSContext();
         }
 
-        public Location Get(int id)
+        public Location Get(int id, int organisationId)
         {
             Location foundLocation;
             try
@@ -47,7 +47,7 @@ namespace FABS_DataAccess.Repository
             return foundLocation;
         }
 
-        public IEnumerable<Location> GetAll()
+        public IEnumerable<Location> GetAll(int organisationId)
         {
             IEnumerable<Location> listLocation;
             try

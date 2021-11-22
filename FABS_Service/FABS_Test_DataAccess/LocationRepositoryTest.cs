@@ -132,7 +132,7 @@ namespace FABS_Test_DataAccess
             {
                 var locationRepository = new LocationRepository();
 
-                Location location = locationRepository.Get(id);
+                Location location = locationRepository.Get(id, 1);
 
                 if (expectedSuccess == true)
                 {
@@ -195,7 +195,7 @@ namespace FABS_Test_DataAccess
 
                 //act
                 int returnedID = locationRepository.Create(location);
-                var result = locationRepository.Get(returnedID);
+                var result = locationRepository.Get(returnedID, 1);
 
                 //assert
                 if(expectedSuccess == true && returnedID > 0)
