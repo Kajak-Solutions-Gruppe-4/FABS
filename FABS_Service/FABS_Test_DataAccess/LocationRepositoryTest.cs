@@ -58,8 +58,7 @@ namespace FABS_Test_DataAccess
         public static IEnumerable<object[]> GetData(string nameOfCaller)
         {
             //Create Location test objects
-
-            //Zipcode/Country test objects
+                //Zipcode/Country test objects
             Country country1 = new Country("Denmark");
             ZipcodeCountryCity zipcodeCountryCity1 = new ZipcodeCountryCity("9000", country1, "Aalborg");
                 //Organisation test objects
@@ -91,7 +90,7 @@ namespace FABS_Test_DataAccess
                 case "Seed":
                     allData.Add(new object[]
                     {
-                        //Support Classes
+                        //Organisation Classes
                         country1,
                         zipcodeCountryCity1,
                         organisationAddress1,
@@ -176,6 +175,8 @@ namespace FABS_Test_DataAccess
                     Assert.Equal("9000", location.Organisations.Addresses.ZipcodeCountryCity.Zipcode);
                     Assert.Equal("Aalborg", location.Organisations.Addresses.ZipcodeCountryCity.City);
                     Assert.Equal("Denmark", location.Organisations.Addresses.ZipcodeCountryCity.Countries.Name);
+                    Assert.Equal("12341234", location.People.OrganisationPeople.ToList()[0].Organisations.Cvr);
+                    Assert.Equal("12341234", location.People.OrganisationPeople.ToList()[0].Organisations.Name);
                 }
                 else if (expectedSuccess == false)
                 {
@@ -209,7 +210,7 @@ namespace FABS_Test_DataAccess
                     //Warehouse Address
                     Assert.Equal(result.Warehouses.Addresses.StreetName, location.Warehouses.Addresses.StreetName);
                     Assert.Equal(result.Warehouses.Addresses.StreetNumber, location.Warehouses.Addresses.StreetNumber);
-                    //Assert.Null(location.Warehouses.Addresses.ApartmentNumber);
+                    Assert.Equal(result.Warehouses.Addresses.ApartmentNumber, location.Warehouses.Addresses.ApartmentNumber);
                     Assert.Equal(result.Warehouses.Addresses.ZipcodeCountryCity.Zipcode, location.Warehouses.Addresses.ZipcodeCountryCity.Zipcode);
                     Assert.Equal(result.Warehouses.Addresses.ZipcodeCountryCity.City, location.Warehouses.Addresses.ZipcodeCountryCity.City);
                     Assert.Equal(result.Warehouses.Addresses.ZipcodeCountryCity.Countries.Name, location.Warehouses.Addresses.ZipcodeCountryCity.Countries.Name);
@@ -218,14 +219,14 @@ namespace FABS_Test_DataAccess
                     Assert.Equal(result.People.FirstName, location.People.FirstName);
                     Assert.Equal(result.People.LastName, location.People.LastName);
                     Assert.Equal(result.People.TelephoneNumber, location.People.TelephoneNumber);
-                    //Assert.False(location.People.IsAdmin);
+                    Assert.Equal(result.People.IsAdmin, location.People.IsAdmin);
                     //login
                     Assert.Equal(result.People.Login.Email, location.People.Login.Email);
                     Assert.Equal(result.People.Login.Password, location.People.Login.Password);
                     //Person Address
                     Assert.Equal(result.People.Addresses.StreetName, location.People.Addresses.StreetName);
                     Assert.Equal(result.People.Addresses.StreetNumber, location.People.Addresses.StreetNumber);
-                    //Assert.Null(location.People.Addresses.ApartmentNumber);
+                    Assert.Equal(result.People.Addresses.ApartmentNumber, location.People.Addresses.ApartmentNumber);
                     Assert.Equal(result.People.Addresses.ZipcodeCountryCity.Zipcode, location.People.Addresses.ZipcodeCountryCity.Zipcode);
                     Assert.Equal(result.People.Addresses.ZipcodeCountryCity.City, location.People.Addresses.ZipcodeCountryCity.City);
                     Assert.Equal(result.People.Addresses.ZipcodeCountryCity.Countries.Name, location.People.Addresses.ZipcodeCountryCity.Countries.Name);
@@ -236,10 +237,15 @@ namespace FABS_Test_DataAccess
                     //Organisation Address
                     Assert.Equal(result.Organisations.Addresses.StreetName, location.Organisations.Addresses.StreetName);
                     Assert.Equal(result.Organisations.Addresses.StreetNumber, location.Organisations.Addresses.StreetNumber);
-                    //Assert.Null(location.Organisations.Addresses.ApartmentNumber);
+                    Assert.Equal(result.Organisations.Addresses.ApartmentNumber, location.Organisations.Addresses.ApartmentNumber);
                     Assert.Equal(result.Organisations.Addresses.ZipcodeCountryCity.Zipcode, location.Organisations.Addresses.ZipcodeCountryCity.Zipcode);
                     Assert.Equal(result.Organisations.Addresses.ZipcodeCountryCity.City, location.Organisations.Addresses.ZipcodeCountryCity.City);
                     Assert.Equal(result.Organisations.Addresses.ZipcodeCountryCity.Countries.Name, location.Organisations.Addresses.ZipcodeCountryCity.Countries.Name);
+                    if (location.People.OrganisationPeople.Count > 0)
+                    {
+                        Assert.Equal(result.People.OrganisationPeople.ToList()[0].Organisations.Cvr, location.People.OrganisationPeople.ToList()[0].Organisations.Cvr);
+                        Assert.Equal(result.People.OrganisationPeople.ToList()[0].Organisations.Name, location.People.OrganisationPeople.ToList()[0].Organisations.Name);
+                    }
                 }
                 else if (expectedSuccess == false)
                 {
