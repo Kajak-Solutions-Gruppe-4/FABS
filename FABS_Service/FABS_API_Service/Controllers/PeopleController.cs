@@ -174,6 +174,7 @@ namespace FABS_API_Service.Controllers
                 address,
                 login
                 );
+            person.OrganisationPeople.Add(organisationPerson);
             return person;
         }
     }
