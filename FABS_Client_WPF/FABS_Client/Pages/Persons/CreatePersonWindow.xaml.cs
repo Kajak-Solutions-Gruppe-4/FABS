@@ -44,6 +44,8 @@ namespace FABS_Client_WPF.Pages.Persons
             AddressDto address = new AddressDto(
                 streetnameText.Text.ToString(),
                 streetNoText.Text.ToString(),
+
+                //TODO: make so arpartmentNumber is null when the string is empty, instead of "" (an empty string)
                 apartmentNoText.Text.ToString(),
                 zipcodeText.Text.ToString(),
                 1,
