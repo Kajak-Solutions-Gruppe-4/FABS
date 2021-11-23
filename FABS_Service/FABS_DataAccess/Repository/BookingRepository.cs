@@ -15,12 +15,17 @@ namespace FABS_DataAccess.Repository
             throw new NotImplementedException();
         }
 
-        public bool Delete(int id)
+        public bool Delete(PrimaryKey pk)
         {
             throw new NotImplementedException();
         }
 
-        public Booking Get(int id, int organisationId)
+        public PrimaryKey FindPrimaryKey(Booking t)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Booking Get(PrimaryKey pk, int organisationId)
         {
             throw new NotImplementedException();
         }
@@ -30,7 +35,7 @@ namespace FABS_DataAccess.Repository
             throw new NotImplementedException();
         }
 
-        public bool Update(int id, Booking t)
+        public bool Update(PrimaryKey pk, Booking t)
         {
             throw new NotImplementedException();
         }

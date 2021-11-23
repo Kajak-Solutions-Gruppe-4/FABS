@@ -17,11 +17,12 @@ namespace FABS_DataAccess.Repository
             _context = new FABSContext();
         }
 
-        public Item Get(int id, int organisationId)
+        public Item Get(PrimaryKey pk, int organisationId)
         {
             Item foundItem;
             try
             {
+                int id = GetPrimaryKeyValue(pk);
                 //Eager loading
                 foundItem = _context.Items
                         //Organisation
@@ -99,12 +100,13 @@ namespace FABS_DataAccess.Repository
             return insertId;
         }
 
-        public bool Delete(int id)
+        public bool Delete(PrimaryKey pk)
         {
             bool wasDeleted = false;
 
             try
             {
+                int id = GetPrimaryKeyValue(pk);
                 var i = _context.Items.Find(id);
                 var res = _context.Remove(i);
                 _context.SaveChanges();
@@ -119,7 +121,7 @@ namespace FABS_DataAccess.Repository
             return wasDeleted;
         }
 
-        public bool Update(int id, Item i)
+        public bool Update(PrimaryKey pk, Item i)
         {
             //throw new NotImplementedException();
             //TO DO: Get update to work in EF
@@ -127,6 +129,7 @@ namespace FABS_DataAccess.Repository
 
             try
             {
+                int id = GetPrimaryKeyValue(pk);
                 //Get the context entity form DB so we can change it
                 var itemResultEntity = _context.Items.Find(id);
                 //Update the context entity with the date recieved from the update object
@@ -143,6 +146,13 @@ namespace FABS_DataAccess.Repository
             }
 
             return wasUpdated;
+        }
+
+        private int GetPrimaryKeyValue(PrimaryKey pk) => (int) pk.KeyValues.First();
+
+        public PrimaryKey FindPrimaryKey(Item t)
+        {
+            throw new NotImplementedException();
         }
     }
 }

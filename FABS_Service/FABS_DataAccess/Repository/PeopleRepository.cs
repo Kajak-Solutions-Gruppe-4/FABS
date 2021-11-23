@@ -23,12 +23,12 @@ namespace FABS_DataAccess.Repository
         /// </summary>
         /// <param name="id">The id of the person to find in database.</param>
         /// <returns>Returns the person object or NULL if nothing was found.</returns>
-        public Person Get(int id, int organisationId)
+        public Person Get(PrimaryKey pk, int organisationId)
         {
             Person foundPerson;
             try
             {
-               
+                    int id = GetPrimaryKeyValue(pk);
                     // eager loading
                     foundPerson = _context.People
                     .Include(a => a.Addresses)
@@ -47,6 +47,7 @@ namespace FABS_DataAccess.Repository
 
             return foundPerson;
         }
+
 
         public IEnumerable<Person> GetAll(int organisationId)
         {
@@ -97,17 +98,17 @@ namespace FABS_DataAccess.Repository
             return insertedId;
         }
 
-        public bool Delete(int id)
+        public bool Delete(PrimaryKey pk)
         {
             bool wasDeleted = false;
 
             try
             {
-               
-                    var p = _context.People.Find(id);
-                    var res = _context.Remove(p);
-                    _context.SaveChanges();
-                    wasDeleted = true;
+                int id = GetPrimaryKeyValue(pk);
+                var p = _context.People.Find(id);
+                var res = _context.Remove(p);
+                _context.SaveChanges();
+                wasDeleted = true;
                 
             }
             catch
@@ -117,7 +118,7 @@ namespace FABS_DataAccess.Repository
 
             return wasDeleted;
         }
-        public bool Update(int id, Person p)
+        public bool Update(PrimaryKey pk, Person p)
         {
             //throw new NotImplementedException();
             //TO DO: Get update to work in EF
@@ -126,24 +127,24 @@ namespace FABS_DataAccess.Repository
 
             try
             {
-               
-                    //Get the context entity form DB so we can change it.
-                    var personResultEntity = _context.People.Find(id);
-                    //Update the context entity with the date recieved from the update object
-                        //Person
-                    personResultEntity.FirstName = p.FirstName;
-                    personResultEntity.LastName = p.LastName;
-                    personResultEntity.TelephoneNumber = p.TelephoneNumber;
-                    personResultEntity.AddressesId = p.AddressesId;
-                    personResultEntity.IsAdmin = p.IsAdmin;
-                    personResultEntity.Addresses = p.Addresses;
-                    personResultEntity.Login = p.Login;
-                        //Other
-                    personResultEntity.OrganisationPeople = p.OrganisationPeople;
-                    personResultEntity.Bookings = p.Bookings;
-                    personResultEntity.Locations = p.Locations;
+                int id = GetPrimaryKeyValue(pk);
+                //Get the context entity form DB so we can change it.
+                var personResultEntity = _context.People.Find(id);
+                //Update the context entity with the date recieved from the update object
+                    //Person
+                personResultEntity.FirstName = p.FirstName;
+                personResultEntity.LastName = p.LastName;
+                personResultEntity.TelephoneNumber = p.TelephoneNumber;
+                personResultEntity.AddressesId = p.AddressesId;
+                personResultEntity.IsAdmin = p.IsAdmin;
+                personResultEntity.Addresses = p.Addresses;
+                personResultEntity.Login = p.Login;
+                    //Other
+                personResultEntity.OrganisationPeople = p.OrganisationPeople;
+                personResultEntity.Bookings = p.Bookings;
+                personResultEntity.Locations = p.Locations;
 
-                    _context.SaveChanges();
+                _context.SaveChanges();
                 
 
                 wasUpdated = true;
@@ -155,6 +156,13 @@ namespace FABS_DataAccess.Repository
 
             return wasUpdated;
 
+        }
+
+        private int GetPrimaryKeyValue(PrimaryKey pk) => (int) pk.KeyValues.First();
+
+        public PrimaryKey FindPrimaryKey(Person t)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -17,11 +17,12 @@ namespace FABS_DataAccess.Repository
             _context = new FABSContext();
         }
 
-        public Location Get(int id, int organisationId)
+        public Location Get(PrimaryKey pk, int organisationId)
         {
             Location foundLocation;
             try
             {
+                int id = GetPrimaryKeyValue(pk);
                 //eager loading
                 foundLocation = _context.Locations
                     //Warehouse
@@ -46,6 +47,7 @@ namespace FABS_DataAccess.Repository
 
             return foundLocation;
         }
+
 
         public IEnumerable<Location> GetAll(int organisationId)
         {
@@ -95,12 +97,13 @@ namespace FABS_DataAccess.Repository
             return insertId;
         }
 
-        public bool Delete(int id)
+        public bool Delete(PrimaryKey pk)
         {
             bool wasDeleted = false;
 
             try
             {
+                int id = GetPrimaryKeyValue(pk);
                 var l = _context.Locations.Find(id);
                 var res = _context.Remove(l);
                 _context.SaveChanges();
@@ -117,7 +120,7 @@ namespace FABS_DataAccess.Repository
 
 
 
-        public bool Update(int id, Location l)
+        public bool Update(PrimaryKey pk, Location l)
         {
             //throw new NotImplementedException();
             //TO DO: Get update to work in EF
@@ -125,6 +128,7 @@ namespace FABS_DataAccess.Repository
 
             try
             {
+                int id = GetPrimaryKeyValue(pk);
                 //Get the context entity form DB so we can change it
                 var locationResultEntity = _context.Locations.Find(id);
                 //Update the context entity with the date recieved from the update object
@@ -145,6 +149,13 @@ namespace FABS_DataAccess.Repository
             }
 
             return wasUpdated;
+        }
+
+        private int GetPrimaryKeyValue(PrimaryKey pk) => (int) pk.KeyValues.First();
+
+        public PrimaryKey FindPrimaryKey(Location t)
+        {
+            throw new NotImplementedException();
         }
     }
 }

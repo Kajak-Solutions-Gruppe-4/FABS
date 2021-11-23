@@ -15,7 +15,7 @@ namespace FABS_DataAccess.Repository
             throw new NotImplementedException();
         }
 
-        public Warehouse Get(int id, int organisationId)
+        public Warehouse Get(PrimaryKey pk, int organisationId)
         {
             throw new NotImplementedException();
         }
@@ -25,15 +25,19 @@ namespace FABS_DataAccess.Repository
             throw new NotImplementedException();
         }
 
-        public bool Update(int id, Warehouse t)
+        public bool Update(PrimaryKey pk, Warehouse t)
         {
             throw new NotImplementedException();
         }
 
-        public bool Delete(int id)
+        public bool Delete(PrimaryKey pk)
         {
             throw new NotImplementedException();
         }
 
+        public PrimaryKey FindPrimaryKey(Warehouse t)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

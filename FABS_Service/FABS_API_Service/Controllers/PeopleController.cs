@@ -19,11 +19,15 @@ namespace FABS_API_Service.Controllers
     public class PeopleController : ControllerBase
     {
         private readonly IRepository<Person> _peopleRepository;
+        private readonly IRepository<ZipcodeCountryCity> _zipcodeCountryCityRepository;
+        private readonly IRepository<Address> _addressRepository;
 
         [ActivatorUtilitiesConstructor]
         public PeopleController()
         {
             _peopleRepository = new PeopleRepository();
+            _zipcodeCountryCityRepository = new ZipcodeCountryCityRepository();
+            _addressRepository = new AddressRepository();
         }
         // GET: api/<PeopleController>
         [HttpGet]
@@ -56,7 +60,7 @@ namespace FABS_API_Service.Controllers
             {
                 return new StatusCodeResult(422);
             }
-            Person foundPerson = _peopleRepository.Get(id, organisationId);
+            Person foundPerson = _peopleRepository.Get(new PrimaryKey(id), organisationId);
             if (foundPerson != null)
             {
                 PersonDto personDto = ConvertModelToDto(foundPerson);
@@ -80,6 +84,7 @@ namespace FABS_API_Service.Controllers
             int newPersonId = _peopleRepository.Create(p);
             if (newPersonId > -1)
             {
+                //NOTE: do we really need to tell the user the id?
                 return Ok(newPersonId);
             }
             else
@@ -96,7 +101,7 @@ namespace FABS_API_Service.Controllers
         [HttpPut("{id}")]
         public ActionResult Put(int id, Person p)
         {
-            bool wasOk = _peopleRepository.Update(id, p);
+            bool wasOk = _peopleRepository.Update(new PrimaryKey(id), p);
             if (wasOk)
             {
                 return Ok();
@@ -111,7 +116,7 @@ namespace FABS_API_Service.Controllers
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
-            var wasOk = _peopleRepository.Delete(id);
+            var wasOk = _peopleRepository.Delete(new PrimaryKey(id));
             if (wasOk)
             {
                 return Ok();
@@ -147,32 +152,56 @@ namespace FABS_API_Service.Controllers
 
         private Person ConvertDtoToModel(PersonDto dto, int organisationId)
         {
-            ZipcodeCountryCity zipcodeCountryCity = new ZipcodeCountryCity(
-                dto.Address.Zipcode,
-                dto.Address.CountryId,
-                dto.Address.City
-                );
+            Person person = new Person();
+            person.FirstName = dto.FirstName;
+            person.LastName = dto.FirstName;
+            person.TelephoneNumber = dto.TelephoneNumber;
+            person.IsAdmin = false;
+
             Address address = new Address(
                 dto.Address.StreetName,
                 dto.Address.StreetNumber,
                 dto.Address.ApartmentNumber,
-                zipcodeCountryCity
+                dto.Address.Zipcode,
+                dto.Address.CountryId
                 );
-            OrganisationPerson organisationPerson = new OrganisationPerson(
-                organisationId,
-                dto.Id
-                );
+            PrimaryKey addressPrimaryKey = _addressRepository.FindPrimaryKey(address);
+            int currentAddressIdInContext = (int) addressPrimaryKey.KeyValues[0];
+            if(currentAddressIdInContext > 0)
+            {
+                // if address already exists in database, use that address.
+                person.AddressesId = currentAddressIdInContext;
+            }
+            else
+            {
+                ZipcodeCountryCity zipcodeCountryCity = new ZipcodeCountryCity(
+                    dto.Address.Zipcode,
+                    dto.Address.CountryId,
+                    dto.Address.City
+                    );
+                PrimaryKey zipcodeCountryCityPrimaryKey = _zipcodeCountryCityRepository.FindPrimaryKey(zipcodeCountryCity);
+                if(zipcodeCountryCityPrimaryKey != null)
+                {
+                    // if address does not already exist in database, but the Zipcode does, create new address with existing zipcode
+                    person.Addresses = address;
+                }
+                else
+                {
+                    // if neither address or zipcode exist in database, create both.
+                    address.ZipcodeCountryCity = zipcodeCountryCity;
+                    person.Addresses = address;
+                }
+            }
+
             Login login = new Login(
                 dto.Email,
                 "1234"
                 );
-            Person person = new Person(
-                dto.FirstName,
-                dto.LastName,
-                dto.TelephoneNumber,
-                false,
-                address,
-                login
+            person.Login = login;
+
+            OrganisationPerson organisationPerson = new OrganisationPerson(
+                organisationId,
+                dto.Id
                 );
             person.OrganisationPeople.Add(organisationPerson);
             return person;

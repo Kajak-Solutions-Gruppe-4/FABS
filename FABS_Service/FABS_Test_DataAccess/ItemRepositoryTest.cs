@@ -129,7 +129,9 @@ namespace FABS_Test_DataAccess
             {
                 var itemRepository = new ItemRepository();
 
-                Item item = itemRepository.Get(id, 1);
+                PrimaryKey pk = new PrimaryKey(id);
+
+                Item item = itemRepository.Get(pk, 1);
 
                 if (expectedSuccess == true)
                 {
@@ -198,7 +200,10 @@ namespace FABS_Test_DataAccess
 
                 //act
                 int returnedID = itemRepository.Create(item);
-                var result = itemRepository.Get(returnedID, 1);
+
+                PrimaryKey pk = new PrimaryKey(returnedID);
+
+                var result = itemRepository.Get(pk, 1);
 
                 //assert
                 if (expectedSuccess == true && returnedID > 0)
