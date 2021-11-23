@@ -5,9 +5,10 @@ using System.Windows.Controls;
 using RestSharp;
 using DataFormat = RestSharp.DataFormat;
 using FABS_Client_WPF;
-using FABS_Client_WPF.Model;
+using FABS_Client_WPF.DTO;
 using Newtonsoft;
 using Newtonsoft.Json;
+
 
 namespace FABS_Client_WPF.Pages.Persons
 {
@@ -32,12 +33,15 @@ namespace FABS_Client_WPF.Pages.Persons
         public void RefreshList()
         {
             var apiClient = new RestClient("https://localhost:44309/Api");
+            // Hardcoded organisation ID for the specific client TODO: 
+            //Add an universal ID to the client for use everywhwere
+            var request = new RestRequest("/people?organisationId=1", DataFormat.Json);
 
-            var request = new RestRequest("/people", DataFormat.Json);
+         
 
             var response = apiClient.Execute(request);
 
-            List<Person> listOfPeople = JsonConvert.DeserializeObject<List<Person>>(response.Content);
+            List<PersonDto> listOfPeople = JsonConvert.DeserializeObject<List<PersonDto>>(response.Content);
 
             Users.ItemsSource = listOfPeople;
         }

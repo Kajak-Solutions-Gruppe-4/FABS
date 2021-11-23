@@ -52,16 +52,16 @@
         <ListView Margin="10" Name="Users" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" VerticalAlignment="Top" MaxHeight="200">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Fornavn" Width="auto" DisplayMemberBinding="{Binding Path=firstName}" />
-                    <GridViewColumn Header="Efternavn" Width="auto" DisplayMemberBinding="{Binding Path=lastName}" />
-                    <GridViewColumn Header="Tlf." Width="auto" DisplayMemberBinding="{Binding Path=telephoneNumber}" />
-                    <GridViewColumn Header="Mail" Width="auto" DisplayMemberBinding="{Binding Path=login.email}"/>
-                    <GridViewColumn Header="Adresse" Width="auto" DisplayMemberBinding="{Binding Path=addresses.FullAddress}" />
+                    <GridViewColumn Header="Fornavn" Width="auto" DisplayMemberBinding="{Binding Path=FirstName}" />
+                    <GridViewColumn Header="Efternavn" Width="auto" DisplayMemberBinding="{Binding Path=LastName}" />
+                    <GridViewColumn Header="Tlf." Width="auto" DisplayMemberBinding="{Binding Path=TelephoneNumber}" />
+                    <GridViewColumn Header="Mail" Width="auto" DisplayMemberBinding="{Binding Path=Email}"/>
+                    <GridViewColumn Header="Adresse" Width="150"  DisplayMemberBinding="{Binding Path=FullAddress}" />
                     <!--<GridViewColumn Header="Gadenavn" Width="auto" DisplayMemberBinding="{Binding Path=addresses.StreetName}" />-->
                     <!--<GridViewColumn Header="Gadenummer" Width="auto" DisplayMemberBinding="{Binding Path=addresses.StreetNumber}" />-->
                     <!--<GridViewColumn Header="Lejlighed Nummer" Width="auto" DisplayMemberBinding="{Binding Path=addresses.ApartmentNumber}" />-->
-                    <GridViewColumn Header="Postnummer" Width="auto" DisplayMemberBinding="{Binding Path=addresses.ZipcodeCountryCity.Zipcode}" />
-                    <GridViewColumn Header="By" Width="auto" DisplayMemberBinding="{Binding Path=addresses.ZipcodeCountryCity.City}" />
+                    <GridViewColumn Header="Postnummer" Width="auto" DisplayMemberBinding="{Binding Path=Address.Zipcode}" />
+                    <GridViewColumn Header="By" Width="auto" DisplayMemberBinding="{Binding Path=Address.City}" />
 
 
                 </GridView>

@@ -13,9 +13,22 @@ namespace FABS_API_Service.DTO
         public AddressDto Address { get; set; }
         public string Email { get; set; }
 
+        public PersonDto()
+        {
+
+        }
         public PersonDto(int id, string firstName, string lastName, string telephoneNumber, AddressDto address, string email)
         {
             Id = id;
+            FirstName = firstName;
+            LastName = lastName;
+            TelephoneNumber = telephoneNumber;
+            Address = address;
+            Email = email;
+        }
+        public PersonDto(string firstName, string lastName, string telephoneNumber, AddressDto address, string email)
+        {
+
             FirstName = firstName;
             LastName = lastName;
             TelephoneNumber = telephoneNumber;
