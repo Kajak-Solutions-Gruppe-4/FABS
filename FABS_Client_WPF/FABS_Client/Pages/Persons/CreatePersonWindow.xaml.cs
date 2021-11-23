@@ -1,4 +1,4 @@
-﻿using FABS_Client_WPF.Model;
+﻿
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using Newtonsoft.Json;
 using DataFormat = RestSharp.DataFormat;
 using FABS_Client_WPF.BusinessLogic;
+using FABS_Client_WPF.DTO;
 
 namespace FABS_Client_WPF.Pages.Persons
 {
@@ -39,21 +40,28 @@ namespace FABS_Client_WPF.Pages.Persons
         {
             PersonHelper helper = new PersonHelper();
 
-            Login login = new Login(emailText.Text.ToString(), "1234");
-            Address address = new Address(streetnameText.Text.ToString(), streetNoText.Text.ToString(),
+            //Login login = new Login(emailText.Text.ToString(), "1234");
+            AddressDto address = new AddressDto(
+                streetnameText.Text.ToString(),
+                streetNoText.Text.ToString(),
                 apartmentNoText.Text.ToString(),
                 zipcodeText.Text.ToString(),
-                1); // 1 in the DB is Danmark. This is hardcoded for now.
-            Person person = new Person()
-            {
+                1,
+                cityText.Text.ToString()
+                );
 
-                firstName = firstNameText.Text.ToString(),
-                lastName = lastNameText.Text.ToString(),
-                telephoneNumber = tlfText.Text.ToString(),
-                isAdmin = false,
-                addresses = address,
-                login = login
-            };
+            //1); // 1 in the DB is Danmark. This is hardcoded for now.
+            PersonDto person = new PersonDto(
+               firstNameText.Text.ToString(),
+               lastNameText.Text.ToString(),
+               tlfText.Text.ToString(),
+                //IsAdmin = false,
+                address,
+               //Login = login
+               emailText.Text.ToString());
+            
+                
+        
 
             helper.PostPerson(person);
 

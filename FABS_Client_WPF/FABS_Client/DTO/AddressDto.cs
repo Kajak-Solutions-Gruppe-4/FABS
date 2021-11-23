@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace FABS_API_Service.DTO
+namespace FABS_Client_WPF.DTO
 {
     public class AddressDto
     {
@@ -30,9 +30,9 @@ namespace FABS_API_Service.DTO
             Country = country;
             City = city;
         }
-        public AddressDto( string streetName, string streetNumber, string apartmentNumber, string zipcode, int countryId, string country, string city)
+        public AddressDto(string streetName, string streetNumber, string apartmentNumber, string zipcode, int countryId, string country, string city)
         {
-           
+
             StreetName = streetName;
             StreetNumber = streetNumber;
             ApartmentNumber = apartmentNumber;

@@ -26,4 +26,8 @@
     <Resource Include="Pages\Kayak.png" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DTO\" />
+  </ItemGroup>
+
 </Project>
