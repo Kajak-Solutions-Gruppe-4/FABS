@@ -49,10 +49,10 @@
         <TextBlock Grid.Column="1" Grid.Row="1" FontSize="20" FontWeight="Bold" Text="Medlemmer" FontFamily="Segce UI" Grid.ColumnSpan="4" Margin="15"/>
 
         <TextBlock Grid.Column="1" Grid.Row="3" FontSize="12" FontWeight="Bold" Text="--- Member List ---" FontFamily="Segce UI" Grid.ColumnSpan="4" Margin="15" TextAlignment="Center"/>
-        <ListView Margin="10" Name="Users" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" VerticalAlignment="Top" MaxHeight="200">
-            <ListView.View>
+        <ListView Margin="10" Name="Users" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" VerticalAlignment="Top" MaxHeight="200" GridViewColumnHeader.Click="OnHeaderClick">
+            <ListView.View >
                 <GridView>
-                    <GridViewColumn Header="Fornavn" Width="auto" DisplayMemberBinding="{Binding Path=FirstName}" />
+                    <GridViewColumn Header="Fornavn" Width="auto" DisplayMemberBinding="{Binding Path=FirstName}"/>
                     <GridViewColumn Header="Efternavn" Width="auto" DisplayMemberBinding="{Binding Path=LastName}" />
                     <GridViewColumn Header="Tlf." Width="auto" DisplayMemberBinding="{Binding Path=TelephoneNumber}" />
                     <GridViewColumn Header="Mail" Width="auto" DisplayMemberBinding="{Binding Path=Email}"/>
@@ -67,7 +67,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
-
+        <TextBox x:Name="TxtFilter" TextChanged="TxtFilter_TextChanged" Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="2" />
         <Button Content="Tilbage" Grid.Column="1" Grid.Row="6" Width="75"/>
         <Button Content="Opret Person" Grid.Column="2" Grid.Row="6" Width="75" Click="ButtonPerson" />
     </Grid>
