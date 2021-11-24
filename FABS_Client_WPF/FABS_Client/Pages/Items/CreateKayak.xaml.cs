@@ -18,8 +18,10 @@ namespace FABS_Client_WPF.Pages.Items
     /// </summary>
     public partial class CreateKayak : Window
     {
-        public CreateKayak()
+        private ItemGUI _parentWindow;
+        public CreateKayak(ItemGUI parentWindow)
         {
+            _parentWindow = parentWindow;
             InitializeComponent();
         }
 

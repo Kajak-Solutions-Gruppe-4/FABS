@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using RestSharp;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -10,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using DataFormat = RestSharp.DataFormat;
 
 namespace FABS_Client_WPF.Pages.Items
 {
@@ -25,9 +28,23 @@ namespace FABS_Client_WPF.Pages.Items
 
         private void CreateKayakButton(object sender, RoutedEventArgs e)
         {
-            CreateKayak createKayak = new CreateKayak();
+            CreateKayak createKayak = new CreateKayak(this);
             //this.Visibility = Visibility.Hidden //Hides Main window while usng second window
             createKayak.Show();
+        }
+
+        public void RefreshList()
+        {
+            //TODO: Implement ItemDTO
+
+            //var apiClient = new RestClient("https://localhost:44309/Api");
+            //var request = new RestRequest("/items?organisationId=1", DataFormat.Json);
+
+            //var response = apiClient.Execute(request);
+
+            //List<ItemDto> listOfItems = JsonConvert.DeserializeObject<List<ItemDto>>)response.Content);
+
+            //Kayaks.ItemsSource = listOfItems;
         }
     }
 }

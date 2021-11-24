@@ -16,14 +16,10 @@ namespace FABS_Client_WPF.BusinessLogic
         {
             try
             {
-             
-                
                 var request = new RestRequest("people/?organisationId=1", Method.POST, DataFormat.Json);
                 request.AddJsonBody(JsonSerializer.Serialize(person));
 
                 var response = _clientPeople.Execute(request);
-
-
             }
             catch (Exception)
             {

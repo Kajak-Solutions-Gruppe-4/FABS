@@ -56,8 +56,25 @@
 
         <!--Create Item label & texfeild-->
         <TextBlock Grid.Column="1" Grid.Row="3" FontSize="12" FontWeight="Bold" Text="--- Kayak List ---" FontFamily="Segce UI" Grid.ColumnSpan="4" Margin="15" TextAlignment="Center"/>
+        <ListView Margin="10" Name="Kayaks" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" VerticalAlignment="Top" MaxHeight="200">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Kajaknavn" Width="auto" DisplayMemberBinding="{Binding Path=FirstName}" />
+                    <GridViewColumn Header="Kajaktype" Width="auto" DisplayMemberBinding="{Binding Path=LastName}" />
+                    <GridViewColumn Header="Længde" Width="auto" DisplayMemberBinding="{Binding Path=TelephoneNumber}" />
+                    <GridViewColumn Header="Max lastvægt" Width="auto" DisplayMemberBinding="{Binding Path=Email}"/>
+                    <GridViewColumn Header="Antal personer" Width="150"  DisplayMemberBinding="{Binding Path=FullAddress}" />
+                    <!--<GridViewColumn Header="Gadenavn" Width="auto" DisplayMemberBinding="{Binding Path=addresses.StreetName}" />-->
+                    <!--<GridViewColumn Header="Gadenummer" Width="auto" DisplayMemberBinding="{Binding Path=addresses.StreetNumber}" />-->
+                    <!--<GridViewColumn Header="Lejlighed Nummer" Width="auto" DisplayMemberBinding="{Binding Path=addresses.ApartmentNumber}" />-->
+                    <GridViewColumn Header="Lokation" Width="auto" DisplayMemberBinding="{Binding Path=Address.Zipcode}" />
+                    <GridViewColumn Header="Plads" Width="auto" DisplayMemberBinding="{Binding Path=Address.City}" />
 
 
+                </GridView>
+            </ListView.View>
+        </ListView>
+        
         <Button Content="Opret Kajak" Grid.Column="2" Grid.Row="5" Width="75" Click="CreateKayakButton"/>
         <Button Content="Rediger Kajak" Grid.Column="1" Grid.Row="5" Width="75" Click="CreateKayakButton"/>
     </Grid>
