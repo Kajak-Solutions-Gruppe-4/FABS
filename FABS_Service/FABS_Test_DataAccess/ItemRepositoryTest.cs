@@ -32,26 +32,10 @@ namespace FABS_Test_DataAccess
                 //Database Table need to perform test
                 List<object[]> data = GetData("Seed").ToList();
 
-                //Populate Item related classes
-                context.AddRange(
-                    //Type classes
-                    data[0][0] as KayakType,
-                    data[0][1] as ItemType,
-                    //Zipcode/Country Classes
-                    data[0][2] as Country,
-                    data[0][3] as Address,
-                    //Location Classes
-                    data[0][4] as Organisation,
-                    data[0][5] as Address,
-                    data[0][6] as Warehouse,
-                    data[0][7] as Location,
-                    //Status Classes
-                    data[0][8] as Status,
-                    //Item Classes
-                    data[0][9] as Item
-                );
 
+                context.AddRange(data[0][0] as Organisation);
                 context.SaveChanges();
+
             }
         }
 
@@ -84,36 +68,17 @@ namespace FABS_Test_DataAccess
             switch (nameOfCaller)
             {
                 case "Seed":
-                    allData.Add(new object[]
-                    {
-                        //type
-                        kayakType1,
-                        itemType1,
-                        //Zipcode/Country test objects
-                        country1,
-                        zipcodeCountryCity1,
-                        //Organisation test objects
-                        organisationAddress1,
-                        organisation1,
-                        //Location test obejcts
-                        warehouseAddress1,
-                        warehouse1,
-                        location1,
-                        //Status test objects
-                        status1,
-                        //ItemType test objects
-                        item1
-
-                    });
+                    allData.Add(new object[] { organisation1 });
                     break;
 
-                case "ReadItem":
+                case "ReadLocation":
                     allData.Add(new object[] { 1, true });
-                    allData.Add(new object[] { 1, false });
+                    allData.Add(new object[] { 1, true });
                     break;
-                case "CreateItem":
-                    allData.Add(new object[] { item2, false });
-                    allData.Add(new object[] { item3, true });
+
+                case "CreateLocation":
+                    allData.Add(new object[] { item2, true });
+                    allData.Add(new object[] { item3, false });
                     break;
                 default:
                     break;

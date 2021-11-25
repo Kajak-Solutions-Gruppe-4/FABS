@@ -131,7 +131,10 @@ namespace FABS_DataAccess.Repository
                 var itemResultEntity = _context.Items.Find(id);
                 //Update the context entity with the date recieved from the update object
                 //Item
-
+                itemResultEntity.Organisations = i.Organisations;
+                itemResultEntity.Statuses = i.Statuses;
+                itemResultEntity.Locations = i.Locations;
+                itemResultEntity.ItemTypes = i.ItemTypes;
 
                 _context.SaveChanges();
                 wasUpdated = true;
