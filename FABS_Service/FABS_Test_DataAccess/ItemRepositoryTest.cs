@@ -43,25 +43,30 @@ namespace FABS_Test_DataAccess
         {
             //Create Item test objects
 
-                //Type test objects
-            KayakType kayakType1 = new KayakType("Red Kayaks Rule!", 120, 2.5m, 1, null);
-            ItemType itemType1 = new ItemType("Kayak", kayakType1);
-                //Zipcode/Country test objects
+
+
+            //Zipcode/Country test objects
             Country country1 = new Country("Denmark");
             ZipcodeCountryCity zipcodeCountryCity1 = new ZipcodeCountryCity("9000", country1, "Aalborg");
-                //Organisation test objects
-            Address organisationAddress1 = new Address("Sofiendalsvej", "60", null, zipcodeCountryCity1);
-            Organisation organisation1 = new Organisation("12341234", "UCN Kajakker", organisationAddress1);
-                //Location test objects
-            Address warehouseAddress1 = new Address("Sofiendalsvej", "60A", null, zipcodeCountryCity1);
-            Warehouse warehouse1 = new Warehouse("Building A", organisationAddress1);
-            Location location1 = new Location("1.2.3", "This is an awesome location spot 1", warehouse1, null, null);
-                //Status test objects
-            Status status1 = new Status("Item Status","Looking Good");
-                //ItemType test objects
+            //Organisation test objects
+            Address address = new Address("Sofiendalsvej", "60", null, zipcodeCountryCity1);
+            Organisation organisation1 = new Organisation("12341234", "UCN Kajakker", address);
+            //Location test objects
+
+            Warehouse warehouse1 = new Warehouse("Building A", address);
+            Location location1 = new Location("1.2.3", "This is an awesome location spot 1", warehouse1, null, organisation1);
+
+            // Creating kajak item
+            KayakType kayakType1 = new KayakType("Red Kayaks Rule!", 120, 2.5m, 1, null);
+            ItemType itemType1 = new ItemType("Kayak", kayakType1);
+
+            //Status test objects
+            Status status1 = new Status("Item Status", "Looking Good");
+            //ItemType test objects
             Item item1 = new Item(organisation1, status1, location1, itemType1);
-            Item item2 = new Item(organisation1, 2, location1, itemType1);
-            Item item3 = new Item(organisation1, 3, location1, itemType1);
+            Item item2 = new Item(organisation1, status1, location1, itemType1);
+            Item item3 = new Item(organisation1, status1, location1, itemType1);
+            organisation1.Items.Add(item1);
 
             //adding test objects to list
             var allData = new List<object[]>();
@@ -71,12 +76,12 @@ namespace FABS_Test_DataAccess
                     allData.Add(new object[] { organisation1 });
                     break;
 
-                case "ReadLocation":
+                case "ReadItem":
                     allData.Add(new object[] { 1, true });
                     allData.Add(new object[] { 1, true });
                     break;
 
-                case "CreateLocation":
+                case "CreateItem":
                     allData.Add(new object[] { item2, true });
                     allData.Add(new object[] { item3, false });
                     break;
@@ -99,7 +104,7 @@ namespace FABS_Test_DataAccess
                 if (expectedSuccess == true)
                 {
                     //Type
-                        //NONE Imidit data
+                    //NONE Imidit data
                     //Organisation
                     Assert.Equal("12341234", item.Organisations.Cvr);
                     Assert.Equal("UCN Kajakker", item.Organisations.Name);
@@ -111,22 +116,22 @@ namespace FABS_Test_DataAccess
                     Assert.Equal("9000", item.Organisations.Addresses.ZipcodeCountryCity.Zipcode);
                     Assert.Equal("Aalborg", item.Organisations.Addresses.ZipcodeCountryCity.City);
                     Assert.Equal("Denmark", item.Organisations.Addresses.ZipcodeCountryCity.Countries.Name);
-                    
+
                     //Status
-                    Assert.Equal("Kayak Status", item.Statuses.Name);
+                    Assert.Equal("Item Status", item.Statuses.Name);
                     Assert.Equal("Looking Good", item.Statuses.Category);
 
                     //Location
                     Assert.Equal("1.2.3", item.Locations.PickLocation);
                     Assert.Equal("This is an awesome location spot 1", item.Locations.Description);
                     Assert.Null(item.Locations.People);
-                    Assert.Null(item.Locations.Organisations);
+                    
 
-                        //Warehouse
+                    //Warehouse
                     Assert.Equal("Building A", item.Locations.Warehouses.Name);
 
                     Assert.Equal("Sofiendalsvej", item.Locations.Warehouses.Addresses.StreetName);
-                    Assert.Equal("60A", item.Locations.Warehouses.Addresses.StreetNumber);
+                    Assert.Equal("60", item.Locations.Warehouses.Addresses.StreetNumber);
                     Assert.Null(item.Locations.Warehouses.Addresses.ApartmentNumber);
 
                     Assert.Equal("9000", item.Locations.Warehouses.Addresses.ZipcodeCountryCity.Zipcode);
@@ -140,7 +145,7 @@ namespace FABS_Test_DataAccess
                     Assert.Equal(120, item.ItemTypes.KayakType.WeightLimit);
                     Assert.Equal(2.5m, item.ItemTypes.KayakType.LengthMeter);
                     Assert.Equal(1, item.ItemTypes.KayakType.PersonCapacity);
-                    Assert.Null(item.ItemTypes.KayakType.ItemType);
+                    
                 }
                 else if (expectedSuccess == false)
                 {
@@ -213,19 +218,19 @@ namespace FABS_Test_DataAccess
                     Assert.Equal(result.ItemTypes.KayakType.ItemType, item.ItemTypes.KayakType.ItemType);
                 }
                 else if (expectedSuccess == false)
-                    {
-                        Assert.Equal(-1, returnedID);
-                    }
-                    else
-                    {
-                        Assert.True(false, "Was supposed to create item, but failed");
-                    }
+                {
+                    Assert.Equal(-1, returnedID);
+                }
+                else
+                {
+                    Assert.True(false, "Was supposed to create item, but failed");
+                }
             }
         }
 
-            public void Dispose()
+        public void Dispose()
         {
-            throw new NotImplementedException();
+            RepopulateDatabase.Seed(); 
         }
     }
 }
