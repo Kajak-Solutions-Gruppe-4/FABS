@@ -35,6 +35,8 @@ namespace FABS_DataAccess.Repository
                     //Organisation
                 .Include(o1 => o1.Organisations)
                 .ThenInclude(o2 => o2.OrganisationPeople)
+                .Include(o => o.Organisations)
+                .ThenInclude(o=> o.Addresses)
                     //Default
                 .FirstOrDefault(x => x.Id == id);
             }
