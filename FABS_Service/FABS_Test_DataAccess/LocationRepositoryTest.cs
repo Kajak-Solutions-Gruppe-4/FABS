@@ -29,11 +29,78 @@ namespace FABS_Test_DataAccess
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
-                //Database Table need to perform test
                 List<object[]> data = GetData("Seed").ToList();
 
 
                 context.AddRange(data[0][0] as Organisation);
+                    //Support classes
+                    data[0][0] as Country,
+                    data[0][1] as ZipcodeCountryCity,
+                    data[0][2] as Address,
+                    data[0][3] as Organisation,
+                    //person classes
+                    data[0][4] as Login,
+                    data[0][5] as Address,
+                    data[0][6] as Person,
+                    data[0][7] as OrganisationPerson,
+                    //Warehouse classes
+                    data[0][8] as Address,
+                    data[0][9] as Warehouse,
+                    //Location classes
+                    data[0][10] as Location
+                    );
+
+                    //Support classes
+                    data[0][0] as Country,
+                    data[0][1] as ZipcodeCountryCity,
+                    data[0][2] as Address,
+                    data[0][3] as Organisation,
+                    //person classes
+                    data[0][4] as Login,
+                    data[0][5] as Address,
+                    data[0][6] as Person,
+                    data[0][7] as OrganisationPerson,
+                    //Warehouse classes
+                    data[0][8] as Address,
+                    data[0][9] as Warehouse,
+                    //Location classes
+                    data[0][10] as Location
+                    );
+
+                    //Support classes
+                    data[0][0] as Country,
+                    data[0][1] as ZipcodeCountryCity,
+                    data[0][2] as Address,
+                    data[0][3] as Organisation,
+                    //person classes
+                    data[0][4] as Login,
+                    data[0][5] as Address,
+                    data[0][6] as Person,
+                    allData.Add(new object[] { 1, true });
+                    //Warehouse classes
+                    data[0][8] as Address,
+                    data[0][9] as Warehouse,
+                    //Location classes
+                    data[0][10] as Location
+                    );
+
+                    //Support classes
+                    data[0][0] as Country,
+                    data[0][1] as ZipcodeCountryCity,
+                    data[0][2] as Address,
+                    data[0][3] as Organisation,
+                    //person classes
+                    data[0][4] as Login,
+                    data[0][5] as Address,
+                    data[0][6] as Person,
+                    data[0][7] as OrganisationPerson,
+                    //Warehouse classes
+                    data[0][8] as Address,
+                    data[0][9] as Warehouse,
+                    //Location classes
+                    data[0][10] as Location
+                    );
+
                 context.SaveChanges();
 
             }
@@ -74,13 +141,11 @@ namespace FABS_Test_DataAccess
             {
                 case "Seed":
                     allData.Add(new object[] { organisation1 });
-                    break;
-
-                case "ReadLocation":
+                    //Assert.Equal("12341234", location.People.OrganisationPeople.ToList()[0].Organisations.Cvr);
+                    //Assert.Equal("12341234", location.People.OrganisationPeople.ToList()[0].Organisations.Name);
                     allData.Add(new object[] { 1, true });
-                    allData.Add(new object[] { 1, true });
+                    allData.Add(new object[] { 1, false });
                     break;
-
                 case "CreateLocation":
                     allData.Add(new object[] { location2, true });
                     allData.Add(new object[] { location3, false });
@@ -144,11 +209,13 @@ namespace FABS_Test_DataAccess
                     Assert.Equal("9000", location.Organisations.Addresses.ZipcodeCountryCity.Zipcode);
                     Assert.Equal("Aalborg", location.Organisations.Addresses.ZipcodeCountryCity.City);
                     Assert.Equal("Denmark", location.Organisations.Addresses.ZipcodeCountryCity.Countries.Name);
-                    //Assert.Equal("12341234", location.People.OrganisationPeople.ToList()[0].Organisations.Cvr);
-                    //Assert.Equal("12341234", location.People.OrganisationPeople.ToList()[0].Organisations.Name);
-                }
-                else if (expectedSuccess == false)
-                {
+                    
+                    ////Commented out for same reason as person
+                    //if (location.People.OrganisationPeople.Count > 0)
+                    //{
+                    //    Assert.Equal(result.People.OrganisationPeople.ToList()[0].Organisations.Cvr, location.People.OrganisationPeople.ToList()[0].Organisations.Cvr);
+                    //    Assert.Equal(result.People.OrganisationPeople.ToList()[0].Organisations.Name, location.People.OrganisationPeople.ToList()[0].Organisations.Name);
+                    //}
                     Assert.Null(location);
                 }
             }
@@ -212,13 +279,11 @@ namespace FABS_Test_DataAccess
                     Assert.Equal(result.Organisations.Addresses.ZipcodeCountryCity.Zipcode, location.Organisations.Addresses.ZipcodeCountryCity.Zipcode);
                     Assert.Equal(result.Organisations.Addresses.ZipcodeCountryCity.City, location.Organisations.Addresses.ZipcodeCountryCity.City);
                     Assert.Equal(result.Organisations.Addresses.ZipcodeCountryCity.Countries.Name, location.Organisations.Addresses.ZipcodeCountryCity.Countries.Name);
-                    
-                    ////Commented out for same reason as person
-                    //if (location.People.OrganisationPeople.Count > 0)
-                    //{
-                    //    Assert.Equal(result.People.OrganisationPeople.ToList()[0].Organisations.Cvr, location.People.OrganisationPeople.ToList()[0].Organisations.Cvr);
-                    //    Assert.Equal(result.People.OrganisationPeople.ToList()[0].Organisations.Name, location.People.OrganisationPeople.ToList()[0].Organisations.Name);
-                    //}
+                    if (location.People.OrganisationPeople.Count > 0)
+                    {
+                        Assert.Equal(result.People.OrganisationPeople.ToList()[0].Organisations.Cvr, location.People.OrganisationPeople.ToList()[0].Organisations.Cvr);
+                        Assert.Equal(result.People.OrganisationPeople.ToList()[0].Organisations.Name, location.People.OrganisationPeople.ToList()[0].Organisations.Name);
+                    }
                 }
                 else if (expectedSuccess == false)
                 {

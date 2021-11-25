@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace FABS_Client_WPF.DTO
+namespace FABS_API_Service.DTO
 {
-    class ItemDto
+    public class ItemDto
     {
         public int Id { get; set; }
         public OrganisationDto OrganisationsId { get; set; }
