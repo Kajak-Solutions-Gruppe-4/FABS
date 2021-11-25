@@ -65,10 +65,9 @@ namespace FABS_DataAccess.Repository
                 //Person
                 .Include(p => p.People)
                 .ThenInclude(l => l.Login)
-                //Organisation
+                    //Organisation
                 .Include(o1 => o1.Organisations)
                 .ThenInclude(o2 => o2.OrganisationPeople);
-               
             }
 
             catch
@@ -138,6 +137,8 @@ namespace FABS_DataAccess.Repository
                 locationResultEntity.Warehouses = l.Warehouses;
                 locationResultEntity.People = l.People;
                 locationResultEntity.Organisations = l.Organisations;
+                    //Other
+                locationResultEntity.Items = l.Items;
 
                 _context.SaveChanges();
                 wasUpdated = true;
