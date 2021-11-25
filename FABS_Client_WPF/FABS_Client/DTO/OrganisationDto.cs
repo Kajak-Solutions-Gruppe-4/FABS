@@ -37,6 +37,12 @@ namespace FABS_Client_WPF.DTO
             Cvr = cvr;
             Name = name;
         }
+        public OrganisationDto(int id, string cvr, string name)
+        {
+            Id = id;
+            Cvr = cvr;
+            Name = name;
+        }
     }
 }
 
