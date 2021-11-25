@@ -34,7 +34,6 @@ namespace FABS_DataAccess.Repository
                 .ThenInclude(l => l.Login)
                     //Organisation
                 .Include(o1 => o1.Organisations)
-                .ThenInclude(o2 => o2.OrganisationPeople)
                     //Default
                 .FirstOrDefault(x => x.Id == id);
             }
@@ -53,18 +52,17 @@ namespace FABS_DataAccess.Repository
             try
             {
                 listLocation = _context.Locations
-                    //Warehouse
+                //Warehouse
                 .Include(w => w.Warehouses)
-                    //Location
+                //Location
                 .ThenInclude(a => a.Addresses)
                 .ThenInclude(z => z.ZipcodeCountryCity)
                 .ThenInclude(c => c.Countries)
-                    //Person
+                //Person
                 .Include(p => p.People)
                 .ThenInclude(l => l.Login)
-                    //Organisation
-                .Include(o1 => o1.Organisations)
-                .ThenInclude(o2 => o2.OrganisationPeople);
+                //Organisation
+                .Include(o1 => o1.Organisations);
             }
 
             catch
@@ -134,6 +132,8 @@ namespace FABS_DataAccess.Repository
                 locationResultEntity.Warehouses = l.Warehouses;
                 locationResultEntity.People = l.People;
                 locationResultEntity.Organisations = l.Organisations;
+                    //Other
+                locationResultEntity.Items = l.Items;
 
                 _context.SaveChanges();
                 wasUpdated = true;
