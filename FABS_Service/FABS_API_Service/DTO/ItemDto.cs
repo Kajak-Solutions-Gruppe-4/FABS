@@ -25,5 +25,12 @@ namespace FABS_API_Service.DTO
             LocationsId = locationsId;
             ItemTypesId = itemTypesId;
         }
+
+        public ItemDto(OrganisationDto organisationsId, StatusDto statusesId, ItemTypeDto itemTypesId)
+        {
+            OrganisationsId = organisationsId;
+            StatusesId = statusesId;
+            ItemTypesId = itemTypesId;
+        }
     }
 }

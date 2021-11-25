@@ -38,5 +38,10 @@ namespace FABS_Client_WPF.DTO
             People = peopleDto;
             Organisation = organisationDto;
         }
+        public LocationDto(string pickLocation, string description)
+        {
+            PickLocation = pickLocation;
+            Description = description;
+        }
     }
 }

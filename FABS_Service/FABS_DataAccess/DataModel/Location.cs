@@ -42,5 +42,11 @@ namespace FABS_DataAccess.Model
             People = people;
             
         }
+
+        public Location(string pickLocation, string description) : this()
+        {
+            PickLocation = pickLocation;
+            Description = description;
+        }
     }
 }

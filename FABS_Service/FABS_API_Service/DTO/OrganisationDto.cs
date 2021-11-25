@@ -31,5 +31,11 @@ namespace FABS_API_Service.DTO
             Name = name;
             Address = address;
         }
+
+        public OrganisationDto(string cvr, string name)
+        {
+            Cvr = cvr;
+            Name = name;
+        }
     }
 }
