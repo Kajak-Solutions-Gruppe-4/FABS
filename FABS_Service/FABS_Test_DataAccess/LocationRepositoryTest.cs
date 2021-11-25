@@ -32,75 +32,7 @@ namespace FABS_Test_DataAccess
                 List<object[]> data = GetData("Seed").ToList();
 
 
-                context.AddRange(data[0][0] as Organisation);
-                    //Support classes
-                    data[0][0] as Country,
-                    data[0][1] as ZipcodeCountryCity,
-                    data[0][2] as Address,
-                    data[0][3] as Organisation,
-                    //person classes
-                    data[0][4] as Login,
-                    data[0][5] as Address,
-                    data[0][6] as Person,
-                    data[0][7] as OrganisationPerson,
-                    //Warehouse classes
-                    data[0][8] as Address,
-                    data[0][9] as Warehouse,
-                    //Location classes
-                    data[0][10] as Location
-                    );
-
-                    //Support classes
-                    data[0][0] as Country,
-                    data[0][1] as ZipcodeCountryCity,
-                    data[0][2] as Address,
-                    data[0][3] as Organisation,
-                    //person classes
-                    data[0][4] as Login,
-                    data[0][5] as Address,
-                    data[0][6] as Person,
-                    data[0][7] as OrganisationPerson,
-                    //Warehouse classes
-                    data[0][8] as Address,
-                    data[0][9] as Warehouse,
-                    //Location classes
-                    data[0][10] as Location
-                    );
-
-                    //Support classes
-                    data[0][0] as Country,
-                    data[0][1] as ZipcodeCountryCity,
-                    data[0][2] as Address,
-                    data[0][3] as Organisation,
-                    //person classes
-                    data[0][4] as Login,
-                    data[0][5] as Address,
-                    data[0][6] as Person,
-                    allData.Add(new object[] { 1, true });
-                    //Warehouse classes
-                    data[0][8] as Address,
-                    data[0][9] as Warehouse,
-                    //Location classes
-                    data[0][10] as Location
-                    );
-
-                    //Support classes
-                    data[0][0] as Country,
-                    data[0][1] as ZipcodeCountryCity,
-                    data[0][2] as Address,
-                    data[0][3] as Organisation,
-                    //person classes
-                    data[0][4] as Login,
-                    data[0][5] as Address,
-                    data[0][6] as Person,
-                    data[0][7] as OrganisationPerson,
-                    //Warehouse classes
-                    data[0][8] as Address,
-                    data[0][9] as Warehouse,
-                    //Location classes
-                    data[0][10] as Location
-                    );
-
+                context.AddRange(data[0][0] as Organisation
                 context.SaveChanges();
 
             }
