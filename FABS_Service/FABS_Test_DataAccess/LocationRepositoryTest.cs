@@ -31,41 +31,57 @@ namespace FABS_Test_DataAccess
 
                 List<object[]> data = GetData("Seed").ToList();
 
+                //Populate Location related classes
+                context.AddRange(
+                    //Support classes
+                    data[0][0] as Country,
+                    data[0][1] as ZipcodeCountryCity,
+                    data[0][2] as Address,
+                    data[0][3] as Organisation,
+                    //person classes
+                    data[0][4] as Login,
+                    data[0][5] as Address,
+                    data[0][6] as Person,
+                    data[0][7] as OrganisationPerson,
+                    //Warehouse classes
+                    data[0][8] as Address,
+                    data[0][9] as Warehouse,
+                    //Location classes
+                    data[0][10] as Location
+                    );
 
                 context.AddRange(data[0][0] as Organisation
                 context.SaveChanges();
-
             }
         }
 
         public static IEnumerable<object[]> GetData(string nameOfCaller)
         {
             //Create Location test objects
-            //Zipcode/Country test objects
+                //Zipcode/Country test objects
             Country country1 = new Country("Denmark");
             ZipcodeCountryCity zipcodeCountryCity1 = new ZipcodeCountryCity("9000", country1, "Aalborg");
-            //Organisation test objects
-            Address address1 = new Address("Sofiendalsvej", "60", null, zipcodeCountryCity1);
-            Organisation organisation1 = new Organisation("12341234", "UCN Kajakker", address1);
-            //Person test objects
+                //Organisation test objects
+            Address organisationAddress1 = new Address("Sofiendalsvej", "60", null, zipcodeCountryCity1);
+            Organisation organisation1 = new Organisation("12341234", "UCN Kajakker", organisationAddress1);
+                //Person test objects
             Login login1 = new Login("test1@test.com", "1234");
-            Login login2 = new Login("test2@test.com", "1234");
-
-            Person person1 = new Person("Peter", "Hahn", "20202020", false, address1, login1);
-
-            OrganisationPerson organisationPerson1 = new OrganisationPerson(organisation1, person1);
-            //organisation1.OrganisationPeople.Add(organisationPerson1);
-
-
-            //Warehouse test objects
+            Address personAddress1 = new Address("Sofiendalsvej", "60", null, zipcodeCountryCity1);
+            Person person1 = new Person("Peter", "Hahn", "20202020", false, personAddress1, login1);
+                //Warehouse test objects
             Address warehouseAddress1 = new Address("Sofiendalsvej", "60A", null, zipcodeCountryCity1);
-            Warehouse warehouse1 = new Warehouse("Building A", warehouseAddress1);
-            //Location test objects
-            Location location1 = new Location("1.2.3", "This is an awesome location spot 1", warehouse1, null, organisation1);
-            Location location2 = new Location("1.2.4", "This is an awesome location spot 2", warehouse1, null, organisation1);
-            Location location3 = new Location("1.2.5", "This is an awesome location spot 3", warehouse1, null, organisation1);
+            Warehouse warehouse1 = new Warehouse("Building A", organisationAddress1);
+                //Location test objects
+            Location location1 = new Location("1.2.3", "This is an awesome location spot 1", warehouse1, person1, organisation1);
+            Location location2 = new Location("1.2.4", "This is an awesome location spot 2", warehouse1, person1, organisation1);
+            Location location3 = new Location("1.2.5", "This is an awesome location spot 3", warehouse1, person1, organisation1);
 
-            organisation1.Locations.Add(location1);
+                //Join tables test objects
+            List<OrganisationPerson> organisationPersonList = new List<OrganisationPerson>();
+            OrganisationPerson organisationPerson1 = new OrganisationPerson(organisation1, person1);
+            organisationPersonList.Add(organisationPerson1);
+            organisation1.OrganisationPeople = organisationPersonList;
+            person1.OrganisationPeople = organisationPersonList;
 
             //adding test obejcts to list
             var allData = new List<object[]>();
@@ -79,8 +95,8 @@ namespace FABS_Test_DataAccess
                     allData.Add(new object[] { 1, false });
                     break;
                 case "CreateLocation":
-                    allData.Add(new object[] { location2, true });
-                    allData.Add(new object[] { location3, false });
+                    allData.Add(new object[] { location2, false });
+                    allData.Add(new object[] { location3, true });
                     break;
                 default:
                     break;
@@ -102,7 +118,7 @@ namespace FABS_Test_DataAccess
                 {
                     //Location
                     Assert.Equal("1.2.3", location.PickLocation);
-                    Assert.Equal("This is an awesome location spot 1", location.Description);
+                    Assert.Equal("This is an awesome location spot 2", location.Description);
 
                     //Warehouse
                     Assert.Equal("Building A", location.Warehouses.Name);
@@ -114,22 +130,21 @@ namespace FABS_Test_DataAccess
                     Assert.Equal("Aalborg", location.Warehouses.Addresses.ZipcodeCountryCity.City);
                     Assert.Equal("Denmark", location.Warehouses.Addresses.ZipcodeCountryCity.Countries.Name);
 
-                    //// See comment at line 187
-                    ////Person
-                    //Assert.Equal("Peter", location.People.FirstName);
-                    //Assert.Equal("Hahn", location.People.LastName);
-                    //Assert.Equal("20202020", location.People.TelephoneNumber);
-                    //Assert.False(location.People.IsAdmin);
-                    ////login
-                    //Assert.Equal("test1@test.com", location.People.Login.Email);
-                    //Assert.Equal("1234", location.People.Login.Password);
-                    ////Person Address
-                    //Assert.Equal("Sofiendalsvej", location.People.Addresses.StreetName);
-                    //Assert.Equal("60", location.People.Addresses.StreetNumber);
-                    //Assert.Null(location.People.Addresses.ApartmentNumber);
-                    //Assert.Equal("9000", location.People.Addresses.ZipcodeCountryCity.Zipcode);
-                    //Assert.Equal("Aalborg", location.People.Addresses.ZipcodeCountryCity.City);
-                    //Assert.Equal("Denmark", location.People.Addresses.ZipcodeCountryCity.Countries.Name);
+                    //Person
+                    Assert.Equal("Peter", location.People.FirstName);
+                    Assert.Equal("Hahn", location.People.LastName);
+                    Assert.Equal("20202020", location.People.TelephoneNumber);
+                    Assert.False(location.People.IsAdmin);
+                    //login
+                    Assert.Equal("test1@test.com", location.People.Login.Email);
+                    Assert.Equal("1234", location.People.Login.Password);
+                    //Person Address
+                    Assert.Equal("Sofiendalsvej", location.People.Addresses.StreetName);
+                    Assert.Equal("60", location.People.Addresses.StreetNumber);
+                    Assert.Null(location.People.Addresses.ApartmentNumber);
+                    Assert.Equal("9000", location.People.Addresses.ZipcodeCountryCity.Zipcode);
+                    Assert.Equal("Aalborg", location.People.Addresses.ZipcodeCountryCity.City);
+                    Assert.Equal("Denmark", location.People.Addresses.ZipcodeCountryCity.Countries.Name);
 
                     //Organisation
                     Assert.Equal("12341234", location.Organisations.Cvr);
@@ -167,7 +182,7 @@ namespace FABS_Test_DataAccess
                 var result = locationRepository.Get(returnedID, 1);
 
                 //assert
-                if (expectedSuccess == true && returnedID > 0)
+                if(expectedSuccess == true && returnedID > 0)
                 {
                     //Location
                     Assert.Equal(result.PickLocation, location.PickLocation);
@@ -183,23 +198,21 @@ namespace FABS_Test_DataAccess
                     Assert.Equal(result.Warehouses.Addresses.ZipcodeCountryCity.City, location.Warehouses.Addresses.ZipcodeCountryCity.City);
                     Assert.Equal(result.Warehouses.Addresses.ZipcodeCountryCity.Countries.Name, location.Warehouses.Addresses.ZipcodeCountryCity.Countries.Name);
 
-                    ////Comented out because if we create a location that has been setup with at person object (see Line 65-67) 
-                    ////it tries to create them in DB and throw and duplicate error
-                    ////Person
-                    //Assert.Equal(result.People.FirstName, location.People.FirstName);
-                    //Assert.Equal(result.People.LastName, location.People.LastName);
-                    //Assert.Equal(result.People.TelephoneNumber, location.People.TelephoneNumber);
-                    //Assert.Equal(result.People.IsAdmin, location.People.IsAdmin);
-                    ////login
-                    //Assert.Equal(result.People.Login.Email, location.People.Login.Email);
-                    //Assert.Equal(result.People.Login.Password, location.People.Login.Password);
-                    ////Person Address
-                    //Assert.Equal(result.People.Addresses.StreetName, location.People.Addresses.StreetName);
-                    //Assert.Equal(result.People.Addresses.StreetNumber, location.People.Addresses.StreetNumber);
-                    //Assert.Equal(result.People.Addresses.ApartmentNumber, location.People.Addresses.ApartmentNumber);
-                    //Assert.Equal(result.People.Addresses.ZipcodeCountryCity.Zipcode, location.People.Addresses.ZipcodeCountryCity.Zipcode);
-                    //Assert.Equal(result.People.Addresses.ZipcodeCountryCity.City, location.People.Addresses.ZipcodeCountryCity.City);
-                    //Assert.Equal(result.People.Addresses.ZipcodeCountryCity.Countries.Name, location.People.Addresses.ZipcodeCountryCity.Countries.Name);
+                    //Person
+                    Assert.Equal(result.People.FirstName, location.People.FirstName);
+                    Assert.Equal(result.People.LastName, location.People.LastName);
+                    Assert.Equal(result.People.TelephoneNumber, location.People.TelephoneNumber);
+                    Assert.Equal(result.People.IsAdmin, location.People.IsAdmin);
+                    //login
+                    Assert.Equal(result.People.Login.Email, location.People.Login.Email);
+                    Assert.Equal(result.People.Login.Password, location.People.Login.Password);
+                    //Person Address
+                    Assert.Equal(result.People.Addresses.StreetName, location.People.Addresses.StreetName);
+                    Assert.Equal(result.People.Addresses.StreetNumber, location.People.Addresses.StreetNumber);
+                    Assert.Equal(result.People.Addresses.ApartmentNumber, location.People.Addresses.ApartmentNumber);
+                    Assert.Equal(result.People.Addresses.ZipcodeCountryCity.Zipcode, location.People.Addresses.ZipcodeCountryCity.Zipcode);
+                    Assert.Equal(result.People.Addresses.ZipcodeCountryCity.City, location.People.Addresses.ZipcodeCountryCity.City);
+                    Assert.Equal(result.People.Addresses.ZipcodeCountryCity.Countries.Name, location.People.Addresses.ZipcodeCountryCity.Countries.Name);
 
                     //Organisation
                     Assert.Equal(result.Organisations.Cvr, location.Organisations.Cvr);

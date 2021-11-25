@@ -35,9 +35,6 @@ namespace FABS_DataAccess.Repository
                     //Organisation
                 .Include(o1 => o1.Organisations)
                 .ThenInclude(o2 => o2.OrganisationPeople)
-                    // Organization adress
-                .Include(o => o.Organisations)
-                .ThenInclude(o => o.Addresses)
                     //Default
                 .FirstOrDefault(x => x.Id == id);
             }
@@ -56,13 +53,13 @@ namespace FABS_DataAccess.Repository
             try
             {
                 listLocation = _context.Locations
-                //Warehouse
+                    //Warehouse
                 .Include(w => w.Warehouses)
-                //Location
+                    //Location
                 .ThenInclude(a => a.Addresses)
                 .ThenInclude(z => z.ZipcodeCountryCity)
                 .ThenInclude(c => c.Countries)
-                //Person
+                    //Person
                 .Include(p => p.People)
                 .ThenInclude(l => l.Login)
                     //Organisation
