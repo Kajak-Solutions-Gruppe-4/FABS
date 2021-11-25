@@ -11,8 +11,9 @@
 
         }
 
-        public StatusDto(string name, string category)
+        public StatusDto(int id, string name, string category)
         {
+            Id = id;
             Name = name;
             Category = category;
         }

@@ -14,7 +14,7 @@ namespace FABS_Test_DataAccess
 
     public class BookingRepositoryTest : IDisposable
     {
-        //WIP code for when we start working on Booking
+        ////WIP code for when we start working on Booking
         //// The constroctur is called before every test
         //public BookingRepositoryTest()
         //{
@@ -58,23 +58,23 @@ namespace FABS_Test_DataAccess
         //public static IEnumerable<object[]> GetData(string nameOfCaller)
         //{
         //    //Create Booking test objects
-        //        //Status test objects
+        //    //Status test objects
         //    Status status1 = new Status("Item Status", "Looking Good");
-        //        //Zipcode/Country test objects
+        //    //Zipcode/Country test objects
         //    Country country1 = new Country("Denmark");
         //    ZipcodeCountryCity zipcodeCountryCity1 = new ZipcodeCountryCity("9000", country1, "Aalborg");
-        //        //Organisation test objects
+        //    //Organisation test objects
         //    Address organisationAddress1 = new Address("Sofiendalsvej", "60", null, zipcodeCountryCity1);
         //    Organisation organisation1 = new Organisation("12341234", "UCN Kajakker", organisationAddress1);
-        //        //Person test objects
+        //    //Person test objects
         //    Login login1 = new Login("test1@test.com", "1234");
         //    Address personAddress1 = new Address("Sofiendalsvej", "60", null, zipcodeCountryCity1);
         //    Person person1 = new Person("Peter", "Hahn", "20202020", false, personAddress1, login1);
 
-        //        //Booking test objects
-        //            //DateTime - year - month – day – hour – minute - second
+        //    //Booking test objects
+        //    //DateTime - year - month – day – hour – minute - second
         //    DateTime date1 = new DateTime(2021, 12, 1, 12, 0, 0);
-        //    DateTime date2 = new DateTime(2021, 12 ,1 , 14, 0, 0);
+        //    DateTime date2 = new DateTime(2021, 12, 1, 14, 0, 0);
         //    DateTime date3 = new DateTime(2021, 12, 1, 14, 0, 0);
         //    DateTime date4 = new DateTime(2021, 12, 1, 16, 0, 0);
         //    DateTime date5 = new DateTime(2021, 12, 1, 16, 0, 0);
@@ -83,7 +83,7 @@ namespace FABS_Test_DataAccess
         //    Booking booking2 = new Booking(date3, date4, person1, status1);
         //    Booking booking3 = new Booking(date5, date6, person1, status1);
 
-        //        //Join tables test objects
+        //    //Join tables test objects
         //    List<OrganisationPerson> organisationPersonList = new List<OrganisationPerson>();
         //    OrganisationPerson organisationPerson1 = new OrganisationPerson(organisation1, person1);
         //    organisationPersonList.Add(organisationPerson1);
@@ -91,7 +91,7 @@ namespace FABS_Test_DataAccess
         //    person1.OrganisationPeople = organisationPersonList;
 
         //    //adding test objects to list
-        //    var allData.Add(new object[]);
+        //    var allData.Add(new object[0]);
         //    switch (nameOfCaller)
         //    {
         //        case "Seed":
@@ -141,7 +141,7 @@ namespace FABS_Test_DataAccess
 
         //        Booking booking = BookingRepository.Get(id, 1);
 
-        //        if(expectedSuccess == true)
+        //        if (expectedSuccess == true)
         //        {
         //            //Person
         //            Assert.Equal("Peter", booking.People.FirstName);
@@ -164,7 +164,7 @@ namespace FABS_Test_DataAccess
         //            Assert.Equal("12341234", booking.People.OrganisationPeople.ToList()[0].Organisations.Name);
         //        }
 
-        //        else if(expectedSuccess == false)
+        //        else if (expectedSuccess == false)
         //        {
         //            Assert.Null(booking);
         //        }
@@ -181,27 +181,27 @@ namespace FABS_Test_DataAccess
         //        BookingRepository bookingRepository = new BookingRepository();
 
         //        //act
-        //        int returnedID = locationRepository.Create(booking);
-        //        var result = locationRepository.Get(returnedID, 1);
+        //        int returnedID = bookingRepository.Create(booking);
+        //        var result = bookingRepository.Get(returnedID, 1);
 
         //        //assert
         //        if (expectedSuccess == true && returnedID > 0)
         //        {
         //            //Person
-        //            Assert.Equal(result.booking.People.FirstName, booking.People.FirstName);
-        //            Assert.Equal(result.booking.People.LastName, booking.People.LastName);
-        //            Assert.Equal(result.booking.People.TelephoneNumber, booking.People.TelephoneNumber);
-        //            Assert.Equal(result.booking.People.IsAdmin, booking.People.IsAdmin);
+        //            Assert.Equal(result.People.FirstName, booking.People.FirstName);
+        //            Assert.Equal(result.People.LastName, booking.People.LastName);
+        //            Assert.Equal(result.People.TelephoneNumber, booking.People.TelephoneNumber);
+        //            Assert.Equal(result.People.IsAdmin, booking.People.IsAdmin);
         //            //login
-        //            Assert.Equal(result.booking.People.Login.Email, booking.People.Login.Email);
-        //            Assert.Equal(result.booking.People.Login.Password, booking.People.Login.Password);
+        //            Assert.Equal(result.People.Login.Email, booking.People.Login.Email);
+        //            Assert.Equal(result.People.Login.Password, booking.People.Login.Password);
         //            //Person Address
-        //            Assert.Equal(result.booking.People.Addresses.StreetName, booking.People.Addresses.StreetName);
-        //            Assert.Equal(result.booking.People.Addresses.StreetNumber, booking.People.Addresses.StreetNumber);
+        //            Assert.Equal(result.People.Addresses.StreetName, booking.People.Addresses.StreetName);
+        //            Assert.Equal(result.People.Addresses.StreetNumber, booking.People.Addresses.StreetNumber);
         //            Assert.Equal(result.People.Addresses.ApartmentNumber, booking.People.Addresses.ApartmentNumber);
-        //            Assert.Equal(result.booking.People.Addresses.ZipcodeCountryCity.Zipcode, booking.People.Addresses.ZipcodeCountryCity.Zipcode);
-        //            Assert.Equal(result.booking.People.Addresses.ZipcodeCountryCity.City, booking.People.Addresses.ZipcodeCountryCity.City);
-        //            Assert.Equal(result.booking.People.Addresses.ZipcodeCountryCity.Countries.Name, booking.People.Addresses.ZipcodeCountryCity.Countries.Name);
+        //            Assert.Equal(result.People.Addresses.ZipcodeCountryCity.Zipcode, booking.People.Addresses.ZipcodeCountryCity.Zipcode);
+        //            Assert.Equal(result.People.Addresses.ZipcodeCountryCity.City, booking.People.Addresses.ZipcodeCountryCity.City);
+        //            Assert.Equal(result.People.Addresses.ZipcodeCountryCity.Countries.Name, booking.People.Addresses.ZipcodeCountryCity.Countries.Name);
 
         //            if (booking.People.OrganisationPeople.Count > 0)
         //            {
@@ -219,14 +219,14 @@ namespace FABS_Test_DataAccess
         //    }
         //}
 
-        //public void Dispose()
-        //{
-        //    RepopulateDatabase.Seed();
-        //}
-
         public void Dispose()
         {
-            throw new NotImplementedException();
+            RepopulateDatabase.Seed();
         }
+
+        //public void Dispose()
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

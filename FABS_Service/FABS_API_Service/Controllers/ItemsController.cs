@@ -45,7 +45,7 @@ namespace FABS_API_Service.Controllers
             return Ok(items);
         }
 
- 
+
 
         // GET api/<ItemsController>/5
         [HttpGet("{id}")]
@@ -72,30 +72,50 @@ namespace FABS_API_Service.Controllers
         {
         }
 
-        
+
 
         private ItemDto ConvertModelToDto(Item item)
         {
+            //Getting the item
+            int id = item.Id;
 
             OrganisationDto organisationDto = new OrganisationDto(
+                item.Organisations.Id,
                 item.Organisations.Cvr,
-                item.Organisations.Name    
+                item.Organisations.Name
                 );
 
-            StatusDto statusDto = new StatusDto(
+            //Check if item has a status
+            StatusDto statusDto = null;
+            if (item.Statuses != null)
+            {
+                statusDto = new StatusDto(
+                item.Statuses.Id,
                 item.Statuses.Name,
                 item.Statuses.Category
                 );
-
-            LocationDto locationDto = new LocationDto(
+            }
+            //Check if item has a location
+            LocationDto locationDto = null;
+            if (item.Locations != null)
+            {
+                locationDto = new LocationDto(
+                item.Locations.Id,
                 item.Locations.PickLocation,
                 item.Locations.Description
                 );
-            ItemTypeDto itemTypeDto = new ItemTypeDto(
-                item.ItemTypes.Name
-                );
+            }
+            ItemTypeDto itemTypeDto = null;
+            if (item.ItemTypes != null)
+            {
+                itemTypeDto = new ItemTypeDto(
+                    item.ItemTypes.Id,
+                    item.ItemTypes.Name
+                    );
+            }
 
             ItemDto itemDto = new ItemDto(
+                id,
                 organisationDto,
                 statusDto,
                 locationDto,

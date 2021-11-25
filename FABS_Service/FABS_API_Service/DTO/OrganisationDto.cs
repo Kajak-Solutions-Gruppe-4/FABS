@@ -37,5 +37,12 @@ namespace FABS_API_Service.DTO
             Cvr = cvr;
             Name = name;
         }
+
+        public OrganisationDto(int id, string cvr, string name)
+        {
+            Id = id;
+            Cvr = cvr;
+            Name = name;
+        }
     }
 }

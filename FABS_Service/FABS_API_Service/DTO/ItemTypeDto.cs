@@ -10,8 +10,9 @@
 
         }
 
-        public ItemTypeDto(string name)
+        public ItemTypeDto(int id, string name)
         {
+            Id = id;
             Name = name;
         }
     }

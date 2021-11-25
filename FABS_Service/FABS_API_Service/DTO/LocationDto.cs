@@ -39,8 +39,9 @@ namespace FABS_API_Service.DTO
             Organisation = organisationDto;
         }
 
-        public LocationDto(string pickLocation, string description)
+        public LocationDto(int id, string pickLocation, string description)
         {
+            Id = id;
             PickLocation = pickLocation;
             Description = description;
         }
