@@ -1,5 +1,4 @@
-﻿using FABS_Client_WPF.DTO;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -38,14 +37,14 @@ namespace FABS_Client_WPF.Pages.Items
         {
             //TODO: Implement ItemDTO
 
-            var apiClient = new RestClient("https://localhost:44309/Api");
-            var request = new RestRequest("/items?organisationId=1", DataFormat.Json);
+            //var apiClient = new RestClient("https://localhost:44309/Api");
+            //var request = new RestRequest("/items?organisationId=1", DataFormat.Json);
 
-            var response = apiClient.Execute(request);
+            //var response = apiClient.Execute(request);
 
-            List<ItemDto> listOfItems = JsonConvert.DeserializeObject<List<ItemDto>>(response.Content); 
+            //List<ItemDto> listOfItems = JsonConvert.DeserializeObject<List<ItemDto>>)response.Content);
 
-            Kayaks.ItemsSource = listOfItems;
+            //Kayaks.ItemsSource = listOfItems;
         }
     }
 }

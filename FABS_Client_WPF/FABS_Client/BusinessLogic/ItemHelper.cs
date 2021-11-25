@@ -1,10 +1,9 @@
 ﻿using FABS_Client_WPF.DTO;
-//using Newtonsoft.Json;
+using Newtonsoft.Json;
 using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Text.Json;
 
 namespace FABS_Client_WPF.BusinessLogic
 {
@@ -16,7 +15,7 @@ namespace FABS_Client_WPF.BusinessLogic
             try
             {
                 var request = new RestRequest("items/?organisationId=1", Method.POST, DataFormat.Json);
-                request.AddJsonBody(JsonSerializer.Serialize(item));
+                //request.AddJsonBody(JsonSerializer.Serialize(item));
 
                 var response = _clientItem.Execute(request);
             }

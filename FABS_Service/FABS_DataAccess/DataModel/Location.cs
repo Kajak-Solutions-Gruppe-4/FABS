@@ -32,7 +32,7 @@ namespace FABS_DataAccess.Model
             Organisations = organisations;
         }
 
-        public Location(string pickLocation, string description, int? warehousesId,  int organisationsId, Person people) :this()
+        public Location( string pickLocation, string description, int? warehousesId,  int organisationsId, Person people) :this()
         {
             
             PickLocation = pickLocation;
