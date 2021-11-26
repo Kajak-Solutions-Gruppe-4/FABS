@@ -53,33 +53,34 @@
         <TextBlock Grid.Column="1" Grid.Row="1" FontSize="20" FontWeight="Bold" Text="Opret Kajak" FontFamily="Segce UI" Grid.ColumnSpan="4" Margin="15"/>
 
         <!--Create Item label & texfeild-->
-        <TextBlock Grid.Column="1" Grid.Row="3" FontWeight="SemiBold" Text="Kajaknavn: " FontFamily="Segce UI" Margin="3"/>
+        <TextBlock Grid.Column="1" Grid.Row="3" FontWeight="SemiBold" Text="Enhed navn: " FontFamily="Segce UI" Margin="3"/>
         <TextBox x:Name="itemNameText" Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="2" />
 
-        <TextBlock Grid.Column="1" Grid.Row="4" FontWeight="SemiBold" Text="Kajaktype: " FontFamily="Segce UI" Margin="3"/>
-        <TextBox x:Name="itemTypeText" Grid.Column="2" Grid.Row="4" Grid.ColumnSpan="2" />
-
-        <TextBlock Grid.Column="1" Grid.Row="6" FontWeight="SemiBold" Text="Længde: " FontFamily="Segce UI" Margin="3"/>
-        <TextBox x:Name="kayakLengthText" Grid.Column="2" Grid.Row="6" Grid.ColumnSpan="2" />
-
-        <TextBlock Grid.Column="1" Grid.Row="7" FontWeight="SemiBold" Text="Max last (kg): " FontFamily="Segce UI" Margin="3"/>
-        <TextBox x:Name="WeightText" Grid.Column="2" Grid.Row="7" Grid.ColumnSpan="2" />
-
-        <TextBlock Grid.Column="1" Grid.Row="8" FontWeight="SemiBold" Text="Personer/kapacitet: " FontFamily="Segce UI" Margin="3"/>
-        <TextBox x:Name="personCapacityText" Grid.Column="2" Grid.Row="8" Grid.ColumnSpan="2" />
-
-        <TextBlock Grid.Column="1" Grid.Row="10" FontWeight="SemiBold" Text="Lager: " FontFamily="Segce UI" Margin="3"/>
-        <ComboBox x:Name = "warehouse" Grid.Column="2" Grid.Row="10" Grid.ColumnSpan="2">
+        <TextBlock Grid.Column="1" Grid.Row="4" FontWeight="SemiBold" Text="Enhed type: " FontFamily="Segce UI" Margin="3"/>
+        <ComboBox x:Name = "itemTypeDropDown" Grid.Column="2" Grid.Row="4" Grid.ColumnSpan="2">
             <ComboBoxItem IsSelected="True">Udvælg</ComboBoxItem>
             <ComboBoxItem>ComboBox Item #2</ComboBoxItem>
             <ComboBoxItem>ComboBox Item #3</ComboBoxItem>
         </ComboBox>
+        
+        <TextBlock Grid.Column="1" Grid.Row="6" FontWeight="SemiBold" Text="Længde: " FontFamily="Segce UI" Margin="3"/>
+        <TextBox x:Name="kayakLengthText" Grid.Column="2" Grid.Row="6" Grid.ColumnSpan="2" />
 
-        <TextBlock Grid.Column="1" Grid.Row="11" FontWeight="SemiBold" Text="Lagerplads: " FontFamily="Segce UI" Margin="3"/>
-        <TextBox x:Name="pickitLocationText" Grid.Column="2" Grid.Row="11" Grid.ColumnSpan="2" />
+        <TextBlock Grid.Column="1" Grid.Row="7" FontWeight="SemiBold" Text="Max last (kg): " FontFamily="Segce UI" Margin="3"/>
+        <TextBox x:Name="kayakWeightText" Grid.Column="2" Grid.Row="7" Grid.ColumnSpan="2" />
+
+        <TextBlock Grid.Column="1" Grid.Row="8" FontWeight="SemiBold" Text="Personer/kapacitet: " FontFamily="Segce UI" Margin="3"/>
+        <TextBox x:Name="kayakPersonCapacityText" Grid.Column="2" Grid.Row="8" Grid.ColumnSpan="2" />
+
+        <TextBlock Grid.Column="1" Grid.Row="10" FontWeight="SemiBold" Text="Lagerplads: " FontFamily="Segce UI" Margin="3"/>
+        <ComboBox x:Name = "locationDropDown" Grid.Column="2" Grid.Row="10" Grid.ColumnSpan="2">
+            <ComboBoxItem IsSelected="True">Ingen</ComboBoxItem>
+            <ComboBoxItem>ComboBox Item #2</ComboBoxItem>
+            <ComboBoxItem>ComboBox Item #3</ComboBoxItem>
+        </ComboBox>
 
         <TextBlock Grid.Column="1" Grid.Row="12" FontWeight="SemiBold" Text="Beskrivelse: " FontFamily="Segce UI" Margin="3"/>
-        <TextBox x:Name="DecriptionText" Grid.Column="2" Grid.Row="12" Grid.ColumnSpan="2" />
+        <TextBox x:Name="itemTypeDecriptionText" Grid.Column="2" Grid.Row="12" Grid.ColumnSpan="2" />
 
         <Button Content="Tilbage" Grid.Column="2" Grid.Row="14" Width="75" Click="BackButton"/>
         <Button Content="Opret Kajak" Grid.Column="3" Grid.Row="14" Width="75" Click="CreatKayakButton"/>

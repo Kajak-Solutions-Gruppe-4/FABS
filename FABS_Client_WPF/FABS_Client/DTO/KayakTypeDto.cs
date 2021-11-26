@@ -4,7 +4,7 @@ using System.Text;
 
 namespace FABS_Client_WPF.DTO
 {
-    class KayakTypeDto
+    public class KayakTypeDto
     {
         public ItemTypeDto ItemTypesId { get; set; }
         public string Description { get; set; }
@@ -20,6 +20,14 @@ namespace FABS_Client_WPF.DTO
         public KayakTypeDto(ItemTypeDto itemTypesId, string description, int weightLimit, decimal lengthMeter, int personCapacity)
         {
             ItemTypesId = itemTypesId;
+            Description = description;
+            WeightLimit = weightLimit;
+            LengthMeter = lengthMeter;
+            PersonCapacity = personCapacity;
+        }
+
+        public KayakTypeDto(string description, int weightLimit, decimal lengthMeter, int personCapacity)
+        {
             Description = description;
             WeightLimit = weightLimit;
             LengthMeter = lengthMeter;
