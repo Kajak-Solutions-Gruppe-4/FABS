@@ -13,24 +13,24 @@
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width ="20" />
-            <ColumnDefinition Width ="auto" />
-            <ColumnDefinition Width ="auto" />
-            <ColumnDefinition Width ="auto" />
-            <ColumnDefinition Width ="auto" />
-            <ColumnDefinition Width ="auto" />
-            <ColumnDefinition Width ="auto" />
-            <ColumnDefinition Width ="auto" />
-            <ColumnDefinition Width ="auto" />
+            <ColumnDefinition Width ="100" />
             <ColumnDefinition Width ="auto" />
             <ColumnDefinition Width ="*" />
+            <ColumnDefinition Width ="auto" />
+            <ColumnDefinition Width ="auto" />
+            <ColumnDefinition Width ="auto" />
+            <ColumnDefinition Width ="auto" />
+            <ColumnDefinition Width ="auto" />
+            <ColumnDefinition Width ="auto" />
+            <ColumnDefinition Width ="auto" />
             <ColumnDefinition Width ="20" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="20"/>
-            <RowDefinition Height="auto"/>
             <RowDefinition Height="20"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
@@ -59,16 +59,14 @@
         <ListView Margin="10" Name="Kayaks" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" VerticalAlignment="Top" MaxHeight="200">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Kajaknavn" Width="auto" DisplayMemberBinding="{Binding Path=FirstName}" />
-                    <GridViewColumn Header="Kajaktype" Width="auto" DisplayMemberBinding="{Binding Path=LastName}" />
-                    <GridViewColumn Header="Længde" Width="auto" DisplayMemberBinding="{Binding Path=TelephoneNumber}" />
-                    <GridViewColumn Header="Max lastvægt" Width="auto" DisplayMemberBinding="{Binding Path=Email}"/>
-                    <GridViewColumn Header="Antal personer" Width="150"  DisplayMemberBinding="{Binding Path=FullAddress}" />
-                    <!--<GridViewColumn Header="Gadenavn" Width="auto" DisplayMemberBinding="{Binding Path=addresses.StreetName}" />-->
-                    <!--<GridViewColumn Header="Gadenummer" Width="auto" DisplayMemberBinding="{Binding Path=addresses.StreetNumber}" />-->
-                    <!--<GridViewColumn Header="Lejlighed Nummer" Width="auto" DisplayMemberBinding="{Binding Path=addresses.ApartmentNumber}" />-->
-                    <GridViewColumn Header="Lokation" Width="auto" DisplayMemberBinding="{Binding Path=Address.Zipcode}" />
-                    <GridViewColumn Header="Plads" Width="auto" DisplayMemberBinding="{Binding Path=Address.City}" />
+                    <GridViewColumn Header="Kajaknavn" Width="auto" DisplayMemberBinding="{Binding Path=ItemTypesId.Name}" />
+                    <GridViewColumn Header="Beskrivelse" Width="auto" DisplayMemberBinding="{Binding Path=ItemTypesId.KayakType.Description}" />
+                    <GridViewColumn Header="Længde" Width="auto" DisplayMemberBinding="{Binding Path=ItemTypesId.KayakType.LengthMeter}" />
+                    <GridViewColumn Header="Max lastvægt" Width="auto" DisplayMemberBinding="{Binding Path=ItemTypesId.KayakType.WeightLimit}"/>
+                    <GridViewColumn Header="Antal personer" Width="auto"  DisplayMemberBinding="{Binding Path=ItemTypesId.KayakType.PersonCapacity}" />
+                    <GridViewColumn Header="Lokation" Width="auto" DisplayMemberBinding="{Binding Path=LocationsId.PickLocation}" />
+                    <!--<GridViewColumn Header="Plads" Width="auto" DisplayMemberBinding="{Binding Path=Address.City}" />-->
+                    <GridViewColumn Header="Status" Width="auto" DisplayMemberBinding="{Binding Path=StatusesId.Name}" />
 
 
                 </GridView>

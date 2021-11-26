@@ -25,6 +25,7 @@ namespace FABS_Client_WPF.Pages.Items
         public ItemGUI()
         {
             InitializeComponent();
+            RefreshList();
         }
 
         private void CreateKayakButton(object sender, RoutedEventArgs e)
