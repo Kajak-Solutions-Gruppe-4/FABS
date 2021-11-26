@@ -8,15 +8,19 @@ using FABS_Client_WPF;
 using FABS_Client_WPF.DTO;
 using Newtonsoft;
 using Newtonsoft.Json;
-
+using System.Windows.Input;
+using System.Xml;
 
 namespace FABS_Client_WPF.Pages.Persons
 {
+
     /// <summary>
     /// Interaction logic for PersonsGUI.xaml
     /// </summary>
     public partial class PersonsGUI : Page
     {
+        public var editPerson { get; set; }
+
         public PersonsGUI()
         {
             InitializeComponent();
@@ -45,5 +49,24 @@ namespace FABS_Client_WPF.Pages.Persons
 
             Users.ItemsSource = listOfPeople;
         }
+
+        public void listViewItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            //XmlElement User = ((ListViewItem)sender).Content as XmlElement;
+
+
+            editPerson = ((ListViewItem)sender).Content;
+
+            //var usinfo = (people)person.IsSelected;
+            
+
+            UpdatePersonWindow updatePersonWindow = new UpdatePersonWindow(this.editPerson);
+            //updatePersonWindow.Owner = this;
+            
+            
+            updatePersonWindow.Show();
+
+        }
+
     }
 }

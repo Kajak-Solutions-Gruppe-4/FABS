@@ -1,0 +1,88 @@
+﻿<Window x:Class="FABS_Client_WPF.Pages.Persons.UpdatePersonWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FABS_Client_WPF.Pages.Persons"
+        mc:Ignorable="d"
+        Title="UpdatePersonWindow" Height="410" Width="340">
+    <Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width ="20" />
+            <ColumnDefinition Width ="auto" />
+            <ColumnDefinition Width ="auto" />
+            <ColumnDefinition Width ="auto" />
+            <ColumnDefinition Width ="auto" />
+            <ColumnDefinition Width ="auto" />
+            <ColumnDefinition Width ="auto" />
+            <ColumnDefinition Width ="auto" />
+            <ColumnDefinition Width ="auto" />
+            <ColumnDefinition Width ="auto" />
+            <ColumnDefinition Width ="*" />
+            <ColumnDefinition Width ="20" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="20"/>
+
+            <RowDefinition Height="Auto"/>
+
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Column="1" Grid.Row="1" FontSize="20" FontWeight="Bold" Text="Rediger medlem" FontFamily="Segce UI" Grid.ColumnSpan="4" Margin="15"/>
+
+        <TextBlock Grid.Column="1" Grid.Row="3" FontWeight="SemiBold" Text="Fornavn: " FontFamily="Segce UI" Margin="3"/>
+        <TextBox x:Name="firstNameText" Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="2" />
+
+        <TextBlock Grid.Column="1" Grid.Row="4" FontWeight="SemiBold" Text="Efternavn: " FontFamily="Segce UI" Margin="3"/>
+        <TextBox x:Name="lastNameText" Grid.Column="2" Grid.Row="4" Grid.ColumnSpan="2" />
+
+        <TextBlock Grid.Column="1" Grid.Row="5" FontWeight="SemiBold" Text="Email: " FontFamily="Segce UI" Margin="3"/>
+        <TextBox x:Name="emailText" Grid.Column="2" Grid.Row="5" Grid.ColumnSpan="2"/>
+
+        <TextBlock Grid.Column="1" Grid.Row="6" FontWeight="SemiBold" Text="Tlf.: " FontFamily="Segce UI" Margin="3"/>
+        <TextBox x:Name="tlfText" Grid.Column="2" Grid.Row="6" Grid.ColumnSpan="2"  />
+
+        <TextBlock Grid.Column="1" Grid.Row="8" FontWeight="SemiBold" Text="Gadenavn: " FontFamily="Segce UI" Margin="3"/>
+        <TextBox x:Name="streetnameText" Grid.Column="2" Grid.Row="8" Grid.ColumnSpan="2"  />
+
+        <TextBlock Grid.Column="1" Grid.Row="9" FontWeight="SemiBold" Text="Husnummer: " FontFamily="Segce UI" Margin="3"/>
+        <TextBox x:Name="streetNoText" Grid.Column="2" Grid.Row="9" Grid.ColumnSpan="2"  />
+
+        <TextBlock Grid.Column="1" Grid.Row="10" FontWeight="SemiBold" Text="Lejlighedsnummer.: " FontFamily="Segce UI" Margin="3"/>
+        <TextBox x:Name="apartmentNoText" Grid.Column="2" Grid.Row="10" Grid.ColumnSpan="2" />
+
+        <TextBlock Grid.Column="1" Grid.Row="11" FontWeight="SemiBold" Text="By: " FontFamily="Segce UI" Margin="3"/>
+        <TextBox x:Name="cityText" Grid.Column="2" Grid.Row="11" Grid.ColumnSpan="2" />
+
+        <TextBlock Grid.Column="1" Grid.Row="12" FontWeight="SemiBold" Text="Postnummer: " FontFamily="Segce UI" Margin="3"/>
+        <TextBox x:Name="zipcodeText" Grid.Column="2" Grid.Row="12" Grid.ColumnSpan="2" />
+
+        <TextBlock Grid.Column="1" Grid.Row="13" FontWeight="SemiBold" Text="Systemadministrator: " FontFamily="Segce UI" Margin="3"/>
+        <CheckBox Grid.Column="2" Grid.Row="13"/>
+
+        <Button Content="Tilbage" Grid.Column="2" Grid.Row="15" Width="85" Click="BackButton"/>
+        <Button Content="Opdater oplysninger" Grid.Column="3" Grid.Row="15" Width="85" Click="CreatePersonButton"/>
+
+
+
+    </Grid>
+</Window>

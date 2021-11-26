@@ -50,7 +50,9 @@
 
         <TextBlock Grid.Column="1" Grid.Row="3" FontSize="12" FontWeight="Bold" Text="--- Member List ---" FontFamily="Segce UI" Grid.ColumnSpan="4" Margin="15" TextAlignment="Center"/>
         <ListView Margin="10" Name="Users" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" VerticalAlignment="Top" MaxHeight="200">
+
             <ListView.View>
+                
                 <GridView>
                     <GridViewColumn Header="Fornavn" Width="auto" DisplayMemberBinding="{Binding Path=FirstName}" />
                     <GridViewColumn Header="Efternavn" Width="auto" DisplayMemberBinding="{Binding Path=LastName}" />
@@ -66,6 +68,11 @@
 
                 </GridView>
             </ListView.View>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <EventSetter Event="MouseDoubleClick" Handler="listViewItem_MouseDoubleClick" />
+                </Style>
+            </ListView.ItemContainerStyle>
         </ListView>
 
         <Button Content="Tilbage" Grid.Column="1" Grid.Row="6" Width="75"/>
