@@ -19,7 +19,7 @@ namespace FABS_Client_WPF.Pages.Persons
     /// </summary>
     public partial class PersonsGUI : Page
     {
-        public var editPerson { get; set; }
+        //public object EditPerson { get; set; }
 
         public PersonsGUI()
         {
@@ -52,16 +52,14 @@ namespace FABS_Client_WPF.Pages.Persons
 
         public void listViewItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            //XmlElement User = ((ListViewItem)sender).Content as XmlElement;
 
 
-            editPerson = ((ListViewItem)sender).Content;
 
-            //var usinfo = (people)person.IsSelected;
-            
+            object Person = ((ListViewItem)sender).Content;
 
-            UpdatePersonWindow updatePersonWindow = new UpdatePersonWindow(this.editPerson);
-            //updatePersonWindow.Owner = this;
+
+
+            UpdatePersonWindow updatePersonWindow = new UpdatePersonWindow(Person);
             
             
             updatePersonWindow.Show();

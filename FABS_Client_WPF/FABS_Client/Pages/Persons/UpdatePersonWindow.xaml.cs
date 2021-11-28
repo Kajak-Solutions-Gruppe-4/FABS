@@ -13,6 +13,7 @@ using FABS_Client_WPF.BusinessLogic;
 using FABS_Client_WPF.DTO;
 
 
+
 namespace FABS_Client_WPF.Pages.Persons
 {
     /// <summary>
@@ -20,16 +21,41 @@ namespace FABS_Client_WPF.Pages.Persons
     /// </summary>
     public partial class UpdatePersonWindow : Window
     {
-       // private PersonsGUI _parentWindow;
-        public UpdatePersonWindow()
+        // private PersonsGUI _parentWindow;
+        //public UpdatePersonWindow(this)
+        //{
+        //   // _parentWindow = parentWindow;
+        //    InitializeComponent();
+
+
+        // //firstNameText.Text = person.Firstname;
+
+        //}
+            //public string Person { get; set; }
+        public UpdatePersonWindow(object Person)
         {
-           // _parentWindow = parentWindow;
             InitializeComponent();
 
-           // Person =;
-          
+            string FirstName = ((FABS_Client_WPF.DTO.PersonDto)Person).FirstName;
+            string LastName = ((FABS_Client_WPF.DTO.PersonDto)Person).LastName;
+            string Email = ((FABS_Client_WPF.DTO.PersonDto)Person).Email;
+            string Phone = ((FABS_Client_WPF.DTO.PersonDto)Person).TelephoneNumber;
+            string Street = ((FABS_Client_WPF.DTO.PersonDto)Person).Address.StreetName;
+            string SNum = ((FABS_Client_WPF.DTO.PersonDto)Person).Address.StreetNumber;
+            string AptNum = ((FABS_Client_WPF.DTO.PersonDto)Person).Address.ApartmentNumber;
+            string City = ((FABS_Client_WPF.DTO.PersonDto)Person).Address.City;
+            string Zipcode = ((FABS_Client_WPF.DTO.PersonDto)Person).Address.Zipcode;
 
-         //firstNameText.Text = person.Firstname;
+
+            firstNameText.Text = FirstName;
+            lastNameText.Text = LastName;
+            emailText.Text = Email;
+            tlfText.Text = Phone;
+            streetnameText.Text = Street;
+            streetNoText.Text = SNum;
+            apartmentNoText.Text = AptNum;
+            cityText.Text = City;
+            zipcodeText.Text = Zipcode;
 
         }
 
@@ -38,7 +64,12 @@ namespace FABS_Client_WPF.Pages.Persons
             Close();
         }
 
-        private void CreatePersonButton(object sender, RoutedEventArgs e)
+        private void UpdatePersonButton(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void DeletePersonButton(object sender, RoutedEventArgs e)
         {
             Close();
         }

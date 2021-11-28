@@ -79,9 +79,9 @@
         <TextBlock Grid.Column="1" Grid.Row="13" FontWeight="SemiBold" Text="Systemadministrator: " FontFamily="Segce UI" Margin="3"/>
         <CheckBox Grid.Column="2" Grid.Row="13"/>
 
-        <Button Content="Tilbage" Grid.Column="2" Grid.Row="15" Width="85" Click="BackButton"/>
-        <Button Content="Opdater oplysninger" Grid.Column="3" Grid.Row="15" Width="85" Click="CreatePersonButton"/>
-
+        <Button Content="Slet Medlem" Grid.Column="2" Grid.Row="15" Width="85" Click="DeletePersonButton"/>
+        <Button Content="Opdater oplysninger" Grid.Column="3" Grid.Row="15" Width="85" Click="UpdatePersonButton"/>
+        <Button Content="Tilbage" Grid.Column="3" Grid.Row="18" Width="85" Click="BackButton"/>
 
 
     </Grid>
