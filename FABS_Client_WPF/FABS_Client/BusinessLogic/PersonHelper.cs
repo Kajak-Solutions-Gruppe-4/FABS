@@ -26,6 +26,23 @@ namespace FABS_Client_WPF.BusinessLogic
 
                 throw;
             }
+
+        }
+        internal void PutPerson(PersonDto person)
+        {
+            try
+            {
+                var request = new RestRequest("people/?organisationId=1", Method.PUT, DataFormat.Json);
+                request.AddJsonBody(JsonSerializer.Serialize(person));
+
+                var response = _clientPeople.Execute(request);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
         }
     }
 }

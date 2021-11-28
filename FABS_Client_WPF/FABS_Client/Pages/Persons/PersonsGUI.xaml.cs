@@ -59,7 +59,7 @@ namespace FABS_Client_WPF.Pages.Persons
 
 
 
-            UpdatePersonWindow updatePersonWindow = new UpdatePersonWindow(Person);
+            UpdatePersonWindow updatePersonWindow = new UpdatePersonWindow(Person, this);
             
             
             updatePersonWindow.Show();

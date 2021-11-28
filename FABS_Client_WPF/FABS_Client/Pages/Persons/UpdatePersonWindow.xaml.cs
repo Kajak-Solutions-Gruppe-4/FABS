@@ -21,19 +21,11 @@ namespace FABS_Client_WPF.Pages.Persons
     /// </summary>
     public partial class UpdatePersonWindow : Window
     {
-        // private PersonsGUI _parentWindow;
-        //public UpdatePersonWindow(this)
-        //{
-        //   // _parentWindow = parentWindow;
-        //    InitializeComponent();
+        private PersonsGUI _parentWindow;
 
-
-        // //firstNameText.Text = person.Firstname;
-
-        //}
-            //public string Person { get; set; }
-        public UpdatePersonWindow(object Person)
+        public UpdatePersonWindow(object Person, PersonsGUI parentWindow)
         {
+            _parentWindow = parentWindow;
             InitializeComponent();
 
             string FirstName = ((FABS_Client_WPF.DTO.PersonDto)Person).FirstName;
@@ -66,6 +58,40 @@ namespace FABS_Client_WPF.Pages.Persons
 
         private void UpdatePersonButton(object sender, RoutedEventArgs e)
         {
+            PersonHelper helper = new PersonHelper();
+
+            //Login login = new Login(emailText.Text.ToString(), "1234");
+            AddressDto address = new AddressDto(
+                streetnameText.Text.ToString(),
+                streetNoText.Text.ToString(),
+
+                //TODO: make so arpartmentNumber is null when the string is empty, instead of "" (an empty string)
+                apartmentNoText.Text.ToString(),
+                zipcodeText.Text.ToString(),
+                1,
+                cityText.Text.ToString()
+                );
+
+            //1); // 1 in the DB is Danmark. This is hardcoded for now.
+            PersonDto person = new PersonDto(
+               firstNameText.Text.ToString(),
+               lastNameText.Text.ToString(),
+               tlfText.Text.ToString(),
+                //IsAdmin = false,
+                address,
+               //Login = login
+               emailText.Text.ToString());
+
+
+
+
+            helper.PutPerson(person);
+
+            //_parentWindow.RefreshList();
+
+            //var instanceOfPersonGUI = new PersonsGUI();
+            //instanceOfPersonGUI.RefreshList();
+
             Close();
         }
 
