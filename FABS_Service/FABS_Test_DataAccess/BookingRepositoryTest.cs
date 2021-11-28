@@ -63,17 +63,14 @@ namespace FABS_Test_DataAccess
             Person person1 = new Person("Peter", "Hahn", "20202020", false, address, login1);
             Person person2 = new Person("Lars", "Andersen", "29292929", false, 1, login1);
             Person person3 = new Person("Rasmus", "Larsen", "28282828", false, 1, login2);
-
             
-            
-
             //Create kayaks
             Warehouse warehouse1 = new Warehouse("Building A", address);
             Location location1 = new Location("1.2.3", "This is an awesome location spot 1", warehouse1, null, organisation1);
             KayakType kayakType1 = new KayakType("Red Kayaks Rule!", 120, 2.5m, 1, null);
             ItemType itemType1 = new ItemType("Kayak", kayakType1);
-            Status status1 = new Status("Item Status", "Looking Good");
-            Status status2 = new Status("Booking Status", "Active");
+            Status status1 = new Status("Looking Good", "Item Status");
+            Status status2 = new Status("Active", "Booking Status");
 
             Item item1 = new Item(organisation1, status1, location1, itemType1);
             Item item2 = new Item(organisation1, status1, location1, itemType1);
@@ -133,7 +130,52 @@ namespace FABS_Test_DataAccess
         [MemberData(nameof(GetData), parameters: "ReadBooking")]
         public void ReadBooking(int id, bool expectedSuccess)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+
+            using (var context = new FABSContext())
+            {
+                var bookingRepository = new BookingRepository();
+                Booking booking = bookingRepository.Get(id, 1);
+
+                if (expectedSuccess == true)
+                {
+                    //Booking
+                    Assert.Equal("2021-01-24 23:12:00.000", booking.StartDatetime.ToString());
+                    Assert.Equal("2021-01-25 01:00:00.000", booking.EndDatetime.ToString());
+                    Assert.Equal("Booking Status", booking.Statuses.Category);
+                    Assert.Equal("Active", booking.Statuses.Name);
+
+                    //Booking lines
+                    //Item location
+                    
+                    //Person
+                    Assert.Equal("Peter", booking.People.FirstName);
+                    Assert.Equal("Hahn", booking.People.LastName);
+                    Assert.Equal("20202020", booking.People.TelephoneNumber);
+                    Assert.False(booking.People.IsAdmin);
+                    
+                    //login
+                    Assert.Equal("test1@test.com", booking.People.Login.Email);
+                    Assert.Equal("1234", booking.People.Login.Password);
+                    
+                    //Person Address
+                    Assert.Equal("Sofiendalsvej", booking.People.Addresses.StreetName);
+                    Assert.Equal("60", booking.People.Addresses.StreetNumber);
+                    Assert.Null(booking.People.Addresses.ApartmentNumber);
+                    Assert.Equal("9000", booking.People.Addresses.ZipcodeCountryCity.Zipcode);
+                    Assert.Equal("Aalborg", booking.People.Addresses.ZipcodeCountryCity.City);
+                    Assert.Equal("Denmark", booking.People.Addresses.ZipcodeCountryCity.Countries.Name);
+
+                    //Organisation
+                    Assert.Equal("12341234", booking.People.OrganisationPeople.ToList()[0].Organisations.Cvr);
+                    Assert.Equal("12341234", booking.People.OrganisationPeople.ToList()[0].Organisations.Name);
+                }
+
+                else if (expectedSuccess == false)
+                {
+                    Assert.Null(booking);
+                }
+            }
         }
 
 
