@@ -84,7 +84,6 @@ namespace FABS_API_Service.Controllers
         private LocationDto ConvertModelToDto(Location location)
         {
 
-
             AddressDto personAddressDto = new AddressDto(
                 location.People.Addresses.Id,
                 location.People.Addresses.StreetName,
