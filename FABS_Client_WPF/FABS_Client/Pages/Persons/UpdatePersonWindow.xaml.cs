@@ -23,7 +23,7 @@ namespace FABS_Client_WPF.Pages.Persons
     {
         private PersonsGUI _parentWindow;
 
-        public UpdatePersonWindow(object Person, PersonsGUI parentWindow)
+        public UpdatePersonWindow(PersonsGUI parentWindow, object Person)
         {
             _parentWindow = parentWindow;
             InitializeComponent();
@@ -87,10 +87,7 @@ namespace FABS_Client_WPF.Pages.Persons
 
             helper.PutPerson(person);
 
-            //_parentWindow.RefreshList();
-
-            //var instanceOfPersonGUI = new PersonsGUI();
-            //instanceOfPersonGUI.RefreshList();
+            _parentWindow.RefreshList();
 
             Close();
         }
