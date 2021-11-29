@@ -29,13 +29,13 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="10"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="10"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="80"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="20"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
@@ -49,35 +49,36 @@
 
         <TextBlock Grid.Column="1" Grid.Row="1" FontSize="20" FontWeight="Bold" Text="Create Person" FontFamily="Segce UI" Grid.ColumnSpan="4" Margin="15"/>
 
-        <!--Create Item label & texfeild-->
-        <TextBlock Grid.Column="1" Grid.Row="3" FontWeight="SemiBold" Text="Enhed navn: " FontFamily="Segce UI" Margin="3"/>
-        <TextBox x:Name="itemNameText" Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="2" />
+        <!--Create Person label & texfeild-->
+        <TextBlock Grid.Column="1" Grid.Row="3" FontWeight="SemiBold" Text="Fornavn: " FontFamily="Segce UI" Margin="3"/>
+        <TextBox x:Name="firstNameText" Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="2" />
 
-        <TextBlock Grid.Column="1" Grid.Row="4" FontWeight="SemiBold" Text="Enhed type: " FontFamily="Segce UI" Margin="3"/>
-        <!--<GridViewColumn Header="Fornavn" Width="auto" DisplayMemberBinding="{Binding Path=FirstName}" />-->
-        <ComboBox x:Name = "itemTypeDropDown" Grid.Column="2" Grid.Row="4" Grid.ColumnSpan="2" />
+        <TextBlock Grid.Column="1" Grid.Row="4" FontWeight="SemiBold" Text="Efternavn: " FontFamily="Segce UI" Margin="3"/>
+        <TextBox x:Name="lastNameText" Grid.Column="2" Grid.Row="4" Grid.ColumnSpan="2" />
 
-        <TextBlock Grid.Column="1" Grid.Row="5" FontWeight="SemiBold" Text="Kajak type: " FontFamily="Segce UI" Margin="3"/>
-        <!--<GridViewColumn Header="Fornavn" Width="auto" DisplayMemberBinding="{Binding Path=FirstName}" />-->
-        <ComboBox x:Name = "kayakTypeDropDown" Grid.Column="2" Grid.Row="5" Grid.ColumnSpan="2" />
+        <TextBlock Grid.Column="1" Grid.Row="5" FontWeight="SemiBold" Text="Email: " FontFamily="Segce UI" Margin="3"/>
+        <TextBox x:Name="emailText" Grid.Column="2" Grid.Row="5" Grid.ColumnSpan="2"/>
 
-        <TextBlock Grid.Column="1" Grid.Row="7" FontWeight="SemiBold" Text="Længde: " FontFamily="Segce UI" Margin="3"/>
-        <TextBox x:Name="kayakLengthText" Grid.Column="2" Grid.Row="7" Grid.ColumnSpan="2" />
+        <TextBlock Grid.Column="1" Grid.Row="6" FontWeight="SemiBold" Text="Tlf.: " FontFamily="Segce UI" Margin="3"/>
+        <TextBox x:Name="tlfText" Grid.Column="2" Grid.Row="6" Grid.ColumnSpan="2"  />
 
-        <TextBlock Grid.Column="1" Grid.Row="8" FontWeight="SemiBold" Text="Max last (kg): " FontFamily="Segce UI" Margin="3"/>
-        <TextBox x:Name="kayakWeightText" Grid.Column="2" Grid.Row="8" Grid.ColumnSpan="2" />
+        <TextBlock Grid.Column="1" Grid.Row="8" FontWeight="SemiBold" Text="Gadenavn: " FontFamily="Segce UI" Margin="3"/>
+        <TextBox x:Name="streetnameText" Grid.Column="2" Grid.Row="8" Grid.ColumnSpan="2"  />
 
-        <TextBlock Grid.Column="1" Grid.Row="9" FontWeight="SemiBold" Text="Personer/kapacitet: " FontFamily="Segce UI" Margin="3"/>
-        <TextBox x:Name="kayakPersonCapacityText" Grid.Column="2" Grid.Row="9" Grid.ColumnSpan="2" />
+        <TextBlock Grid.Column="1" Grid.Row="9" FontWeight="SemiBold" Text="Husnummer: " FontFamily="Segce UI" Margin="3"/>
+        <TextBox x:Name="streetNoText" Grid.Column="2" Grid.Row="9" Grid.ColumnSpan="2"  />
 
-        <TextBlock Grid.Column="1" Grid.Row="11" FontWeight="SemiBold" Text="Lagerplads: " FontFamily="Segce UI" Margin="3"/>
-        <ComboBox x:Name = "locationDropDown" Grid.Column="2" Grid.Row="11" Grid.ColumnSpan="2" ItemsSource="{Binding Path=LocationDataSource}" />
+        <TextBlock Grid.Column="1" Grid.Row="10" FontWeight="SemiBold" Text="Lejlighedsnummer.: " FontFamily="Segce UI" Margin="3"/>
+        <TextBox x:Name="apartmentNoText" Grid.Column="2" Grid.Row="10" Grid.ColumnSpan="2" />
 
-        <TextBlock Grid.Column="1" Grid.Row="12" FontWeight="SemiBold" Text="Beskrivelse: " FontFamily="Segce UI" Margin="3"/>
-        <TextBox x:Name="itemTypeDecriptionText" Grid.Column="2" Grid.Row="12" Grid.ColumnSpan="2" />
+        <TextBlock Grid.Column="1" Grid.Row="11" FontWeight="SemiBold" Text="By: " FontFamily="Segce UI" Margin="3"/>
+        <TextBox x:Name="cityText" Grid.Column="2" Grid.Row="11" Grid.ColumnSpan="2" />
 
-        <Button Content="Tilbage" Grid.Column="2" Grid.Row="14" Width="75" Click="BackButton"/>
-        <Button Content="Opret Kajak" Grid.Column="3" Grid.Row="14" Width="75" Click="CreatKayakButton"/>
+        <TextBlock Grid.Column="1" Grid.Row="12" FontWeight="SemiBold" Text="Postnummer: " FontFamily="Segce UI" Margin="3"/>
+        <TextBox x:Name="zipcodeText" Grid.Column="2" Grid.Row="12" Grid.ColumnSpan="2" />
+
+        <Button Content="Tilbage" Grid.Column="2" Grid.Row="14" Width="85" Click="BackButton"/>
+        <Button Content="Opret Medlem" Grid.Column="3" Grid.Row="14" Width="85" Click="CreatePersonButton"/>
 
     </Grid>
 </Window>
