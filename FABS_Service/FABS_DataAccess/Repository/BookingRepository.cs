@@ -11,10 +11,10 @@ namespace FABS_DataAccess.Repository
     public class BookingRepository : IRepository<Booking>
     {
 
-
         //WIP
 
         //private readonly FABSContext _context;
+        private readonly string _connect = ConfigurationManager.ConnectionStrings["FABS_connectionstring"].ToString();
 
         //public BookingRepository()
         //{
@@ -104,7 +104,27 @@ namespace FABS_DataAccess.Repository
 
         public IEnumerable<Booking> GetAll(int organisationId)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            IEnumerable<Booking> listBooking;
+
+            try
+            {
+                listBooking = _context.Booking
+                .Where(p => p.OrganisationPeople.Any(op => op.OrganisationsId == organisationId))
+                .Include(a => a.Addresses)
+                .ThenInclude(z => z.ZipcodeCountryCity)
+                .ThenInclude(c => c.Countries)
+                .Include(l => l.Login)
+                .Include(op => op.OrganisationPeople)
+                .ThenInclude(a => a.Organisations);
+
+
+            }
+            catch
+            {
+                listBooking = null;
+            }
+            return listBooking;
         }
 
         public bool Update(int id, Booking t)
