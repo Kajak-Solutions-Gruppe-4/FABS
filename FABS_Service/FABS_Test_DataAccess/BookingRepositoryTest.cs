@@ -146,18 +146,36 @@ namespace FABS_Test_DataAccess
                     Assert.Equal("Active", booking.Statuses.Name);
 
                     //Booking lines
+
                     //Item location
-                    
+                    Assert.Equal("Building A", booking.BookingLines.First().Items.Locations.Warehouses.Name);
+                    Assert.Equal("Sofiendalsvej", booking.BookingLines.First().Items.Locations.Warehouses.Addresses.StreetName);
+                    Assert.Equal("60", booking.BookingLines.First().Items.Locations.Warehouses.Addresses.StreetNumber);
+                    Assert.Null(booking.BookingLines.First().Items.Locations.Warehouses.Addresses.ApartmentNumber);
+                    Assert.Equal("9000", booking.BookingLines.First().Items.Locations.Warehouses.Addresses.ZipcodeCountryCity.Zipcode);
+                    Assert.Equal("Aalborg", booking.BookingLines.First().Items.Locations.Warehouses.Addresses.ZipcodeCountryCity.City);
+                    Assert.Equal("Danmark", booking.BookingLines.First().Items.Locations.Warehouses.Addresses.ZipcodeCountryCity.Countries.Name);
+
+                    //Item type
+                    Assert.Equal("Red Kayaks Rule!", booking.BookingLines.First().Items.ItemTypes.KayakType.Description);
+                    Assert.Equal(120, booking.BookingLines.First().Items.ItemTypes.KayakType.WeightLimit);
+                    Assert.Equal(2.5m, booking.BookingLines.First().Items.ItemTypes.KayakType.LengthMeter);
+                    Assert.Equal(1, booking.BookingLines.First().Items.ItemTypes.KayakType.PersonCapacity);
+
+                    //Pick location
+                    Assert.Equal("1.2.3", booking.BookingLines.First().Items.Locations.PickLocation);
+                    Assert.Equal("This is an awesome location spot 1", booking.BookingLines.First().Items.Locations.Description);
+                
                     //Person
                     Assert.Equal("Peter", booking.People.FirstName);
                     Assert.Equal("Hahn", booking.People.LastName);
                     Assert.Equal("20202020", booking.People.TelephoneNumber);
                     Assert.False(booking.People.IsAdmin);
-                    
+
                     //login
                     Assert.Equal("test1@test.com", booking.People.Login.Email);
                     Assert.Equal("1234", booking.People.Login.Password);
-                    
+
                     //Person Address
                     Assert.Equal("Sofiendalsvej", booking.People.Addresses.StreetName);
                     Assert.Equal("60", booking.People.Addresses.StreetNumber);
