@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FABS_Client_WPF.Pages.Persons"
         mc:Ignorable="d"
-        Title="UpdatePersonWindow" Height="410" Width="340">
+        Title="UpdatePersonWindow" Height="410" Width="810">
     <Grid>
 
         <Grid.ColumnDefinitions>
@@ -16,6 +16,9 @@
             <ColumnDefinition Width ="auto" />
             <ColumnDefinition Width ="auto" />
             <ColumnDefinition Width ="auto" />
+            <ColumnDefinition Width ="auto" />
+            <ColumnDefinition Width ="auto" />
+            <ColumnDefinition Width ="300" />
             <ColumnDefinition Width ="auto" />
             <ColumnDefinition Width ="auto" />
             <ColumnDefinition Width ="auto" />
@@ -47,41 +50,44 @@
 
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Column="1" Grid.Row="1" FontSize="20" FontWeight="Bold" Text="Rediger medlem" FontFamily="Segce UI" Grid.ColumnSpan="4" Margin="15"/>
+        <TextBlock Grid.Column="10" Grid.Row="1" FontSize="20" FontWeight="Bold" Text="Rediger medlem" FontFamily="Segce UI" Grid.ColumnSpan="4" Margin="15"/>
 
-        <TextBlock Grid.Column="1" Grid.Row="3" FontWeight="SemiBold" Text="Fornavn: " FontFamily="Segce UI" Margin="3"/>
-        <TextBox x:Name="firstNameText" Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="2" />
+        <TextBlock Grid.Column="10" Grid.Row="3" FontWeight="SemiBold" Text="Fornavn: " FontFamily="Segce UI" Margin="3"/>
+        <TextBox x:Name="firstNameText" Grid.Column="11" Grid.Row="3" Grid.ColumnSpan="2" />
 
-        <TextBlock Grid.Column="1" Grid.Row="4" FontWeight="SemiBold" Text="Efternavn: " FontFamily="Segce UI" Margin="3"/>
-        <TextBox x:Name="lastNameText" Grid.Column="2" Grid.Row="4" Grid.ColumnSpan="2" />
+        <TextBlock Grid.Column="10" Grid.Row="4" FontWeight="SemiBold" Text="Efternavn: " FontFamily="Segce UI" Margin="3"/>
+        <TextBox x:Name="lastNameText" Grid.Column="11" Grid.Row="4" Grid.ColumnSpan="2" />
 
-        <TextBlock Grid.Column="1" Grid.Row="5" FontWeight="SemiBold" Text="Email: " FontFamily="Segce UI" Margin="3"/>
-        <TextBox x:Name="emailText" Grid.Column="2" Grid.Row="5" Grid.ColumnSpan="2"/>
+        <TextBlock Grid.Column="10" Grid.Row="5" FontWeight="SemiBold" Text="Email: " FontFamily="Segce UI" Margin="3"/>
+        <TextBox x:Name="emailText" Grid.Column="11" Grid.Row="5" Grid.ColumnSpan="2"/>
 
-        <TextBlock Grid.Column="1" Grid.Row="6" FontWeight="SemiBold" Text="Tlf.: " FontFamily="Segce UI" Margin="3"/>
-        <TextBox x:Name="tlfText" Grid.Column="2" Grid.Row="6" Grid.ColumnSpan="2"  />
+        <TextBlock Grid.Column="10" Grid.Row="6" FontWeight="SemiBold" Text="Tlf.: " FontFamily="Segce UI" Margin="3"/>
+        <TextBox x:Name="tlfText" Grid.Column="11" Grid.Row="6" Grid.ColumnSpan="2"  />
 
-        <TextBlock Grid.Column="1" Grid.Row="8" FontWeight="SemiBold" Text="Gadenavn: " FontFamily="Segce UI" Margin="3"/>
-        <TextBox x:Name="streetnameText" Grid.Column="2" Grid.Row="8" Grid.ColumnSpan="2"  />
+        <TextBlock Grid.Column="10" Grid.Row="8" FontWeight="SemiBold" Text="Gadenavn: " FontFamily="Segce UI" Margin="3"/>
+        <TextBox x:Name="streetnameText" Grid.Column="11" Grid.Row="8" Grid.ColumnSpan="2"  />
 
-        <TextBlock Grid.Column="1" Grid.Row="9" FontWeight="SemiBold" Text="Husnummer: " FontFamily="Segce UI" Margin="3"/>
-        <TextBox x:Name="streetNoText" Grid.Column="2" Grid.Row="9" Grid.ColumnSpan="2"  />
+        <TextBlock Grid.Column="10" Grid.Row="9" FontWeight="SemiBold" Text="Husnummer: " FontFamily="Segce UI" Margin="3"/>
+        <TextBox x:Name="streetNoText" Grid.Column="11" Grid.Row="9" Grid.ColumnSpan="2"  />
 
-        <TextBlock Grid.Column="1" Grid.Row="10" FontWeight="SemiBold" Text="Lejlighedsnummer.: " FontFamily="Segce UI" Margin="3"/>
-        <TextBox x:Name="apartmentNoText" Grid.Column="2" Grid.Row="10" Grid.ColumnSpan="2" />
+        <TextBlock Grid.Column="10" Grid.Row="10" FontWeight="SemiBold" Text="Lejlighedsnummer.: " FontFamily="Segce UI" Margin="3"/>
+        <TextBox x:Name="apartmentNoText" Grid.Column="11" Grid.Row="10" Grid.ColumnSpan="2" />
 
-        <TextBlock Grid.Column="1" Grid.Row="11" FontWeight="SemiBold" Text="By: " FontFamily="Segce UI" Margin="3"/>
-        <TextBox x:Name="cityText" Grid.Column="2" Grid.Row="11" Grid.ColumnSpan="2" />
+        <TextBlock Grid.Column="10" Grid.Row="11" FontWeight="SemiBold" Text="By: " FontFamily="Segce UI" Margin="3"/>
+        <TextBox x:Name="cityText" Grid.Column="11" Grid.Row="11" Grid.ColumnSpan="2" />
 
-        <TextBlock Grid.Column="1" Grid.Row="12" FontWeight="SemiBold" Text="Postnummer: " FontFamily="Segce UI" Margin="3"/>
-        <TextBox x:Name="zipcodeText" Grid.Column="2" Grid.Row="12" Grid.ColumnSpan="2" />
+        <TextBlock Grid.Column="10" Grid.Row="12" FontWeight="SemiBold" Text="Postnummer: " FontFamily="Segce UI" Margin="3"/>
+        <TextBox x:Name="zipcodeText" Grid.Column="11" Grid.Row="12" Grid.ColumnSpan="2" />
 
-        <TextBlock Grid.Column="1" Grid.Row="13" FontWeight="SemiBold" Text="Systemadministrator: " FontFamily="Segce UI" Margin="3"/>
-        <CheckBox Grid.Column="2" Grid.Row="13"/>
+        <TextBlock Grid.Column="10" Grid.Row="13" FontWeight="SemiBold" Text="Systemadministrator: " FontFamily="Segce UI" Margin="3"/>
+        <CheckBox Grid.Column="11" Grid.Row="13"/>
 
-        <Button Content="Slet Medlem" Grid.Column="2" Grid.Row="15" Width="85" Click="DeletePersonButton"/>
-        <Button Content="Opdater oplysninger" Grid.Column="3" Grid.Row="15" Width="85" Click="UpdatePersonButton"/>
-        <Button Content="Tilbage" Grid.Column="3" Grid.Row="18" Width="85" Click="BackButton"/>
+        <Button Content="Slet Medlem" Grid.Column="11" Grid.Row="15" Width="85" Click="DeletePersonButton"/>
+        <Button Content="Opdater oplysninger" Grid.Column="12" Grid.Row="15" Width="120" Click="UpdatePersonButton"/>
+        <Button Content="Tilbage" Grid.Column="13" Grid.Row="18" Width="85" Click="BackButton"/>
+
+        <TextBlock Grid.Column="1" Grid.Row="1" FontSize="20" FontWeight="Bold" Text="Bookinger" FontFamily="Segce UI" Grid.ColumnSpan="4" Margin="15"/>
+        <Button Content="Opret Booking" Grid.Column="2" Grid.Row="10" Width="85" Click="NewBooking"/>
 
 
     </Grid>

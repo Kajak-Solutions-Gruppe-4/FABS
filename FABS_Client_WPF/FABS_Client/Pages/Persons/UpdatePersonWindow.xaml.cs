@@ -94,6 +94,21 @@ namespace FABS_Client_WPF.Pages.Persons
 
         private void DeletePersonButton(object sender, RoutedEventArgs e)
         {
+            MessageBoxResult result = MessageBox.Show("Sletning af medlem er permanent. Er du sikker?", "Advarsel!", MessageBoxButton.YesNo);
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    MessageBox.Show("Så sletter vi den!", "Advarsel!");
+                    break;
+                case MessageBoxResult.No:
+                    MessageBox.Show("Så sletter vi den ikke!", "Alt er OK");
+                    break;
+
+            }
+        }
+
+        private void NewBooking(object sender, RoutedEventArgs e)
+        {
             Close();
         }
     }
