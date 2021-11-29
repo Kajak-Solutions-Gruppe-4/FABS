@@ -127,6 +127,8 @@ namespace FABS_API_Service.Controllers
                 location.Id,
                 location.PickLocation,
                 location.Description,
+                //todo Warehouse needs to be allow null
+                null,
                 personDto,
                 organisationDto
                 );
