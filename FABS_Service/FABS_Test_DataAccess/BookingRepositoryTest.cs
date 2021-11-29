@@ -146,7 +146,6 @@ namespace FABS_Test_DataAccess
                     Assert.Equal("Active", booking.Statuses.Name);
 
                     //Booking lines
-
                     //Item location
                     Assert.Equal("Building A", booking.BookingLines.First().Items.Locations.Warehouses.Name);
                     Assert.Equal("Sofiendalsvej", booking.BookingLines.First().Items.Locations.Warehouses.Addresses.StreetName);
@@ -195,6 +194,88 @@ namespace FABS_Test_DataAccess
                 }
             }
         }
+
+        [Theory]
+        [MemberData(nameof(GetData), parameters: "CreateBooking")]
+        public void CreateBooking(Booking booking, bool expectedSuccess)
+        {
+            BookingRepository bookingRepository = new BookingRepository();
+
+            int returnedId = bookingRepository.Create(booking);
+            var result = bookingRepository.Get(returnedId, 1);
+            if (expectedSuccess == true && returnedId > 0)
+            {
+                //Booking
+                Assert.Equal(result.StartDatetime.ToString(), booking.StartDatetime.ToString());
+                Assert.Equal(result.EndDatetime.ToString(), booking.EndDatetime.ToString());
+                Assert.Equal(result.Statuses.Category, booking.Statuses.Category);
+                Assert.Equal(result.Statuses.Name, booking.Statuses.Name);
+
+                //Booking lines
+                //Item location
+                Assert.Equal(result.BookingLines.First().Items.Locations.Warehouses.Name, 
+                    booking.BookingLines.First().Items.Locations.Warehouses.Name);
+                Assert.Equal(result.BookingLines.First().Items.Locations.Warehouses.Addresses.StreetName, 
+                    booking.BookingLines.First().Items.Locations.Warehouses.Addresses.StreetName);
+                Assert.Equal(result.BookingLines.First().Items.Locations.Warehouses.Addresses.StreetNumber, 
+                    booking.BookingLines.First().Items.Locations.Warehouses.Addresses.StreetNumber);
+                Assert.Null(booking.BookingLines.First().Items.Locations.Warehouses.Addresses.ApartmentNumber);
+                Assert.Equal(result.BookingLines.First().Items.Locations.Warehouses.Addresses.ZipcodeCountryCity.Zipcode, 
+                    booking.BookingLines.First().Items.Locations.Warehouses.Addresses.ZipcodeCountryCity.Zipcode);
+                Assert.Equal(result.BookingLines.First().Items.Locations.Warehouses.Addresses.ZipcodeCountryCity.City, 
+                    booking.BookingLines.First().Items.Locations.Warehouses.Addresses.ZipcodeCountryCity.City);
+                Assert.Equal(result.BookingLines.First().Items.Locations.Warehouses.Addresses.ZipcodeCountryCity.Countries.Name, 
+                    booking.BookingLines.First().Items.Locations.Warehouses.Addresses.ZipcodeCountryCity.Countries.Name);
+
+                //Item type
+                Assert.Equal(result.BookingLines.First().Items.ItemTypes.KayakType.Description, 
+                    booking.BookingLines.First().Items.ItemTypes.KayakType.Description);
+                Assert.Equal(result.BookingLines.First().Items.ItemTypes.KayakType.WeightLimit, 
+                    booking.BookingLines.First().Items.ItemTypes.KayakType.WeightLimit);
+                Assert.Equal(result.BookingLines.First().Items.ItemTypes.KayakType.LengthMeter, 
+                    booking.BookingLines.First().Items.ItemTypes.KayakType.LengthMeter);
+                Assert.Equal(result.BookingLines.First().Items.ItemTypes.KayakType.PersonCapacity, 
+                    booking.BookingLines.First().Items.ItemTypes.KayakType.PersonCapacity);
+
+                //Pick location
+                Assert.Equal(result.BookingLines.First().Items.Locations.PickLocation, 
+                    booking.BookingLines.First().Items.Locations.PickLocation);
+                Assert.Equal(result.BookingLines.First().Items.Locations.Description, 
+                    booking.BookingLines.First().Items.Locations.Description);
+
+                //Person
+                Assert.Equal(result.People.FirstName, booking.People.FirstName);
+                Assert.Equal(result.People.LastName, booking.People.LastName);
+                Assert.Equal(result.People.TelephoneNumber, booking.People.TelephoneNumber);
+                Assert.False(booking.People.IsAdmin);
+
+                //login
+                Assert.Equal(result.People.Login.Email, booking.People.Login.Email);
+                Assert.Equal(result.People.Login.Password, booking.People.Login.Password);
+
+                //Person Address
+                Assert.Equal(result.People.Addresses.StreetName, booking.People.Addresses.StreetName);
+                Assert.Equal(result.People.Addresses.StreetNumber, booking.People.Addresses.StreetNumber);
+                Assert.Null(booking.People.Addresses.ApartmentNumber);
+                Assert.Equal(result.People.Addresses.ZipcodeCountryCity.Zipcode, 
+                    booking.People.Addresses.ZipcodeCountryCity.Zipcode);
+                Assert.Equal(result.People.Addresses.ZipcodeCountryCity.City, 
+                    booking.People.Addresses.ZipcodeCountryCity.City);
+                Assert.Equal(result.People.Addresses.ZipcodeCountryCity.Countries.Name, 
+                    booking.People.Addresses.ZipcodeCountryCity.Countries.Name);
+
+            }
+            else if (expectedSuccess == false)
+            {
+                Assert.Equal(-1, returnedId);
+            }
+            else
+            {
+                Assert.True(false, "Was supposed to create booking, but failed");
+            }
+
+        }
+
 
 
 
