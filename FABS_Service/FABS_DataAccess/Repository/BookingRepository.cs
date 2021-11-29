@@ -105,10 +105,11 @@ namespace FABS_DataAccess.Repository
         public IEnumerable<Booking> GetAll(int organisationId)
         {
             //throw new NotImplementedException();
-            IEnumerable<Booking> listBooking;
+            IEnumerable<Booking> listBooking = null;
 
             try
             {
+                string query = "select id, start_datetime, end_datetime";
                 listBooking = _context.Booking
                 .Where(p => p.OrganisationPeople.Any(op => op.OrganisationsId == organisationId))
                 .Include(a => a.Addresses)
@@ -118,8 +119,19 @@ namespace FABS_DataAccess.Repository
                 .Include(op => op.OrganisationPeople)
                 .ThenInclude(a => a.Organisations);
 
+                //string query = "select ID, Produkt, Antal from Lager";
 
-            }
+                //using (SqlConnection conn = new SqlConnection(connect))
+                //using (SqlCommand readCommand = new SqlCommand(query, conn))
+                //{
+                //    if (conn != null)
+                //    {
+                //        conn.Open();
+                //        SqlDataReader productReader = readCommand.ExecuteReader();
+                //        foundProducts = GetProductObjects(productReader);
+                //    }
+
+                //}
             catch
             {
                 listBooking = null;
