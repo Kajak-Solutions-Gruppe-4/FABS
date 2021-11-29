@@ -28,6 +28,10 @@ namespace FABS_Client_WPF.Pages.Items
         {
             _parentWindow = parentWindow;
             InitializeComponent();
+            LoadItemTypeComboBox();
+            LoadKayakTypeComboBox();
+            LoadLocationComboBox();
+
         }
 
         private void BackButton(object sender, RoutedEventArgs e)
@@ -71,6 +75,52 @@ namespace FABS_Client_WPF.Pages.Items
             _parentWindow.RefreshList();
 
             Close();
+        }
+
+        private void LoadItemTypeComboBox()
+        {
+            //To Do Populate Combo with right data or api call
+            //itemTypeDropDown.ItemsSource = new List<string> { "Kayaks" };
+            //itemTypeDropDown.ItemsSource = ItemTypeHelper.GetAllItems(1);
+
+            var apiClient = new RestClient("https://localhost:44309/Api");
+            var request = new RestRequest("/itemTypes?organisationId=1", DataFormat.Json);
+
+            var response = apiClient.Execute(request);
+
+            List<ItemTypeDto> listOfItemTypes = JsonConvert.DeserializeObject<List<ItemTypeDto>>(response.Content);
+
+            itemTypeDropDown.ItemsSource = listOfItemTypes;
+        }
+
+        private void LoadKayakTypeComboBox()
+        {
+            //To Do Populate Combo with right data or api call
+            //itemTypeDropDown.ItemsSource = new List<string> { "Kayak Type A, Kayak Type B" };
+
+            var apiClient = new RestClient("https://localhost:44309/Api");
+            var request = new RestRequest("/kayakTypes?organisationId=1", DataFormat.Json);
+
+            var response = apiClient.Execute(request);
+
+            List<KayakTypeDto> listOfKayakTypes = JsonConvert.DeserializeObject<List<KayakTypeDto>>(response.Content);
+
+            kayakTypeDropDown.ItemsSource = listOfKayakTypes;
+        }
+
+        private void LoadLocationComboBox()
+        {
+            //To Do Populate Combo with right data or api call
+            //locationDropDown.ItemsSource = new List<string> { "Plads 1", "Plads 2" };
+
+            var apiClient = new RestClient("https://localhost:44309/Api");
+            var request = new RestRequest("/Locations?organisationId=1", DataFormat.Json);
+
+            var response = apiClient.Execute(request);
+
+            List<LocationDto> listOfLocations = JsonConvert.DeserializeObject<List<LocationDto>>(response.Content);
+
+            locationDropDown.ItemsSource = listOfLocations;
         }
 
         public void SetLocationList()

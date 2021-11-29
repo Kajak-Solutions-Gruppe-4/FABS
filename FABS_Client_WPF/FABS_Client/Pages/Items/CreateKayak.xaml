@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FABS_Client_WPF.Pages.Items"
         mc:Ignorable="d"
-        Title="CreateKayak" Height="450" Width="300">
+        Title="CreateKayak" Height="450" Width="350">
 
     <Grid Background="White">
 
@@ -30,12 +30,12 @@
             <RowDefinition Height="20"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="10"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="10"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="10"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="80"/>
             <RowDefinition Height="20"/>
@@ -57,27 +57,24 @@
         <TextBox x:Name="itemNameText" Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="2" />
 
         <TextBlock Grid.Column="1" Grid.Row="4" FontWeight="SemiBold" Text="Enhed type: " FontFamily="Segce UI" Margin="3"/>
-        <ComboBox x:Name = "itemTypeDropDown" Grid.Column="2" Grid.Row="4" Grid.ColumnSpan="2">
-            <ComboBoxItem IsSelected="True">Udvælg</ComboBoxItem>
-            <ComboBoxItem>ComboBox Item #2</ComboBoxItem>
-            <ComboBoxItem>ComboBox Item #3</ComboBoxItem>
-        </ComboBox>
-        
-        <TextBlock Grid.Column="1" Grid.Row="6" FontWeight="SemiBold" Text="Længde: " FontFamily="Segce UI" Margin="3"/>
-        <TextBox x:Name="kayakLengthText" Grid.Column="2" Grid.Row="6" Grid.ColumnSpan="2" />
+        <!--<GridViewColumn Header="Fornavn" Width="auto" DisplayMemberBinding="{Binding Path=FirstName}" />-->
+        <ComboBox x:Name = "itemTypeDropDown" Grid.Column="2" Grid.Row="4" Grid.ColumnSpan="2" ItemsSource="{Binding Path=ItemType.Name}" />
 
-        <TextBlock Grid.Column="1" Grid.Row="7" FontWeight="SemiBold" Text="Max last (kg): " FontFamily="Segce UI" Margin="3"/>
-        <TextBox x:Name="kayakWeightText" Grid.Column="2" Grid.Row="7" Grid.ColumnSpan="2" />
+        <TextBlock Grid.Column="1" Grid.Row="5" FontWeight="SemiBold" Text="Kajak type: " FontFamily="Segce UI" Margin="3"/>
+        <!--<GridViewColumn Header="Fornavn" Width="auto" DisplayMemberBinding="{Binding Path=FirstName}" />-->
+        <ComboBox x:Name = "kayakTypeDropDown" Grid.Column="2" Grid.Row="5" Grid.ColumnSpan="2" ItemsSource="{Binding Path=KayakType.Name}" />
 
-        <TextBlock Grid.Column="1" Grid.Row="8" FontWeight="SemiBold" Text="Personer/kapacitet: " FontFamily="Segce UI" Margin="3"/>
-        <TextBox x:Name="kayakPersonCapacityText" Grid.Column="2" Grid.Row="8" Grid.ColumnSpan="2" />
+        <TextBlock Grid.Column="1" Grid.Row="7" FontWeight="SemiBold" Text="Længde: " FontFamily="Segce UI" Margin="3"/>
+        <TextBox x:Name="kayakLengthText" Grid.Column="2" Grid.Row="7" Grid.ColumnSpan="2" />
 
-        <TextBlock Grid.Column="1" Grid.Row="10" FontWeight="SemiBold" Text="Lagerplads: " FontFamily="Segce UI" Margin="3"/>
-        <ComboBox x:Name = "locationDropDown" Grid.Column="2" Grid.Row="10" Grid.ColumnSpan="2">
-            <ComboBoxItem IsSelected="True">Ingen</ComboBoxItem>
-            <ComboBoxItem>ComboBox Item #2</ComboBoxItem>
-            <ComboBoxItem>ComboBox Item #3</ComboBoxItem>
-        </ComboBox>
+        <TextBlock Grid.Column="1" Grid.Row="8" FontWeight="SemiBold" Text="Max last (kg): " FontFamily="Segce UI" Margin="3"/>
+        <TextBox x:Name="kayakWeightText" Grid.Column="2" Grid.Row="8" Grid.ColumnSpan="2" />
+
+        <TextBlock Grid.Column="1" Grid.Row="9" FontWeight="SemiBold" Text="Personer/kapacitet: " FontFamily="Segce UI" Margin="3"/>
+        <TextBox x:Name="kayakPersonCapacityText" Grid.Column="2" Grid.Row="9" Grid.ColumnSpan="2" />
+
+        <TextBlock Grid.Column="1" Grid.Row="11" FontWeight="SemiBold" Text="Lagerplads: " FontFamily="Segce UI" Margin="3"/>
+        <ComboBox x:Name = "locationDropDown" Grid.Column="2" Grid.Row="11" Grid.ColumnSpan="2" ItemsSource="{Binding Path=LocationDataSource}" />
 
         <TextBlock Grid.Column="1" Grid.Row="12" FontWeight="SemiBold" Text="Beskrivelse: " FontFamily="Segce UI" Margin="3"/>
         <TextBox x:Name="itemTypeDecriptionText" Grid.Column="2" Grid.Row="12" Grid.ColumnSpan="2" />

@@ -83,25 +83,50 @@ namespace FABS_API_Service.Controllers
 
         private LocationDto ConvertModelToDto(Location location)
         {
-            AddressDto wAddress = new AddressDto(
-                
+
+
+            AddressDto personAddressDto = new AddressDto(
+                location.People.Addresses.Id,
+                location.People.Addresses.StreetName,
+                location.People.Addresses.StreetNumber,
+                location.People.Addresses.ApartmentNumber,
+                location.People.Addresses.ZipcodeCountryCity.Zipcode,
+                location.People.Addresses.ZipcodeCountryCity.Countries.Id,
+                location.People.Addresses.ZipcodeCountryCity.Countries.Name,
+                location.People.Addresses.ZipcodeCountryCity.City
                 );
-            WarehouseDto warehouseDto = new WarehouseDto(
-                location.Warehouses.Id,
-                location.Warehouses.Name,
-                wAddress
-                );
+
             PersonDto personDto = new PersonDto(
-                
+                location.People.Id,
+                location.People.FirstName,
+                location.People.LastName,
+                location.People.TelephoneNumber,
+                personAddressDto,
+                location.People.Login.Email
                 );
+
+            AddressDto organisaitonAddressDto = new AddressDto(
+                location.People.Addresses.Id,
+                location.People.Addresses.StreetName,
+                location.People.Addresses.StreetNumber,
+                location.People.Addresses.ApartmentNumber,
+                location.People.Addresses.ZipcodeCountryCity.Zipcode,
+                location.People.Addresses.ZipcodeCountryCity.Countries.Id,
+                location.People.Addresses.ZipcodeCountryCity.Countries.Name,
+                location.People.Addresses.ZipcodeCountryCity.City
+                );
+
             OrganisationDto organisationDto = new OrganisationDto(
-                
+                location.Organisations.Id,
+                location.Organisations.Cvr,
+                location.Organisations.Name,
+                organisaitonAddressDto
                 );
+
             LocationDto locationDto = new LocationDto(
                 location.Id,
                 location.PickLocation,
                 location.Description,
-                warehouseDto,
                 personDto,
                 organisationDto
                 );
