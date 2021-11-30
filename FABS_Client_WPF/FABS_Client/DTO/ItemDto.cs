@@ -32,6 +32,16 @@ namespace FABS_Client_WPF.DTO
             ItemTypesId = itemTypesId;
         }
 
+        public ItemDto(int id, StatusDto statusesId, LocationDto locationsId, ItemTypeDto itemTypesId)
+        {
+            Id = id;
+            StatusesId = statusesId;
+            LocationsId = locationsId;
+            ItemTypesId = itemTypesId;
+        }
+    }
+}
+
         public ItemDto(int id, OrganisationDto organisationId, StatusDto statusId, LocationDto locationId, ItemTypeDto itemTypeId)
         {
             Id = id;
