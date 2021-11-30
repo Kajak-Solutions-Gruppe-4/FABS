@@ -7,6 +7,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using System.IO;
 using Microsoft.Data.SqlClient;
+using System.Transactions;
 
 namespace FABS_DataAccess.Repository
 {
@@ -48,78 +49,49 @@ namespace FABS_DataAccess.Repository
                 .Build();
             _connectionString = Configuration.GetConnectionString("FABS_connectionstring");
         }
+                       
 
-
-
-        //public Booking Get(int id, int organitionId)
-        //{
-        //    Booking foundBooking;
-        //    try
-        //    {
-        //        //eager loading
-        //        foundBooking = _context.Bookings
-        //            //Person
-        //        .Include(p1 => p1.People)
-        //            //Status
-        //        .Include(s => s.Statuses)
-
-
-        //        .FirstOrDefault(x => x.Id == id);
-        //    }
-        //    catch
-        //    {
-        //        foundBooking = null;
-        //    }
-
-        //    return foundBooking;
-        //}
-
-        //public IEnumerable<Booking> GetAll(int organisationId)
-        //{
-        //    IEnumerable<Booking> listBooking;
-
-        //    try
-        //    {
-        //        listBooking = _context.Bookings
-        //        //Person
-        //        .Include(p1 => p1.People)
-        //        //Status
-        //        .Include(s => s.Statuses)
-        //    }
-        //    catch
-        //    {
-        //        listBooking = null;
-        //    }
-
-        //    return listBooking;
-        //}
-
-
-
-
-
-        //public int Create(Booking b)
-        //{
-        //    int insertedID;
-        //    try
-        //    {
-        //        var res = _context.Bookings.Add(b);
-        //        _context.SaveChanges();
-        //        insertedID = res.Entity.Id;
-        //    }
-        //    catch(Exception e)
-        //    {
-        //        Console.WriteLine(e.Message);
-        //        insertedId = -1;
-        //    }
-        //}
-
-        //public bool 
-
-
-        public int Create(Booking t)
+        public int Create(Booking booking)
         {
-            throw new NotImplementedException();
+            string bookingQuery = "INSERT INTO bookings(start_datetime, end_datetime, people_id, statuses_id) " +
+                                  "VALUES(@StartDateTime, @EndDateTime, @PersonId, @StatusId)";
+            string bookingLineQuery = "INSERT INTO booking_line(bookings_id, items_id)" +
+                                      "VALUES(@BookingId, @ItemId)";
+
+            int affectedRows = 0;
+            using (TransactionScope ts = new TransactionScope())
+            {
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    conn.Open();
+                    int? insertedId = -1;
+                    using (SqlCommand createBookingCommand = conn.CreateCommand())
+                    {
+                        createBookingCommand.CommandText = bookingQuery;
+                        createBookingCommand.Parameters.AddWithValue("StartDateTime", booking.StartDatetime);
+                        createBookingCommand.Parameters.AddWithValue("EndDateTime", booking.EndDatetime);
+                        createBookingCommand.Parameters.AddWithValue("PersonId", booking.PeopleId);
+                        createBookingCommand.Parameters.AddWithValue("StatusId", booking.StatusesId);
+
+                        insertedId = (int?)createBookingCommand.ExecuteScalar();
+                        affectedRows++;
+                    }
+
+                    foreach (BookingLine bookingLine in booking.BookingLines)
+                    {
+                        using (SqlCommand createBookingLineCommand = conn.CreateCommand())
+                        {
+                            createBookingLineCommand.CommandText = bookingLineQuery;
+                            createBookingLineCommand.Parameters.AddWithValue("BookingId", insertedId);
+                            createBookingLineCommand.Parameters.AddWithValue("ItemId", bookingLine.ItemsId);
+                            createBookingLineCommand.ExecuteNonQuery();
+                            affectedRows++;
+                        }
+                    }
+                }
+            }
+            
+            return affectedRows; 
         }
 
         public bool Delete(int id)

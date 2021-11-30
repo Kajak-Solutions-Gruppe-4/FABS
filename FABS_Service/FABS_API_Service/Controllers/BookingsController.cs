@@ -56,9 +56,21 @@ namespace FABS_API_Service.Controllers
 
         // POST api/<BookingsController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public ActionResult<int> Post([FromBody] BookingDto bDto, int organisationId)
         {
+            Booking b = ConvertDtoToModel(bDto);
+            int newBookingId = _bookingRepository.Create(b);
+            if (newBookingId > -1)
+            {
+                return Ok(newBookingId);
+            }
+            else
+            {
+                return new StatusCodeResult(500);
+            }
         }
+
+        
 
         // PUT api/<BookingsController>/5
         [HttpPut("{id}")]
@@ -88,8 +100,24 @@ namespace FABS_API_Service.Controllers
                 booking.StartDatetime,
                 booking.EndDatetime,
                 booking.PeopleId,
-                bookingLines
+                bookingLines,
+                booking.StatusesId
                 );
+        }
+        
+        private Booking ConvertDtoToModel(BookingDto bDto)
+        {
+            Booking booking = new Booking(
+                bDto.StartDateTime,
+                bDto.EndDateTime,
+                bDto.PersonId,
+                bDto.StatusId
+                );
+            foreach (BookingLineDto bookingLineDto in bDto.BookingsLines)
+            {
+                booking.BookingLines.Add(new BookingLine(bookingLineDto.BookingId, bookingLineDto.ItemId));
+            }
+            return booking;
         }
     }
 }
