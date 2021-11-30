@@ -79,46 +79,13 @@
         <!---->
         
         <!--Length-->
-        <TextBlock Grid.Column="1" Grid.Row="7" FontWeight="SemiBold" Text="Længde: " FontFamily="Segce UI" Margin="3">
-            <TextBlock.Style>
-                <Style TargetType="{x:Type TextBlock}">
-                    <Setter Property="Foreground" Value="Black"/>
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding ElementName=NewItemCheckBox, Path=IsChecked}" Value="False">
-                            <Setter Property="Foreground" Value="Gray"/>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </TextBlock.Style>
-        </TextBlock>
+        <TextBlock Grid.Column="1" Grid.Row="7" FontWeight="SemiBold" Text="Længde: " FontFamily="Segce UI" Margin="3"/>
 
         <!--Weight-->
-        <TextBlock Grid.Column="1" Grid.Row="8" FontWeight="SemiBold" Text="Max last (kg): " FontFamily="Segce UI" Margin="3">
-            <TextBlock.Style>
-                <Style TargetType="{x:Type TextBlock}">
-                    <Setter Property="Foreground" Value="Black"/>
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding ElementName=NewItemCheckBox, Path=IsChecked}" Value="False">
-                            <Setter Property="Foreground" Value="Gray"/>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </TextBlock.Style>
-        </TextBlock>
+        <TextBlock Grid.Column="1" Grid.Row="8" FontWeight="SemiBold" Text="Max last (kg): " FontFamily="Segce UI" Margin="3"/>
 
         <!--Capacity-->
-        <TextBlock Grid.Column="1" Grid.Row="9" FontWeight="SemiBold" Text="Personer/kapacitet: " FontFamily="Segce UI" Margin="3">
-            <TextBlock.Style>
-                <Style TargetType="{x:Type TextBlock}">
-                    <Setter Property="Foreground" Value="Black"/>
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding ElementName=NewItemCheckBox, Path=IsChecked}" Value="False">
-                            <Setter Property="Foreground" Value="Gray"/>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </TextBlock.Style>
-        </TextBlock>
+        <TextBlock Grid.Column="1" Grid.Row="9" FontWeight="SemiBold" Text="Personer/kapacitet: " FontFamily="Segce UI" Margin="3"/>
 
         <!---->
         <!--Select Item Type-->
