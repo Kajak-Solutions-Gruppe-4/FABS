@@ -27,5 +27,12 @@ namespace FABS_API_Service.DTO
             PersonCapacity = personCapacity;
         }
 
+        public KayakTypeDto(string description, int weightLimit, decimal lengthMeter, int personCapacity)
+        {
+            Description = description;
+            WeightLimit = weightLimit;
+            LengthMeter = lengthMeter;
+            PersonCapacity = personCapacity;
+        }
     }
 }
