@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using System.IO;
+using Microsoft.Data.SqlClient;
 
 namespace FABS_DataAccess.Repository
 {
@@ -14,12 +16,40 @@ namespace FABS_DataAccess.Repository
         //WIP
 
         //private readonly FABSContext _context;
-        private readonly string _connect = ConfigurationManager.ConnectionStrings["FABS_connectionstring"].ToString();
+        //private readonly string _connect = ConfigurationManager.ConnectionStrings["FABS_connectionstring"].ToString();
+        private string _connectionString;
 
-        //public BookingRepository()
-        //{
-        //    _context = new FABSContext();
-        //}
+        public BookingRepository()
+        {
+            Initialize();
+        }
+
+        private void Initialize()
+        {
+            string physicalPath = "";
+            string appSettingsString = @"FABS_API_Service\appsettings.json";
+            string folderUpString = @"";
+            // Loops to search back in folders to be able to find appsettings.
+            // TODO: find a better solution than just looping 10 times
+            for (int i = 0; i < 10; i++)
+            {
+                physicalPath = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), folderUpString));
+                physicalPath += appSettingsString;
+                if (physicalPath.Contains(@"FABS_Service\FABS_API_Service\appsettings.json"))
+                {
+                    break;
+                }
+                folderUpString += @"..\";
+            }
+
+            IConfigurationRoot Configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile(physicalPath)
+                .Build();
+            _connectionString = Configuration.GetConnectionString("FABS_connectionstring");
+        }
+
+
 
         //public Booking Get(int id, int organitionId)
         //{
@@ -109,29 +139,24 @@ namespace FABS_DataAccess.Repository
 
             try
             {
-                string query = "select id, start_datetime, end_datetime";
-                listBooking = _context.Booking
-                .Where(p => p.OrganisationPeople.Any(op => op.OrganisationsId == organisationId))
-                .Include(a => a.Addresses)
-                .ThenInclude(z => z.ZipcodeCountryCity)
-                .ThenInclude(c => c.Countries)
-                .Include(l => l.Login)
-                .Include(op => op.OrganisationPeople)
-                .ThenInclude(a => a.Organisations);
+                string query = "SELECT bookings.id AS \"booking_id\", bookings.start_datetime, bookings.end_datetime, people.id AS \"people_id\", " +
+                    "bookings.statuses_id AS \"booking_statuses_id\", booking_line.items_id FROM booking_line " +
+                    "INNER JOIN bookings ON booking_line.bookings_id = bookings.id " +
+                    "INNER JOIN people ON bookings.people_id = people.id " +
+                    "INNER JOIN items ON booking_line.items_id = items.id " +
+                    "ORDER BY booking_id ASC";
 
-                //string query = "select ID, Produkt, Antal from Lager";
-
-                //using (SqlConnection conn = new SqlConnection(connect))
-                //using (SqlCommand readCommand = new SqlCommand(query, conn))
-                //{
-                //    if (conn != null)
-                //    {
-                //        conn.Open();
-                //        SqlDataReader productReader = readCommand.ExecuteReader();
-                //        foundProducts = GetProductObjects(productReader);
-                //    }
-
-                //}
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                using (SqlCommand readCommand = new SqlCommand(query, conn))
+                {
+                    if (conn != null)
+                    {
+                        conn.Open();
+                        SqlDataReader bookingReader = readCommand.ExecuteReader();
+                        listBooking = GetBookingObjects(bookingReader);
+                    }
+                }
+            }
             catch
             {
                 listBooking = null;
@@ -142,6 +167,36 @@ namespace FABS_DataAccess.Repository
         public bool Update(int id, Booking t)
         {
             throw new NotImplementedException();
+        }
+
+        private IEnumerable<Booking> GetBookingObjects(SqlDataReader bookingReader)
+        {
+            //throw new NotImplementedException();
+
+            List<Booking> foundBookings = new List<Booking>();
+            Booking tempBooking = null;
+            int tempBookingId; DateTime tempStartTime; DateTime tempEndTime; int tempPeopleId; int tempStatusId; int tempItemId;
+
+            while (bookingReader.Read())
+            {
+                tempBookingId = bookingReader.GetInt32(bookingReader.GetOrdinal("booking_id"));
+                tempStartTime = bookingReader.GetDateTime(bookingReader.GetOrdinal("start_datetime"));
+                tempEndTime = bookingReader.GetDateTime(bookingReader.GetOrdinal("end_datetime"));
+                tempPeopleId = bookingReader.GetInt32(bookingReader.GetOrdinal("people_id"));
+                tempStatusId = bookingReader.GetInt32(bookingReader.GetOrdinal("booking_statuses_id"));
+                tempItemId = bookingReader.GetInt32(bookingReader.GetOrdinal("items_id"));
+                
+                var foundBookingIds = foundBookings.Select(fb => fb.Id);
+                if (!foundBookingIds.Contains(tempBookingId))
+                {
+                    tempBooking = new Booking(tempBookingId, tempStartTime, tempEndTime, tempPeopleId, tempStatusId);
+                    foundBookings.Add(tempBooking);
+                }
+                    tempBooking.BookingLines.Add(new BookingLine(tempBookingId, tempItemId));
+                
+            }   
+            
+            return foundBookings;
         }
     }
 }
