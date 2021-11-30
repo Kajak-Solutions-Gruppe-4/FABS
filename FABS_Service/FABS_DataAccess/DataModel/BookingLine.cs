@@ -15,5 +15,11 @@ namespace FABS_DataAccess.Model
             Bookings = bookings;
             Items = items;
         }
+
+        public BookingLine(int bookingsId, int itemsId)
+        {
+            BookingsId = bookingsId;
+            ItemsId = itemsId;
+        }
     }
 }
