@@ -105,19 +105,12 @@ namespace FABS_API_Service.Controllers
                 item.Locations.Description
                 );
             }
-            KayakTypeDto kayakTypeDto = new KayakTypeDto(
-                item.ItemTypes.KayakType.Description,
-                item.ItemTypes.KayakType.WeightLimit,
-                item.ItemTypes.KayakType.LengthMeter,
-                item.ItemTypes.KayakType.PersonCapacity
-                );
             ItemTypeDto itemTypeDto = null;
             if (item.ItemTypes != null)
             {
                 itemTypeDto = new ItemTypeDto(
                     item.ItemTypes.Id,
-                    item.ItemTypes.Name,
-                    kayakTypeDto
+                    item.ItemTypes.Name
                     );
             }
 
