@@ -30,8 +30,8 @@
             <RowDefinition Height="20"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
             <RowDefinition Height="10"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
@@ -49,33 +49,191 @@
 
         </Grid.RowDefinitions>
 
+        <!---->
         <!--Headline-->
+        <!---->
         <TextBlock Grid.Column="1" Grid.Row="1" FontSize="20" FontWeight="Bold" Text="Opret Kajak" FontFamily="Segce UI" Grid.ColumnSpan="4" Margin="15"/>
 
-        <TextBlock Grid.Column="1" Grid.Row="4" FontWeight="SemiBold" Text="Enhed type: " FontFamily="Segce UI" Margin="3"/>
-        <!--<GridViewColumn Header="Fornavn" Width="auto" DisplayMemberBinding="{Binding Path=FirstName}" />-->
-        <ComboBox x:Name = "itemTypeDropDown" Grid.Column="2" Grid.Row="4" Grid.ColumnSpan="2" ItemsSource="{Binding Path=ItemTypeDataSource}" DisplayMemberPath="Name" SelectedValuePath="Name" SelectedValue="ItemTypeDto" DataContextChanged="itemTypeDropDown_DataContextChanged" />
-        <!--<GridViewColumn Header="Fornavn" Width="auto" DisplayMemberBinding="{Binding Path=FirstName}" />-->
+            <!--Item Type Select-->
+        <TextBlock Grid.Column="1" Grid.Row="3" FontWeight="SemiBold" Text="Enhed type: " FontFamily="Segce UI" Margin="3"/>
+        <ComboBox x:Name = "itemTypeDropDown" Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="2" ItemsSource="{Binding Path=ItemTypeDataSource}" DisplayMemberPath="Name" SelectedValuePath="Name" SelectedValue="ItemTypeDto" DataContextChanged="itemTypeDropDown_DataContextChanged">
+            <ComboBox.Style>
+                <Style TargetType="{x:Type ComboBox}">
+                    <Setter Property="IsHitTestVisible" Value="False"/>
+                    <Setter Property="Foreground" Value="Gray" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=NewItemCheckBox, Path=IsChecked}" Value="False">
+                            <Setter Property="IsHitTestVisible" Value="True"/>
+                            <Setter Property="Foreground" Value="Black" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ComboBox.Style>
+        </ComboBox>
 
-        <TextBlock Grid.Column="1" Grid.Row="7" FontWeight="SemiBold" Text="Længde: " FontFamily="Segce UI" Margin="3"/>
-        <TextBox x:Name="kayakLengthText" Grid.Column="2" Grid.Row="7" Grid.ColumnSpan="2"/>
+            <!--New Item Checkbox-->
+        <CheckBox Content="Ny enheds type?" Name="NewItemCheckBox" Grid.Column="2" Grid.Row="4"/>
 
-        <TextBlock Grid.Column="1" Grid.Row="8" FontWeight="SemiBold" Text="Max last (kg): " FontFamily="Segce UI" Margin="3"/>
-        <TextBox x:Name="kayakWeightText" Grid.Column="2" Grid.Row="8" Grid.ColumnSpan="2" />
+        <!---->
+        <!--Text Elements-->
+        <!---->
+        
+        <!--Length-->
+        <TextBlock Grid.Column="1" Grid.Row="7" FontWeight="SemiBold" Text="Længde: " FontFamily="Segce UI" Margin="3">
+            <TextBlock.Style>
+                <Style TargetType="{x:Type TextBlock}">
+                    <Setter Property="Foreground" Value="Black"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=NewItemCheckBox, Path=IsChecked}" Value="False">
+                            <Setter Property="Foreground" Value="Gray"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
 
-        <TextBlock Grid.Column="1" Grid.Row="9" FontWeight="SemiBold" Text="Personer/kapacitet: " FontFamily="Segce UI" Margin="3"/>
-        <TextBox x:Name="kayakPersonCapacityText" Grid.Column="2" Grid.Row="9" Grid.ColumnSpan="2" />
+        <!--Weight-->
+        <TextBlock Grid.Column="1" Grid.Row="8" FontWeight="SemiBold" Text="Max last (kg): " FontFamily="Segce UI" Margin="3">
+            <TextBlock.Style>
+                <Style TargetType="{x:Type TextBlock}">
+                    <Setter Property="Foreground" Value="Black"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=NewItemCheckBox, Path=IsChecked}" Value="False">
+                            <Setter Property="Foreground" Value="Gray"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
 
+        <!--Capacity-->
+        <TextBlock Grid.Column="1" Grid.Row="9" FontWeight="SemiBold" Text="Personer/kapacitet: " FontFamily="Segce UI" Margin="3">
+            <TextBlock.Style>
+                <Style TargetType="{x:Type TextBlock}">
+                    <Setter Property="Foreground" Value="Black"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=NewItemCheckBox, Path=IsChecked}" Value="False">
+                            <Setter Property="Foreground" Value="Gray"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+
+        <!---->
+        <!--Select Item Type-->
+        <!---->
+
+        <!--Length-->
+        <TextBox x:Name="kayakLengthText" Grid.Column="2" Grid.Row="7" Grid.ColumnSpan="2" IsReadOnly="True">
+            <TextBox.Style>
+                <Style TargetType="{x:Type TextBox}">
+                    <Setter Property="Visibility" Value="Hidden"/>
+                    <Setter Property="Foreground" Value="Black"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=NewItemCheckBox, Path=IsChecked}" Value="False">
+                            <Setter Property="Visibility" Value="Visible"/>
+                            <Setter Property="Foreground" Value="Gray"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
+        </TextBox>
+
+        <!--Weight-->
+        <TextBox x:Name="kayakWeightText" Grid.Column="2" Grid.Row="8" Grid.ColumnSpan="2" IsReadOnly="True">
+            <TextBox.Style>
+                <Style TargetType="{x:Type TextBox}">
+                    <Setter Property="Visibility" Value="Hidden"/>
+                    <Setter Property="Foreground" Value="Black"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=NewItemCheckBox, Path=IsChecked}" Value="False">
+                            <Setter Property="Visibility" Value="Visible"/>
+                            <Setter Property="Foreground" Value="Gray"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
+        </TextBox>
+
+        <!--Capasity-->
+        <TextBox x:Name="kayakPersonCapacityText" Grid.Column="2" Grid.Row="9" Grid.ColumnSpan="2" IsReadOnly="True">
+            <TextBox.Style>
+                <Style TargetType="{x:Type TextBox}">
+                    <Setter Property="Visibility" Value="Hidden"/>
+                    <Setter Property="Foreground" Value="Black"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=NewItemCheckBox, Path=IsChecked}" Value="False">
+                            <Setter Property="Visibility" Value="Visible"/>
+                            <Setter Property="Foreground" Value="Gray"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
+        </TextBox>
+
+        <!---->
+        <!--New Item Type-->
+        <!---->
+
+            <!--Length-->
+        <TextBox x:Name="kayakLengthText2" Grid.Column="2" Grid.Row="7" Grid.ColumnSpan="2">
+            <TextBox.Style>
+                <Style TargetType="{x:Type TextBox}">
+                    <Setter Property="Visibility" Value="Hidden"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=NewItemCheckBox, Path=IsChecked}" Value="True">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
+        </TextBox>
+
+            <!--Weight-->
+        <TextBox x:Name="kayakWeightText2" Grid.Column="2" Grid.Row="8" Grid.ColumnSpan="2">
+            <TextBox.Style>
+                <Style TargetType="{x:Type TextBox}">
+                    <Setter Property="Visibility" Value="Hidden"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=NewItemCheckBox, Path=IsChecked}" Value="True">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
+        </TextBox>
+
+            <!--Capasity-->
+        <TextBox x:Name="kayakPersonCapacityText2" Grid.Column="2" Grid.Row="9" Grid.ColumnSpan="2">
+            <TextBox.Style>
+                <Style TargetType="{x:Type TextBox}">
+                    <Setter Property="Visibility" Value="Hidden"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=NewItemCheckBox, Path=IsChecked}" Value="True">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
+        </TextBox>
+
+        <!---->
+        <!--Other-->
+        <!---->
+        
+            <!--Location-->
         <TextBlock Grid.Column="1" Grid.Row="11" FontWeight="SemiBold" Text="Lagerplads: " FontFamily="Segce UI" Margin="3"/>
         <ComboBox x:Name = "locationDropDown" Grid.Column="2" Grid.Row="11" Grid.ColumnSpan="2" ItemsSource="{Binding Path=LocationDataSource}" DisplayMemberPath="PickLocation" SelectedValuePath="PickLocation" SelectedValue="LocationDto"/>
 
+            <!--Decription-->
         <TextBlock Grid.Column="1" Grid.Row="12" FontWeight="SemiBold" Text="Beskrivelse: " FontFamily="Segce UI" Margin="3"/>
         <TextBox x:Name="itemTypeDecriptionText" Grid.Column="2" Grid.Row="12" Grid.ColumnSpan="2" />
 
+            <!--Buttons-->
         <Button Content="Tilbage" Grid.Column="2" Grid.Row="14" Width="75" Click="BackButton"/>
         <Button Content="Opret Kajak" Grid.Column="3" Grid.Row="14" Width="75" Click="CreatKayakButton"/>
 
-        <!--<Frame x:Name="PageCreateKayak" NavigationUIVisibility="Hidden"/>-->
 
     </Grid>
 </Window>
