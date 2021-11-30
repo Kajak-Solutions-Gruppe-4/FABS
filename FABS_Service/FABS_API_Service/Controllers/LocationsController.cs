@@ -13,11 +13,11 @@ namespace FABS_API_Service.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class LocationController : ControllerBase
+    public class LocationsController : ControllerBase
     {
         private readonly IRepository<Location> _locationRepository;
 
-        public LocationController()
+        public LocationsController()
         {
             _locationRepository = new LocationRepository();
         }
@@ -84,43 +84,60 @@ namespace FABS_API_Service.Controllers
         private LocationDto ConvertModelToDto(Location location)
         {
 
-            AddressDto personAddressDto = new AddressDto(
-                location.People.Addresses.Id,
-                location.People.Addresses.StreetName,
-                location.People.Addresses.StreetNumber,
-                location.People.Addresses.ApartmentNumber,
-                location.People.Addresses.ZipcodeCountryCity.Zipcode,
-                location.People.Addresses.ZipcodeCountryCity.Countries.Id,
-                location.People.Addresses.ZipcodeCountryCity.Countries.Name,
-                location.People.Addresses.ZipcodeCountryCity.City
-                );
+            AddressDto personAddressDto = null;
+            if (location.People != null)
+            {
+                 personAddressDto = new AddressDto(
+                 location.People.Addresses.Id,
+                 location.People.Addresses.StreetName,
+                 location.People.Addresses.StreetNumber,
+                 location.People.Addresses.ApartmentNumber,
+                 location.People.Addresses.ZipcodeCountryCity.Zipcode,
+                 location.People.Addresses.ZipcodeCountryCity.Countries.Id,
+                 location.People.Addresses.ZipcodeCountryCity.Countries.Name,
+                 location.People.Addresses.ZipcodeCountryCity.City
+                 );
+            }
 
-            PersonDto personDto = new PersonDto(
-                location.People.Id,
-                location.People.FirstName,
-                location.People.LastName,
-                location.People.TelephoneNumber,
-                personAddressDto,
-                location.People.Login.Email
-                );
 
-            AddressDto organisaitonAddressDto = new AddressDto(
-                location.People.Addresses.Id,
-                location.People.Addresses.StreetName,
-                location.People.Addresses.StreetNumber,
-                location.People.Addresses.ApartmentNumber,
-                location.People.Addresses.ZipcodeCountryCity.Zipcode,
-                location.People.Addresses.ZipcodeCountryCity.Countries.Id,
-                location.People.Addresses.ZipcodeCountryCity.Countries.Name,
-                location.People.Addresses.ZipcodeCountryCity.City
-                );
+            PersonDto personDto = null;
+            if(location.People != null)
+            {
+                  personDto = new PersonDto(
+                  location.People.Id,
+                  location.People.FirstName,
+                  location.People.LastName,
+                  location.People.TelephoneNumber,
+                  personAddressDto,
+                  location.People.Login.Email
+                  );
+            }
 
-            OrganisationDto organisationDto = new OrganisationDto(
-                location.Organisations.Id,
-                location.Organisations.Cvr,
-                location.Organisations.Name,
-                organisaitonAddressDto
-                );
+            AddressDto organisationAddressDto = null;
+            if (location.Organisations.Addresses != null)
+            {
+                    organisationAddressDto = new AddressDto(
+                    location.Organisations.Addresses.Id,
+                    location.Organisations.Addresses.StreetName,
+                    location.Organisations.Addresses.StreetNumber,
+                    location.Organisations.Addresses.ApartmentNumber,
+                    location.Organisations.Addresses.ZipcodeCountryCity.Zipcode,
+                    location.Organisations.Addresses.ZipcodeCountryCity.Countries.Id,
+                    location.Organisations.Addresses.ZipcodeCountryCity.Countries.Name,
+                    location.Organisations.Addresses.ZipcodeCountryCity.City
+                    );
+            }
+
+            OrganisationDto organisationDto = null;
+            if (location.Organisations != null)
+            {
+                    organisationDto = new OrganisationDto(
+                    location.Organisations.Id,
+                    location.Organisations.Cvr,
+                    location.Organisations.Name,
+                    organisationAddressDto
+                    );
+            }
 
             LocationDto locationDto = new LocationDto(
                 location.Id,
