@@ -13,5 +13,13 @@ namespace FABS_DataAccess.Model
             People = people;
             Statuses = statuses;
         }
+
+        public Booking(int id, DateTime startDatetime, DateTime endDatetime, int peopleId, int statusId) :this()
+        {
+            Id = id;
+            StartDatetime = startDatetime;
+            EndDatetime = endDatetime;
+            PeopleId = peopleId;
+        }
     }
 }
