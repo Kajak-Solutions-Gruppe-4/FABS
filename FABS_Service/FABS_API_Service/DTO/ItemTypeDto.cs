@@ -4,6 +4,8 @@
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        KayakTypeDto KayakTypeDto { get; set; }
+
 
         public ItemTypeDto()
         {
@@ -14,6 +16,14 @@
         {
             Id = id;
             Name = name;
+        }
+
+        public ItemTypeDto(int id, string name, KayakTypeDto kayakTypeDto)
+        {
+            Id = id;
+            Name = name;
+            KayakTypeDto = kayakTypeDto;
+
         }
     }
 }

@@ -29,7 +29,6 @@ namespace FABS_Client_WPF.Pages.Items
             _parentWindow = parentWindow;
             InitializeComponent();
             LoadItemTypeComboBox();
-            LoadKayakTypeComboBox();
             LoadLocationComboBox();
 
         }
@@ -93,21 +92,6 @@ namespace FABS_Client_WPF.Pages.Items
             itemTypeDropDown.ItemsSource = listOfItemTypes;
         }
 
-        private void LoadKayakTypeComboBox()
-        {
-            //To Do Populate Combo with right data or api call
-            //itemTypeDropDown.ItemsSource = new List<string> { "Kayak Type A, Kayak Type B" };
-
-            var apiClient = new RestClient("https://localhost:44309/Api");
-            var request = new RestRequest("/kayakTypes?organisationId=1", DataFormat.Json);
-
-            var response = apiClient.Execute(request);
-
-            List<KayakTypeDto> listOfKayakTypes = JsonConvert.DeserializeObject<List<KayakTypeDto>>(response.Content);
-
-            kayakTypeDropDown.ItemsSource = listOfKayakTypes;
-        }
-
         private void LoadLocationComboBox()
         {
             //To Do Populate Combo with right data or api call
@@ -126,6 +110,12 @@ namespace FABS_Client_WPF.Pages.Items
         public void SetLocationList()
         {
 
+        }
+
+        private void itemTypeDropDown_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            var content = itemTypeDropDown.SelectedItem;
+            kayakLengthText.Text = (string)content;
         }
     }
 }
