@@ -129,7 +129,33 @@ namespace FABS_DataAccess.Repository
 
         public Booking Get(int id, int organisationId)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            Booking booking = new Booking();
+            try
+            {
+                string query ="SELECT bookings.id AS \"booking_id\", bookings.start_datetime, bookings.end_datetime, people.id AS \"people_id\", " +
+                    "bookings.statuses_id AS \"booking_statuses_id\", booking_line.items_id FROM booking_line " +
+                    "INNER JOIN bookings ON booking_line.bookings_id = bookings.id " +
+                    "INNER JOIN people ON bookings.people_id = people.id " +
+                    "INNER JOIN items ON booking_line.items_id = items.id " +
+                    $"where bookings_id = {id}";
+
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                using (SqlCommand readCommand = new SqlCommand(query, conn))
+                {
+                    if (conn != null)
+                    {
+                        conn.Open();
+                        SqlDataReader bookingReader = readCommand.ExecuteReader();
+                        booking = GetBookingObject(bookingReader);
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                booking = null;
+            }
+            return booking;
         }
 
         public IEnumerable<Booking> GetAll(int organisationId)
@@ -197,6 +223,30 @@ namespace FABS_DataAccess.Repository
             }   
             
             return foundBookings;
+        }
+
+        private Booking GetBookingObject(SqlDataReader bookingReader)
+        {
+            Booking tempBooking = null;
+            int tempBookingId; DateTime tempStartTime; DateTime tempEndTime; int tempPeopleId; int tempStatusId; int tempItemId;
+
+            while (bookingReader.Read())
+            {
+                tempBookingId = bookingReader.GetInt32(bookingReader.GetOrdinal("booking_id"));
+                tempStartTime = bookingReader.GetDateTime(bookingReader.GetOrdinal("start_datetime"));
+                tempEndTime = bookingReader.GetDateTime(bookingReader.GetOrdinal("end_datetime"));
+                tempPeopleId = bookingReader.GetInt32(bookingReader.GetOrdinal("people_id"));
+                tempStatusId = bookingReader.GetInt32(bookingReader.GetOrdinal("booking_statuses_id"));
+                tempItemId = bookingReader.GetInt32(bookingReader.GetOrdinal("items_id"));
+                
+                if (tempBooking == null)
+                {
+                    tempBooking = new Booking(tempBookingId, tempStartTime, tempEndTime, tempPeopleId, tempStatusId);
+                }
+                    tempBooking.BookingLines.Add(new BookingLine(tempBookingId, tempItemId));
+                
+            }
+            return tempBooking;
         }
     }
 }

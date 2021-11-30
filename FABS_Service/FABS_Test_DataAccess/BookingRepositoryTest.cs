@@ -113,7 +113,6 @@ namespace FABS_Test_DataAccess
 
                 case "ReadBooking":
                     allData.Add(new object[] { 1, true });
-                    allData.Add(new object[] { 1, true });
                     break;
 
                 case "CreateBooking":
@@ -140,8 +139,8 @@ namespace FABS_Test_DataAccess
                 if (expectedSuccess == true)
                 {
                     //Booking
-                    Assert.Equal("2021-01-24 23:12:00.000", booking.StartDatetime.ToString());
-                    Assert.Equal("2021-01-25 01:00:00.000", booking.EndDatetime.ToString());
+                    Assert.Equal(new DateTime(2021, 1, 24, 23, 12, 0), booking.StartDatetime);
+                    Assert.Equal(new DateTime(2021, 1, 25, 1, 0, 0), booking.EndDatetime);
                     Assert.Equal("Booking Status", booking.Statuses.Category);
                     Assert.Equal("Active", booking.Statuses.Name);
 

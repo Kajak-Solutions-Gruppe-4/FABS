@@ -63,7 +63,9 @@ namespace FABS_Test_DataAccess
                 Status status4 = new Status("Bekræftet", "Booking");
                 Booking booking1 = new Booking(new DateTime(2021, 11, 19, 13, 0, 0), new DateTime(2021, 11, 19, 16, 0, 0), person1, status4);
                 BookingLine bookingLine1 = new BookingLine(booking1, item4);
+                BookingLine bookingLine2 = new BookingLine(booking1, item3);
                 booking1.BookingLines.Add(bookingLine1);
+                booking1.BookingLines.Add(bookingLine2);
                 person1.Bookings.Add(booking1); // adding booking to person, so organisation1 can see the booking through him.
 
                 // adding the missing pieces to organisation, so entity framework can create everything from this object.
