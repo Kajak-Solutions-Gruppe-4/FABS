@@ -59,10 +59,10 @@ namespace FABS_API_Service.Controllers
         public ActionResult<int> Post([FromBody] BookingDto bDto, int organisationId)
         {
             Booking b = ConvertDtoToModel(bDto);
-            int newBookingId = _bookingRepository.Create(b);
-            if (newBookingId > -1)
+            int numberOfAffectedRows = _bookingRepository.Create(b);
+            if (numberOfAffectedRows > -1)
             {
-                return Ok(newBookingId);
+                return Ok(numberOfAffectedRows);
             }
             else
             {
