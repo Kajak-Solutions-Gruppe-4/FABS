@@ -96,6 +96,8 @@ namespace FABS_API_Service.Controllers
                 itemType.Id, 
                 itemType.Name, 
                 kayakTypeDto);
+
+            kayakTypeDto.ItemTypesId = itemTypeDto;
         
             return itemTypeDto;
         }

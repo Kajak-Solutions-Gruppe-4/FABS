@@ -30,9 +30,14 @@ namespace FABS_DataAccess.Repository
             {
                 listItemTypes = _context.ItemTypes
                     .Where(p => p.Items.Any(op => op.OrganisationsId == organisationId))
-                    .Include(k => k.KayakType);
-                
+                    .Include(k => k.KayakType)
                     
+                    
+
+
+                    ;
+
+
             }
             catch
             {

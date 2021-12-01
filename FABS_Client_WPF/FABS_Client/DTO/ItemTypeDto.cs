@@ -8,23 +8,30 @@ namespace FABS_Client_WPF.DTO
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public KayakTypeDto KayakTypesId { get; set; }
+        public KayakTypeDto KayakTypes { get; set; }
 
         public ItemTypeDto()
         {
 
         }
 
-        public ItemTypeDto(int id, string name)
-        {
-            Id = id;
-            Name = name;
-        }
+        //public ItemTypeDto(int id, string name)
+        //{
+        //    Id = id;
+        //    Name = name;
+        //}
 
         public ItemTypeDto(string name, KayakTypeDto kayakType)
         {
             Name = name;
-            KayakTypesId = kayakType;
+            KayakTypes = kayakType;
+        }
+
+        public ItemTypeDto(int id, string name, KayakTypeDto kayakType)
+        {
+            Id = id;
+            Name = name;
+            KayakTypes = kayakType;
         }
     }
 }

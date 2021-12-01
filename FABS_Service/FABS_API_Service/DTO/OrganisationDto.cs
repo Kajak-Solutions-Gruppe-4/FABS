@@ -44,5 +44,6 @@ namespace FABS_API_Service.DTO
             Cvr = cvr;
             Name = name;
         }
+
     }
 }

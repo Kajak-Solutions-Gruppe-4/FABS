@@ -4,7 +4,7 @@
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        KayakTypeDto KayakTypeDto { get; set; }
+        public KayakTypeDto KayakTypeDto { get; set; }
 
 
         public ItemTypeDto()

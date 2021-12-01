@@ -54,12 +54,13 @@ namespace FABS_Client_WPF.Pages.Items
             ItemTypeDto itemType = new ItemTypeDto(
                 itemTypeDropDown.Text.ToString(),
                 kayakType
+
                 );
 
             //location
             LocationDto location = new LocationDto(
                 locationDropDown.Text.ToString()
-                ) ;
+                );
 
             //item
             ItemDto item = new ItemDto(
@@ -87,6 +88,8 @@ namespace FABS_Client_WPF.Pages.Items
 
             var response = apiClient.Execute(request);
 
+            
+
             List<ItemTypeDto> listOfItemTypes = JsonConvert.DeserializeObject<List<ItemTypeDto>>(response.Content);
 
             itemTypeDropDown.ItemsSource = listOfItemTypes;
@@ -112,10 +115,26 @@ namespace FABS_Client_WPF.Pages.Items
 
         }
 
-        private void itemTypeDropDown_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+
+        //public void RefreshList()
+        //{
+        //    //TODO: Implement ItemDTO
+
+        //    var apiClient = new RestClient("https://localhost:44309/Api");
+        //    // Hardcoded organisation ID for the specific client TODO: 
+        //    //Add an universal ID to the client for use everywhwere
+        //    var request = new RestRequest("/items?organisationId=1", DataFormat.Json);
+
+        //    var response = apiClient.Execute(request);
+
+        //}
+        
+        private void itemTypeDropDown_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var content = itemTypeDropDown.SelectedItem;
-            kayakLengthText.Text = (string)content;
+            var LengthText = ((FABS_Client_WPF.DTO.ItemTypeDto)content).KayakTypes.LengthMeter;
+
+            kayakLengthText.Text = LengthText.ToString();
         }
     }
 }
