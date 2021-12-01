@@ -51,8 +51,7 @@ namespace FABS_DataAccess.Repository
         }
 
         // This create booking works!
-        
-
+        //TODO Available logic for kayaks
         public int Create(Booking booking)
         {
 
