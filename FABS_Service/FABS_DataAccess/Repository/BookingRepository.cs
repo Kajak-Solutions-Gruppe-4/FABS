@@ -68,9 +68,10 @@ namespace FABS_DataAccess.Repository
                                       "VALUES(@BookingId, @ItemId)";
 
             // Get connection and run command
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            using (SqlCommand insertBookingCommand = new SqlCommand(bookingQuery, conn))
+            using (TransactionScope ts = new TransactionScope())
             {
+                using SqlConnection conn = new SqlConnection(connectionString);
+                using SqlCommand insertBookingCommand = new SqlCommand(bookingQuery, conn);
 
                 insertBookingCommand.Parameters.AddWithValue("StartDateTime", booking.StartDatetime);
                 insertBookingCommand.Parameters.AddWithValue("EndDateTime", booking.EndDatetime);
@@ -88,24 +89,23 @@ namespace FABS_DataAccess.Repository
 
                 foreach (BookingLine bookingLine in booking.BookingLines)
                 {
-                    using (SqlCommand createBookingLineCommand = new SqlCommand(bookingLineQuery, conn))
-                    {
+                    using SqlCommand createBookingLineCommand = new SqlCommand(bookingLineQuery, conn);
 
-                        //createBookingLineCommand.CommandText = bookingLineQuery;
-                        createBookingLineCommand.Parameters.AddWithValue("BookingId", insertedBookingId);
-                        createBookingLineCommand.Parameters.AddWithValue("ItemId", bookingLine.ItemsId);
-                        try
-                        {
-                            createBookingLineCommand.ExecuteNonQuery();
-                            numberOfRowsInserted++;
-                        }
-                        catch (Exception ex)
-                        {
-                            var res = ex;
-                        }
+                    //createBookingLineCommand.CommandText = bookingLineQuery;
+                    createBookingLineCommand.Parameters.AddWithValue("BookingId", insertedBookingId);
+                    createBookingLineCommand.Parameters.AddWithValue("ItemId", bookingLine.ItemsId);
+                    try
+                    {
+                        createBookingLineCommand.ExecuteNonQuery();
+                        numberOfRowsInserted++;
+                    }
+                    catch (Exception ex)
+                    {
+                        var res = ex;
                     }
                 }
 
+                ts.Complete();
             }
 
             return numberOfRowsInserted;
