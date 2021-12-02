@@ -133,6 +133,7 @@ namespace FABS_DataAccess.Repository
             Booking booking = new Booking();
             try
             {
+                //TODO: WHERE clause for organisation ID so we can information hide based on organsation
                 string query ="SELECT bookings.id AS \"booking_id\", bookings.start_datetime, bookings.end_datetime, people.id AS \"people_id\", " +
                     "bookings.statuses_id AS \"booking_statuses_id\", booking_line.items_id FROM booking_line " +
                     "INNER JOIN bookings ON booking_line.bookings_id = bookings.id " +
@@ -165,6 +166,7 @@ namespace FABS_DataAccess.Repository
 
             try
             {
+                //TODO: WHERE clause for organisation ID so we can information hide based on organsation
                 string query = "SELECT bookings.id AS \"booking_id\", bookings.start_datetime, bookings.end_datetime, people.id AS \"people_id\", " +
                     "bookings.statuses_id AS \"booking_statuses_id\", booking_line.items_id FROM booking_line " +
                     "INNER JOIN bookings ON booking_line.bookings_id = bookings.id " +
