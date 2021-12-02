@@ -54,7 +54,7 @@ namespace FABS_DataAccess.Repository
         //TODO Available logic for kayaks
         public int Create(Booking booking)
         {
-
+            bool allSuccessfull = false;
             int numberOfRowsInserted = 0;
 
             decimal insertedBookingId = -1;
@@ -84,6 +84,7 @@ namespace FABS_DataAccess.Repository
 
                     insertedBookingId = (decimal)insertBookingCommand.ExecuteScalar();
                     numberOfRowsInserted++;
+                    allSuccessfull = true;
                 }
 
 
@@ -98,14 +99,24 @@ namespace FABS_DataAccess.Repository
                     {
                         createBookingLineCommand.ExecuteNonQuery();
                         numberOfRowsInserted++;
+                        allSuccessfull = true;
                     }
                     catch (Exception ex)
                     {
                         var res = ex;
+                        allSuccessfull = false;
+                        break;
                     }
                 }
+                if (allSuccessfull)
+                {
+                    ts.Complete();
 
-                ts.Complete();
+                }
+                else
+                {
+                    numberOfRowsInserted = 0;
+                }
             }
 
             return numberOfRowsInserted;
