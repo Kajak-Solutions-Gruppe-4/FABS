@@ -14,8 +14,10 @@ namespace FABS_Client_Web.Controllers
     public class BookingController : Controller
     {
         //Base url for calling API
-        string Baseurl = "https://localhost:44309/api";
+        string Baseurl = "https://localhost:44309/api/";
         // GET: BookingController
+        
+        
         public async Task<ActionResult> Index()
         {
             List<BookingDto> BookingList = new List<BookingDto>();
@@ -26,7 +28,7 @@ namespace FABS_Client_Web.Controllers
 
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                HttpResponseMessage res = await client.GetAsync("bookings?organisationId=1");
+                HttpResponseMessage res = await client.GetAsync("bookings?organisationid=1");
 
                 if (res.IsSuccessStatusCode)
                 {
