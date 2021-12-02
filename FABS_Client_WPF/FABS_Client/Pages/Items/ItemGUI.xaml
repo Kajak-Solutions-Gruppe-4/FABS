@@ -55,7 +55,7 @@
         <TextBlock Grid.Column="1" Grid.Row="1" FontSize="20" FontWeight="Bold" Text="Kajakker" FontFamily="Segce UI" Grid.ColumnSpan="4" Margin="15"/>
 
         <!--Create Item label & texfeild-->
-        <ListView Margin="10" Name="KayakViewList" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" VerticalAlignment="Top" MaxHeight="200">
+        <ListView Margin="10" Name="KayakViewList" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="4" VerticalAlignment="Top" MaxHeight="200">
 
             <ListView.View>
 
@@ -75,8 +75,10 @@
         </ListView>
 
 
-        <Button Content="Opret Kajak" Grid.Column="2" Grid.Row="5" Width="75" Click="CreateKayakButton"/>
-        <Button Content="Rediger Kajak" Grid.Column="1" Grid.Row="5" Width="75" Click="CreateKayakButton"/>
+        <Button Content="Opret Kajak" Grid.Column="1" Grid.Row="5" Width="100" Click="CreateKayakButton"/>
+        <Button Content="Opret Kajak Type" Grid.Column="2" Grid.Row="5" Width="100" Click="CreateKayakButton"/>
+        <Button Content="Opret Lokation" Grid.Column="3" Grid.Row="5" Width="100" Click="CreateKayakButton"/>
+        <Button Content="Opret Varehus" Grid.Column="4" Grid.Row="5" Width="100" Click="CreateKayakButton"/>
     </Grid>
     
 </Page>

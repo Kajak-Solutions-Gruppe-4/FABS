@@ -117,5 +117,10 @@ namespace FABS_Client_WPF.Pages.Items
             var content = itemTypeDropDown.SelectedItem;
             kayakLengthText.Text = (string)content;
         }
+
+        private void CountAddButton(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
