@@ -10,10 +10,13 @@ namespace FABS_DataAccess.BusinessLogic
 {
     public static class BookingLogic
     {
-        //booking can only be made from current date and forward
-        //booking start/end dats can only occure same day
-        //check if startdate is before enddate time secduleing
-        private static bool DateRangeValidator(DateTime date1, DateTime date2)
+        /// <summary>
+        /// Checks for past dates and if start and end date is correct 
+        /// </summary>
+        /// <param name="date1"></param>
+        /// <param name="date2"></param>
+        /// <returns>True if dates are correctly valdiated</returns>
+        public static bool DateRangeValidator(DateTime date1, DateTime date2)
         {
             bool value = false;
 

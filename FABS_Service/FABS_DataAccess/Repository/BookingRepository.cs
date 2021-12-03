@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using System.IO;
 using Microsoft.Data.SqlClient;
 using System.Transactions;
+using FABS_DataAccess.BusinessLogic;
 
 namespace FABS_DataAccess.Repository
 {
@@ -50,20 +51,38 @@ namespace FABS_DataAccess.Repository
             _connectionString = Configuration.GetConnectionString("FABS_connectionstring");
         }
 
-        // This create booking works!
-        //TODO Available logic for kayaks
+        /// <summary>
+        /// This method Creates booking in the database, if data is correct and there is no overlap between bookings and their items
+        /// </summary>
+        /// <param name="booking">The incoming booking with items</param>
+        /// <returns>Number of rows affected, or 0 if no rows have been written in DB (not successfull)</returns>
         public int Create(Booking booking)
         {
+            
+
             bool allSuccessfull = false;
             int numberOfRowsInserted = 0;
 
             decimal insertedBookingId = -1;
             string connectionString = _connectionString;
 
+            //Validate booking has item
+            if(booking.BookingLines.Count == 0)
+            {
+                return numberOfRowsInserted;
+            }
+
+            //validate Date Range
+            if(!BookingLogic.DateRangeValidator(booking.StartDatetime, booking.EndDatetime))
+            {
+                return numberOfRowsInserted;
+            }
+
             // Prepare command for inserting booking
             string bookingQuery = "INSERT INTO bookings(start_datetime, end_datetime, people_id, statuses_id) " +
                                  "VALUES(@StartDateTime, @EndDateTime, @PersonId, @StatusId) SELECT scope_identity()";
             // Prepare command for inserting bookinglines
+            //TODO: Validate item availability in SQL string
             string bookingLineQuery = "INSERT INTO booking_line(bookings_id, items_id)" +
                                       "VALUES(@BookingId, @ItemId)";
 
@@ -83,6 +102,7 @@ namespace FABS_DataAccess.Repository
                     conn.Open();
 
                     insertedBookingId = (decimal)insertBookingCommand.ExecuteScalar();
+                    //TODO Try catch
                     numberOfRowsInserted++;
                     allSuccessfull = true;
                 }
@@ -92,13 +112,14 @@ namespace FABS_DataAccess.Repository
                 {
                     using SqlCommand createBookingLineCommand = new SqlCommand(bookingLineQuery, conn);
 
-                    //createBookingLineCommand.CommandText = bookingLineQuery;
+                    
                     createBookingLineCommand.Parameters.AddWithValue("BookingId", insertedBookingId);
                     createBookingLineCommand.Parameters.AddWithValue("ItemId", bookingLine.ItemsId);
                     try
                     {
-                        createBookingLineCommand.ExecuteNonQuery();
-                        numberOfRowsInserted++;
+                        //TODO Validate
+                        numberOfRowsInserted += createBookingLineCommand.ExecuteNonQuery();
+                        //numberOfRowsInserted++;
                         allSuccessfull = true;
                     }
                     catch (Exception ex)
