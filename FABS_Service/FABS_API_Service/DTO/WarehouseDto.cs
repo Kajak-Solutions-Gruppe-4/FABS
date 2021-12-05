@@ -28,5 +28,10 @@ namespace FABS_API_Service.DTO
             Name = name;
             Address = address;
         }
+
+        public WarehouseDto(string name)
+        {
+            Name = name;
+        }
     }
 }

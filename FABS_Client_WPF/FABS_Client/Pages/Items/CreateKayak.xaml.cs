@@ -29,6 +29,7 @@ namespace FABS_Client_WPF.Pages.Items
             _parentWindow = parentWindow;
             InitializeComponent();
             LoadItemTypeComboBox();
+            LoadWarehouseComboBox();
             LoadLocationComboBox();
 
         }
@@ -38,7 +39,7 @@ namespace FABS_Client_WPF.Pages.Items
             Close();
         }
 
-        private void CreatKayakButton(object sender, RoutedEventArgs e)
+        private void CreateButton(object sender, RoutedEventArgs e)
         {
             ItemHelper helper = new ItemHelper();
 
@@ -59,17 +60,39 @@ namespace FABS_Client_WPF.Pages.Items
             //location
             LocationDto location = new LocationDto(
                 locationDropDown.Text.ToString()
-                ) ;
+                );
 
-            //item
+            //warehouse
+            WarehouseDto warehouse = new WarehouseDto(
+                warehouseDropDown.Text.ToString()
+                );
+
+            //Item
+
             ItemDto item = new ItemDto(
                 location,
                 itemType
                 );
 
+            ////item
 
-
-            helper.PostItem(item);
+            //if (warehouseDropDown != null)
+            //{
+            //    ItemDto item = new ItemDto(
+            //        location,
+            //        itemType,
+            //        warehouse
+            //        );
+            //    helper.PostItem(item);
+            //}
+            //else
+            //{
+            //    ItemDto item = new ItemDto(
+            //        location,
+            //        itemType
+            //        );
+            //    helper.PostItem(item);
+            //}
 
             _parentWindow.RefreshList();
 
@@ -90,6 +113,21 @@ namespace FABS_Client_WPF.Pages.Items
             List<ItemTypeDto> listOfItemTypes = JsonConvert.DeserializeObject<List<ItemTypeDto>>(response.Content);
 
             itemTypeDropDown.ItemsSource = listOfItemTypes;
+        }
+
+        private void LoadWarehouseComboBox()
+        {
+            //To Do Populate Combo with right data or api call
+            //locationDropDown.ItemsSource = new List<string> { "Plads 1", "Plads 2" };
+
+            var apiClient = new RestClient("https://localhost:44309/Api");
+            var request = new RestRequest("/Warehouses?organisationId=1", DataFormat.Json);
+
+            var response = apiClient.Execute(request);
+
+            List<WarehouseDto> listOfWarehouses = JsonConvert.DeserializeObject<List<WarehouseDto>>(response.Content);
+
+            warehouseDropDown.ItemsSource = listOfWarehouses;
         }
 
         private void LoadLocationComboBox()
@@ -120,7 +158,23 @@ namespace FABS_Client_WPF.Pages.Items
 
         private void CountAddButton(object sender, RoutedEventArgs e)
         {
+            int textbox;
+            int result;
 
+            textbox = Convert.ToInt32(AmountText.Text);
+            result = textbox + 1;
+            AmountText.Text = Convert.ToString(result);
+
+        }
+
+        private void CountSubtractButton(object sender, RoutedEventArgs e)
+        {
+            int textbox;
+            int result;
+
+            textbox = Convert.ToInt32(AmountText.Text);
+            result = textbox - 1;
+            AmountText.Text = Convert.ToString(result);
         }
     }
 }

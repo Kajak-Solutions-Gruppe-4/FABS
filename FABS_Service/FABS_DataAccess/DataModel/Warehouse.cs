@@ -17,5 +17,10 @@ namespace FABS_DataAccess.Model
             Name = name;
             AddressesId = addressesId;
         }
+
+        public Warehouse(string name)
+        {
+            Name = name;
+        }
     }
 }

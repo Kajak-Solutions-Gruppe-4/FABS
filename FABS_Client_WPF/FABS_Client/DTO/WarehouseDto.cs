@@ -28,5 +28,10 @@ namespace FABS_Client_WPF.DTO
             Name = name;
             Address = address;
         }
+
+        public WarehouseDto(string name)
+        {
+            Name = name;
+        }
     }
 }
