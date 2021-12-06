@@ -6,8 +6,11 @@ namespace FABS_Client_WPF.DTO
 {
     public class ItemTypeDto
     {
+        [JsonProperty(PropertyName = "id")]
         public int Id { get; set; }
+        [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
+        [JsonProperty(PropertyName = "kayakTypes")]
         public KayakTypeDto KayakTypes { get; set; }
 
         public ItemTypeDto()
@@ -21,17 +24,17 @@ namespace FABS_Client_WPF.DTO
         //    Name = name;
         //}
 
-        public ItemTypeDto(string name, KayakTypeDto kayakType)
+        public ItemTypeDto(string name, KayakTypeDto kayakTypes)
         {
             Name = name;
-            KayakTypes = kayakType;
+            KayakTypes = kayakTypes;
         }
 
-        public ItemTypeDto(int id, string name, KayakTypeDto kayakType)
+        public ItemTypeDto(int id, string name, KayakTypeDto kayakTypes)
         {
             Id = id;
             Name = name;
-            KayakTypes = kayakType;
+            KayakTypes = kayakTypes;
         }
     }
 }

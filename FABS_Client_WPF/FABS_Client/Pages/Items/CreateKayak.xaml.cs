@@ -88,7 +88,11 @@ namespace FABS_Client_WPF.Pages.Items
 
             var response = apiClient.Execute(request);
 
-            
+            //var objt = JsonConvert.DeserializeObject(response.Content);
+
+            //var account = JsonConvert.DeserializeObject<RequestMetaDataXml>(response.Content);
+
+
 
             List<ItemTypeDto> listOfItemTypes = JsonConvert.DeserializeObject<List<ItemTypeDto>>(response.Content);
 

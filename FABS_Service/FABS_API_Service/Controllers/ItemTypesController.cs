@@ -95,7 +95,8 @@ namespace FABS_API_Service.Controllers
             ItemTypeDto itemTypeDto = new ItemTypeDto(
                 itemType.Id, 
                 itemType.Name, 
-                kayakTypeDto);
+                kayakTypeDto
+                );
 
             kayakTypeDto.ItemTypesId = itemTypeDto;
         
