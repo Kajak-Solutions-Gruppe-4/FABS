@@ -80,7 +80,7 @@ namespace FABS_DataAccess.Repository
             {
                 using (SqlConnection conn = new SqlConnection(_connectionString))
                 {
-                    bool allSuccessfull = false;
+                    bool allSuccessfull = true;
                     decimal insertedBookingId = -1;
                     conn.Open();
                     if (BookingLogic.HasOverlap(conn, booking))
@@ -104,11 +104,16 @@ namespace FABS_DataAccess.Repository
                     insertBookingCommand.Parameters.AddWithValue("StatusId", booking.StatusesId);
 
 
-
+                    try
+                    {
                     insertedBookingId = (decimal)insertBookingCommand.ExecuteScalar();
-                    //TODO Try catch
                     numberOfRowsInserted++;
-                    allSuccessfull = true;
+                    }
+                    catch (SqlException e)
+                    {
+                        allSuccessfull = false;
+                    }
+                    //TODO Try catch
 
 
 
@@ -124,7 +129,6 @@ namespace FABS_DataAccess.Repository
                             //TODO Validate
                             numberOfRowsInserted += createBookingLineCommand.ExecuteNonQuery();
                             //numberOfRowsInserted++;
-                            allSuccessfull = true;
                         }
                         catch (Exception ex)
                         {
