@@ -81,22 +81,30 @@ namespace FABS_Test_DataAccess
             organisation1.Items.Add(item3);
 
             //Create dateTime objects
-            DateTime startDateTime1 = new DateTime(2021, 1, 24, 23, 12, 0);
-            DateTime endDateTime1 = new DateTime(2021, 1, 25, 1, 0, 0);
-            DateTime startDateTime2 = new DateTime(2021, 6, 6, 14, 17, 0);
-            DateTime endDateTime2 = new DateTime(2021, 6, 6, 18, 17, 0);
-            DateTime startDateTime3 = new DateTime(2021, 7, 7, 5, 47, 0);
-            DateTime endDateTime3 = new DateTime(2021, 7, 7, 12, 17, 0);
+            DateTime startDateTime = DateTime.Now.AddHours(1);
+            DateTime endDateTime = DateTime.Now.AddHours(2);
 
             //Create bookings
-            Booking booking1 = new Booking(startDateTime1, endDateTime1, person1, status2);
-            Booking booking2 = new Booking(startDateTime2, endDateTime2, person2, status2);
-            Booking booking3 = new Booking(startDateTime3, endDateTime3, person3, status2);
+            Booking bookingExist = new Booking(startDateTime, endDateTime, person1, status2);
+            Booking bookingBeforeExist = new Booking(startDateTime.AddMinutes(-45), endDateTime.AddMinutes(-75), person2, status2);
+            Booking bookingEndInExist = new Booking(startDateTime.AddMinutes(-30), endDateTime.AddMinutes(-30), person3, status2);
+            Booking bookingSameTimeExist = new Booking(startDateTime.AddMinutes(0), endDateTime.AddMinutes(0), person3, status2);
+            Booking bookingInsideExist = new Booking(startDateTime.AddMinutes(15), endDateTime.AddMinutes(-15), person3, status2);
+            Booking bookingOverExist = new Booking(startDateTime.AddMinutes(-30), endDateTime.AddMinutes(30), person3, status2);
+            Booking bookingStartInExist = new Booking(startDateTime.AddMinutes(30), endDateTime.AddMinutes(30), person3, status2);
+            Booking bookingAfterExist = new Booking(startDateTime.AddMinutes(75), endDateTime.AddMinutes(45), person3, status2);
 
-            BookingLine line1 = new BookingLine(booking1, item1);
+            BookingLine line1 = new BookingLine(bookingExist, item1);
 
-            booking1.BookingLines.Add(line1);
-            person1.Bookings.Add(booking1);
+            bookingExist.BookingLines.Add(line1);
+            bookingBeforeExist.BookingLines.Add(line1);
+            bookingEndInExist.BookingLines.Add(line1);
+            bookingSameTimeExist.BookingLines.Add(line1);
+            bookingInsideExist.BookingLines.Add(line1);
+            bookingOverExist.BookingLines.Add(line1);
+            bookingStartInExist.BookingLines.Add(line1);
+            bookingAfterExist.BookingLines.Add(line1);
+            person1.Bookings.Add(bookingExist);
 
             OrganisationPerson organisationPerson1 = new OrganisationPerson(organisation1, person1);
             OrganisationPerson organisationPerson2 = new OrganisationPerson(organisation1, person2);
@@ -117,8 +125,13 @@ namespace FABS_Test_DataAccess
                     break;
 
                 case "CreateBooking":
-                    allData.Add(new object[] { booking2, true });
-                    allData.Add(new object[] { booking3, false });
+                    allData.Add(new object[] { bookingBeforeExist, true });
+                    allData.Add(new object[] { bookingEndInExist, false });
+                    allData.Add(new object[] { bookingSameTimeExist, false });
+                    allData.Add(new object[] { bookingInsideExist, false });
+                    allData.Add(new object[] { bookingOverExist, false });
+                    allData.Add(new object[] { bookingStartInExist, false });
+                    allData.Add(new object[] { bookingAfterExist, true });
                     break;
                 default:
                     break;
@@ -276,12 +289,17 @@ namespace FABS_Test_DataAccess
 
         }
 
-        [Theory(Skip = "Not done")]
+        [Theory]
         [MemberData(nameof(GetData), parameters: "CreateBooking")]
         public void CreateBookingSimple(Booking booking, bool expectedResult)
         {
             BookingRepository bookingRepository = new BookingRepository();
+            booking.PeopleId = 1;
+            booking.StatusesId = 1;
+            booking.BookingLines.First().ItemsId = 1;
 
+            int numberOfRowsAffected = bookingRepository.Create(booking);
+            Assert.Equal(expectedResult, numberOfRowsAffected > 0);
         }
 
         [Fact]
@@ -292,7 +310,7 @@ namespace FABS_Test_DataAccess
             Booking booking = new Booking(DateTime.Now.AddHours(1), DateTime.Now.AddHours(2), 1, 1);
             BookingLine bookingLine = new BookingLine(1, 1);
             booking.BookingLines.Add(bookingLine);
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 10; i++)
             {
                 List<Task<int>> tasks = new List<Task<int>>();
                 for (int j = 0; j < 100; j++)
