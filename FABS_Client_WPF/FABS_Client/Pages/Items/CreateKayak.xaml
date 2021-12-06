@@ -72,9 +72,10 @@
 
             <!--Item Type Select-->
         <TextBlock Grid.Column="1" Grid.Row="3" FontWeight="SemiBold" Text="Enheds type: " FontFamily="Segce UI" Margin="3"/>
-        <ComboBox x:Name = "itemTypeDropDown" Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="3" ItemsSource="{Binding Path=itemTypeDataSource}" DisplayMemberPath="PickLocation" SelectedValuePath="PickLocation" SelectedValue="LocationDto"/>
+        <ComboBox x:Name = "itemTypeDropDown" Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="3" ItemsSource="{Binding Path=itemTypeDataSource}" DisplayMemberPath="PickLocation" SelectedValuePath="PickLocation">
+        </ComboBox>
 
-            <!--Amount-->
+        <!--Amount-->
         <TextBlock Grid.Column="1" Grid.Row="4" FontWeight="SemiBold" Text="Tilføj (x) antal kajakker: " FontFamily="Segce UI" Margin="3"/>
         <StackPanel Grid.Column="2" Grid.Row="4">
             <Grid>
@@ -93,6 +94,10 @@
                 <Button Content="-" Grid.Column="1" Grid.Row="1" Width="10" Height="10" Click="CountSubtractButton" FontSize="6"/>
             </Grid>
         </StackPanel>
+
+        <!--<Trigger Property="SelectedItem" Value="{x:Null}">
+            <Setter Property="SelectedIndex" Value="0"/>
+        </Trigger>-->
 
         <!--Seperator-->
         <Separator Grid.Column="1" Grid.Row="9" Height="10" Grid.ColumnSpan="3"/>
@@ -135,9 +140,10 @@
 
             <!--Location-->
         <TextBlock Grid.Column="1" Grid.Row="21" FontWeight="SemiBold" Text="Lagerplads: " FontFamily="Segce UI" Margin="3"/>
-        <ComboBox x:Name = "locationDropDown" Grid.Column="2" Grid.Row="21" Grid.ColumnSpan="3" ItemsSource="{Binding Path=LocationDataSource}" DisplayMemberPath="PickLocation" SelectedValuePath="PickLocation" SelectedValue="LocationDto"/>
-        
-            <!--Location Decription-->
+        <ComboBox x:Name = "locationDropDown" Grid.Column="2" Grid.Row="21" Grid.ColumnSpan="3" ItemsSource="{Binding Path=LocationDataSource}" DisplayMemberPath="PickLocation" SelectedValuePath="PickLocation" SelectedValue="LocationDto">
+        </ComboBox>
+
+        <!--Location Decription-->
         <TextBlock Grid.Column="1" Grid.Row="22" FontWeight="SemiBold" Text="Lager Beskrivelse: " FontFamily="Segce UI" Margin="3"/>
         <TextBox x:Name="itemTypeDecriptionText" Grid.Column="2" Grid.Row="22" Grid.ColumnSpan="3" Height="80">
         </TextBox>
