@@ -31,6 +31,7 @@ namespace FABS_Client_WPF.Pages.Items
             LoadItemTypeComboBox();
             LoadWarehouseComboBox();
             LoadLocationComboBox();
+            LocationVisability();
 
         }
 
@@ -139,9 +140,9 @@ namespace FABS_Client_WPF.Pages.Items
             var request = new RestRequest("/Locations?organisationId=1", DataFormat.Json);
 
             var response = apiClient.Execute(request);
+            string defaultInput = "123";
 
             List<LocationDto> listOfLocations = JsonConvert.DeserializeObject<List<LocationDto>>(response.Content);
-
             locationDropDown.ItemsSource = listOfLocations;
         }
 
@@ -175,6 +176,33 @@ namespace FABS_Client_WPF.Pages.Items
             textbox = Convert.ToInt32(AmountText.Text);
             result = textbox - 1;
             AmountText.Text = Convert.ToString(result);
+        }
+
+        private void LocationVisability()
+        {
+            //locationDropDown_FocusableChanged
+            string l = Convert.ToString(locationDropDown);
+
+            if (string.IsNullOrEmpty(l))
+            {
+                LocationDecriptionHeader.Visibility = Visibility.Visible;
+                LocationDecriptionText.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                LocationDecriptionHeader.Visibility = Visibility.Hidden;
+                LocationDecriptionText.Visibility = Visibility.Hidden;
+            }
+        }
+
+        private void locationDropDown_FocusableChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            LocationVisability();
+        }
+
+        private void locationDropDown_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            LocationVisability();
         }
     }
 }

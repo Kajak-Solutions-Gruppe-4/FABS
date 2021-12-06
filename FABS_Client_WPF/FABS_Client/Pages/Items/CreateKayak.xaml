@@ -25,7 +25,8 @@
             <ColumnDefinition Width ="20" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="20"/> <!--Row 0 - (0- 9 main elements)-->
+            <RowDefinition Height="20"/>
+            <!--Row 0 - (0- 9 main elements)-->
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="20"/>
             <RowDefinition Height="auto"/>
@@ -34,8 +35,10 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/> <!--Row 0 - (0- 9 main elements)-->
-            <RowDefinition Height="auto"/> <!--Row 10 - (10-19 reserved for KayakType poppup elements)-->
+            <RowDefinition Height="auto"/>
+            <!--Row 0 - (0- 9 main elements)-->
+            <RowDefinition Height="auto"/>
+            <!--Row 10 - (10-19 reserved for KayakType poppup elements)-->
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
@@ -44,8 +47,10 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/> <!--Row 19 - (10-19 reserved for Kayaktype popup elements)-->
-            <RowDefinition Height="auto"/> <!--Row 20 - (20-29 reserved for Warehouse popup elements)-->
+            <RowDefinition Height="auto"/>
+            <!--Row 19 - (10-19 reserved for Kayaktype popup elements)-->
+            <RowDefinition Height="auto"/>
+            <!--Row 20 - (20-29 reserved for Warehouse popup elements)-->
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
@@ -54,8 +59,10 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/> <!--Row 29 - (20-29 reserved for Warehouse popup elements)-->
-            <RowDefinition Height="auto"/> <!--Row 30 - (30+ reserved for button elements)-->
+            <RowDefinition Height="auto"/>
+            <!--Row 29 - (20-29 reserved for Warehouse popup elements)-->
+            <RowDefinition Height="auto"/>
+            <!--Row 30 - (30+ reserved for button elements)-->
             <RowDefinition Height="*"/>
             <RowDefinition Height="20"/>
 
@@ -65,12 +72,12 @@
 
         <!--Headline-->
         <TextBlock Grid.Column="1" Grid.Row="1" FontSize="20" FontWeight="Bold" Text="Opret Kajak" FontFamily="Segce UI" Grid.ColumnSpan="4" Margin="15"/>
-        
+
         <!---->
         <!--Select Kayak Type-->
         <!---->
 
-            <!--Item Type Select-->
+        <!--Item Type Select-->
         <TextBlock Grid.Column="1" Grid.Row="3" FontWeight="SemiBold" Text="Enheds type: " FontFamily="Segce UI" Margin="3"/>
         <ComboBox x:Name = "itemTypeDropDown" Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="3" ItemsSource="{Binding Path=itemTypeDataSource}" DisplayMemberPath="PickLocation" SelectedValuePath="PickLocation">
         </ComboBox>
@@ -106,25 +113,25 @@
         <!--Read Kayak Type-->
         <!---->
 
-            <!--Length-->
+        <!--Length-->
         <TextBlock Grid.Column="1" Grid.Row="10" FontWeight="SemiBold" Text="Længde (m): " FontFamily="Segce UI" Margin="3"/>
         <TextBox x:Name="kayakLengthText" Grid.Column="2" Grid.Row="10" Grid.ColumnSpan="3">
         </TextBox>
 
-            <!--Weight-->
+        <!--Weight-->
         <TextBlock Grid.Column="1" Grid.Row="11" FontWeight="SemiBold" Text="Max last (kg): " FontFamily="Segce UI" Margin="3"/>
         <TextBox x:Name="kayakWeightText" Grid.Column="2" Grid.Row="11" Grid.ColumnSpan="3">
         </TextBox>
 
-            <!--Capasity-->
+        <!--Capasity-->
         <TextBlock Grid.Column="1" Grid.Row="12" FontWeight="SemiBold" Text="Personer/kapacitet: " FontFamily="Segce UI" Margin="3"/>
         <TextBox x:Name="kayakPersonCapacityText" Grid.Column="2" Grid.Row="12" Grid.ColumnSpan="3">
         </TextBox>
-        
-            <!--KayakType Description-->
+
+        <!--KayakType Description-->
         <TextBlock Grid.Column="1" Grid.Row="13" FontWeight="SemiBold" Text="Kajak Type &#x0a;Beskrivelse: " FontFamily="Segce UI" Margin="3" >
         </TextBlock>
-        <TextBox x:Name="kayakDescriptionText" Grid.Column="2" Grid.Row="13" Grid.ColumnSpan="3" Height="80">
+        <TextBox x:Name="itemTypeDecriptionText" Grid.Column="2" Grid.Row="13" Grid.ColumnSpan="3" Height="80">
         </TextBox>
 
         <!--Seperator-->
@@ -134,28 +141,28 @@
         <!--Location/Warehouse-->
         <!---->
 
-            <!--Warehouse-->
+        <!--Warehouse-->
         <TextBlock Grid.Column="1" Grid.Row="20" FontWeight="SemiBold" Text="Varehus: " FontFamily="Segce UI" Margin="3"/>
         <ComboBox x:Name = "warehouseDropDown" Grid.Column="2" Grid.Row="20" Grid.ColumnSpan="3" ItemsSource="{Binding Path=WarehouseDataSource}" DisplayMemberPath="Name" SelectedValuePath="Name" SelectedValue="WarehouseDto"/>
 
-            <!--Location-->
+        <!--Location-->
         <TextBlock Grid.Column="1" Grid.Row="21" FontWeight="SemiBold" Text="Lagerplads: " FontFamily="Segce UI" Margin="3"/>
-        <ComboBox x:Name = "locationDropDown" Grid.Column="2" Grid.Row="21" Grid.ColumnSpan="3" ItemsSource="{Binding Path=LocationDataSource}" DisplayMemberPath="PickLocation" SelectedValuePath="PickLocation" SelectedValue="LocationDto">
+        <ComboBox x:Name = "locationDropDown" Grid.Column="2" Grid.Row="21" Grid.ColumnSpan="3" ItemsSource="{Binding Path=LocationDataSource}" DisplayMemberPath="PickLocation" SelectedValuePath="PickLocation" SelectedValue="LocationDto" FocusableChanged="locationDropDown_FocusableChanged" SelectionChanged="locationDropDown_SelectionChanged">
         </ComboBox>
 
         <!--Location Decription-->
-        <TextBlock Grid.Column="1" Grid.Row="22" FontWeight="SemiBold" Text="Lager Beskrivelse: " FontFamily="Segce UI" Margin="3"/>
-        <TextBox x:Name="itemTypeDecriptionText" Grid.Column="2" Grid.Row="22" Grid.ColumnSpan="3" Height="80">
+        <TextBlock x:Name="LocationDecriptionHeader" Grid.Column="1" Grid.Row="22" FontWeight="SemiBold" Text="Lager Beskrivelse: " FontFamily="Segce UI" Margin="3" Visibility="Hidden"/>
+        <TextBox x:Name="LocationDecriptionText" Grid.Column="2" Grid.Row="22" Grid.ColumnSpan="3" Height="80" Visibility="Hidden">
         </TextBox>
 
-            <!--Seperator-->
+        <!--Seperator-->
         <Separator Grid.Column="1" Grid.Row="29" Height="10" Grid.ColumnSpan="3"/>
 
         <!---->
         <!--Other-->
         <!---->
 
-            <!--Buttons-->
+        <!--Buttons-->
         <Button Content="Tilbage" Grid.Column="2" Grid.Row="30" Width="75" Click="BackButton"/>
         <Button Content="Opret Kajak" Grid.Column="3" Grid.Row="30" Width="75" Click="CreateButton"/>
 
