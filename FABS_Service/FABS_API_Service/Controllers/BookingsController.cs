@@ -60,7 +60,7 @@ namespace FABS_API_Service.Controllers
         {
             Booking b = ConvertDtoToModel(bDto);
             int numberOfAffectedRows = _bookingRepository.Create(b);
-            if (numberOfAffectedRows > -1)
+            if (numberOfAffectedRows > 0)
             {
                 return Ok(numberOfAffectedRows);
             }

@@ -16,11 +16,12 @@ namespace FABS_DataAccess.BusinessLogic
         /// <param name="date1"></param>
         /// <param name="date2"></param>
         /// <returns>True if dates are correctly valdiated</returns>
+       
         public static bool DateRangeValidator(DateTime date1, DateTime date2)
         {
             bool value = false;
 
-            if (date1 < date2 && date1 > DateTime.Now)
+            if (date1 < date2 && date1 >= DateTime.Now)
             {
                 value = true;
             }
