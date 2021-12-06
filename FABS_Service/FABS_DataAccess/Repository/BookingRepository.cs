@@ -59,12 +59,10 @@ namespace FABS_DataAccess.Repository
         public int Create(Booking booking)
         {
 
-
             bool allSuccessfull = false;
             int numberOfRowsInserted = 0;
 
             decimal insertedBookingId = -1;
-            //string connectionString = _connectionString;
 
             //Validate booking has item
             //TODO: Make exception.
@@ -80,117 +78,72 @@ namespace FABS_DataAccess.Repository
                 return numberOfRowsInserted;
             }
 
+            //Validate Overlapping
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                if (BookingLogic.HasOverlap(conn, booking))
+                {
+                    return numberOfRowsInserted;
+                }
+            
+            }
 
 
             // Prepare command for inserting booking
             string bookingQuery = "INSERT INTO bookings(start_datetime, end_datetime, people_id, statuses_id) " +
-                                 "VALUES(@StartDateTime, @EndDateTime, @PersonId, @StatusId) SELECT scope_identity()";
+                                 "VALUES(@StartDate{}Time, @EndDateTime, @PersonId, @StatusId) SELECT scope_identity()";
             // Prepare command for inserting bookinglines
             //TODO: Validate item availability in SQL string
             string bookingLineQuery = "INSERT INTO booking_line(bookings_id, items_id)" +
                                       "VALUES(@BookingId, @ItemId)";
 
-            string futureItemBookingTimes = "SELECT b.start_datetime, b.end_datetime, i.id " +
-                                            "FROM bookings b, items i " +
-                                            "WHERE b.id IN " +
-                                            "(" +
-                                            "SELECT bl.bookings_id " +
-                                            "FROM booking_line bl " +
-                                            "WHERE i.id = @ItemId " +
-                                            "AND bl.items_id = i.id" +
-                                            ") " +
-                                            "AND b.end_datetime > GETDATE()";
+            using SqlCommand insertBookingCommand = new SqlCommand(bookingQuery, conn);
+
+            insertBookingCommand.Parameters.AddWithValue("StartDateTime", booking.StartDatetime);
+            insertBookingCommand.Parameters.AddWithValue("EndDateTime", booking.EndDatetime);
+            insertBookingCommand.Parameters.AddWithValue("PersonId", booking.PeopleId);
+            insertBookingCommand.Parameters.AddWithValue("StatusId", booking.StatusesId);
 
 
-            bool isOverlapping = false;
-            // Get connection and run command
-            using (TransactionScope ts = new TransactionScope())
+
+            insertedBookingId = (decimal)insertBookingCommand.ExecuteScalar();
+            //TODO Try catch
+            numberOfRowsInserted++;
+            allSuccessfull = true;
+
+
+
+            foreach (BookingLine bookingLine in booking.BookingLines)
             {
-                using SqlConnection conn = new SqlConnection(_connectionString);
+                using SqlCommand createBookingLineCommand = new SqlCommand(bookingLineQuery, conn);
 
-                using (SqlCommand futureItemBookingTimesCommand = new SqlCommand(futureItemBookingTimes, conn))
+
+                createBookingLineCommand.Parameters.AddWithValue("BookingId", insertedBookingId);
+                createBookingLineCommand.Parameters.AddWithValue("ItemId", bookingLine.ItemsId);
+                try
                 {
-                    if (conn != null)
-                    {
-                        conn.Open();
-                    }
-
-                    foreach (var bookingLine in booking.BookingLines)
-                    {
-                        futureItemBookingTimesCommand.Parameters.AddWithValue("ItemId", bookingLine.ItemsId);
-
-                        var bookingTimesReader = futureItemBookingTimesCommand.ExecuteReader();
-                        DateTime startDateTime;
-                        DateTime endDateTime;
-
-                        while (bookingTimesReader.Read())
-                        {
-                            startDateTime = bookingTimesReader.GetDateTime(bookingTimesReader.GetOrdinal("start_datetime"));
-                            endDateTime = bookingTimesReader.GetDateTime(bookingTimesReader.GetOrdinal("end_datetime"));
-
-                            if (new[] { startDateTime, booking.StartDatetime }.Max() < new[] { endDateTime, booking.EndDatetime }.Min())
-                            {
-                                isOverlapping = true;
-                                break;
-                            }
-                        }
-
-
-                        if (isOverlapping)
-                        {
-                            return numberOfRowsInserted;
-                        }
-                    }
+                    //TODO Validate
+                    numberOfRowsInserted += createBookingLineCommand.ExecuteNonQuery();
+                    //numberOfRowsInserted++;
+                    allSuccessfull = true;
                 }
-
-
-                using SqlCommand insertBookingCommand = new SqlCommand(bookingQuery, conn);
-
-                insertBookingCommand.Parameters.AddWithValue("StartDateTime", booking.StartDatetime);
-                insertBookingCommand.Parameters.AddWithValue("EndDateTime", booking.EndDatetime);
-                insertBookingCommand.Parameters.AddWithValue("PersonId", booking.PeopleId);
-                insertBookingCommand.Parameters.AddWithValue("StatusId", booking.StatusesId);
-
-
-
-                insertedBookingId = (decimal)insertBookingCommand.ExecuteScalar();
-                //TODO Try catch
-                numberOfRowsInserted++;
-                allSuccessfull = true;
-
-
-
-                foreach (BookingLine bookingLine in booking.BookingLines)
+                catch (Exception ex)
                 {
-                    using SqlCommand createBookingLineCommand = new SqlCommand(bookingLineQuery, conn);
-
-
-                    createBookingLineCommand.Parameters.AddWithValue("BookingId", insertedBookingId);
-                    createBookingLineCommand.Parameters.AddWithValue("ItemId", bookingLine.ItemsId);
-                    try
-                    {
-                        //TODO Validate
-                        numberOfRowsInserted += createBookingLineCommand.ExecuteNonQuery();
-                        //numberOfRowsInserted++;
-                        allSuccessfull = true;
-                    }
-                    catch (Exception ex)
-                    {
-                        var res = ex;
-                        allSuccessfull = false;
-                        break;
-                    }
-                }
-                if (allSuccessfull)
-                {
-                    ts.Complete();
-
-                }
-                else
-                {
-                    numberOfRowsInserted = 0;
+                    var res = ex;
+                    allSuccessfull = false;
+                    break;
                 }
             }
+            if (allSuccessfull)
+            {
+                ts.Complete();
+
+            }
+            else
+            {
+                numberOfRowsInserted = 0;
+            }
+        }
 
 
             return numberOfRowsInserted;
@@ -198,131 +151,131 @@ namespace FABS_DataAccess.Repository
 
 
 
-        public bool Delete(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Booking Get(int id, int organisationId)
-        {
-            //throw new NotImplementedException();
-            Booking booking = new Booking();
-            try
-            {
-                string query = "SELECT bookings.id AS \"booking_id\", bookings.start_datetime, bookings.end_datetime, people.id AS \"people_id\", " +
-                    "bookings.statuses_id AS \"booking_statuses_id\", booking_line.items_id FROM booking_line " +
-                    "INNER JOIN bookings ON booking_line.bookings_id = bookings.id " +
-                    "INNER JOIN people ON bookings.people_id = people.id " +
-                    "INNER JOIN items ON booking_line.items_id = items.id " +
-                    $"where bookings_id = {id}";
-
-                using (SqlConnection conn = new SqlConnection(_connectionString))
-                using (SqlCommand readCommand = new SqlCommand(query, conn))
-                {
-                    if (conn != null)
-                    {
-                        conn.Open();
-                        SqlDataReader bookingReader = readCommand.ExecuteReader();
-                        booking = GetBookingObject(bookingReader);
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                booking = null;
-            }
-            return booking;
-        }
-
-        public IEnumerable<Booking> GetAll(int organisationId)
-        {
-            //throw new NotImplementedException();
-            IEnumerable<Booking> listBooking = null;
-
-            try
-            {
-                string query = "SELECT bookings.id AS \"booking_id\", bookings.start_datetime, bookings.end_datetime, people.id AS \"people_id\", " +
-                    "bookings.statuses_id AS \"booking_statuses_id\", booking_line.items_id FROM booking_line " +
-                    "INNER JOIN bookings ON booking_line.bookings_id = bookings.id " +
-                    "INNER JOIN people ON bookings.people_id = people.id " +
-                    "INNER JOIN items ON booking_line.items_id = items.id " +
-                    "ORDER BY booking_id ASC";
-
-                using (SqlConnection conn = new SqlConnection(_connectionString))
-                using (SqlCommand readCommand = new SqlCommand(query, conn))
-                {
-                    if (conn != null)
-                    {
-                        conn.Open();
-                        SqlDataReader bookingReader = readCommand.ExecuteReader();
-                        listBooking = GetBookingObjects(bookingReader);
-                    }
-                }
-            }
-            catch
-            {
-                listBooking = null;
-            }
-            return listBooking;
-        }
-
-        public bool Update(int id, Booking t)
-        {
-            throw new NotImplementedException();
-        }
-
-        private IEnumerable<Booking> GetBookingObjects(SqlDataReader bookingReader)
-        {
-            //throw new NotImplementedException();
-
-            List<Booking> foundBookings = new List<Booking>();
-            Booking tempBooking = null;
-            int tempBookingId; DateTime tempStartTime; DateTime tempEndTime; int tempPeopleId; int tempStatusId; int tempItemId;
-
-            while (bookingReader.Read())
-            {
-                tempBookingId = bookingReader.GetInt32(bookingReader.GetOrdinal("booking_id"));
-                tempStartTime = bookingReader.GetDateTime(bookingReader.GetOrdinal("start_datetime"));
-                tempEndTime = bookingReader.GetDateTime(bookingReader.GetOrdinal("end_datetime"));
-                tempPeopleId = bookingReader.GetInt32(bookingReader.GetOrdinal("people_id"));
-                tempStatusId = bookingReader.GetInt32(bookingReader.GetOrdinal("booking_statuses_id"));
-                tempItemId = bookingReader.GetInt32(bookingReader.GetOrdinal("items_id"));
-
-                var foundBookingIds = foundBookings.Select(fb => fb.Id);
-                if (!foundBookingIds.Contains(tempBookingId))
-                {
-                    tempBooking = new Booking(tempBookingId, tempStartTime, tempEndTime, tempPeopleId, tempStatusId);
-                    foundBookings.Add(tempBooking);
-                }
-                tempBooking.BookingLines.Add(new BookingLine(tempBookingId, tempItemId));
-
-            }
-
-            return foundBookings;
-        }
-
-        private Booking GetBookingObject(SqlDataReader bookingReader)
-        {
-            Booking tempBooking = null;
-            int tempBookingId; DateTime tempStartTime; DateTime tempEndTime; int tempPeopleId; int tempStatusId; int tempItemId;
-
-            while (bookingReader.Read())
-            {
-                tempBookingId = bookingReader.GetInt32(bookingReader.GetOrdinal("booking_id"));
-                tempStartTime = bookingReader.GetDateTime(bookingReader.GetOrdinal("start_datetime"));
-                tempEndTime = bookingReader.GetDateTime(bookingReader.GetOrdinal("end_datetime"));
-                tempPeopleId = bookingReader.GetInt32(bookingReader.GetOrdinal("people_id"));
-                tempStatusId = bookingReader.GetInt32(bookingReader.GetOrdinal("booking_statuses_id"));
-                tempItemId = bookingReader.GetInt32(bookingReader.GetOrdinal("items_id"));
-
-                if (tempBooking == null)
-                {
-                    tempBooking = new Booking(tempBookingId, tempStartTime, tempEndTime, tempPeopleId, tempStatusId);
-                }
-                tempBooking.BookingLines.Add(new BookingLine(tempBookingId, tempItemId));
-
-            }
-            return tempBooking;
-        }
+    public bool Delete(int id)
+    {
+        throw new NotImplementedException();
     }
+
+    public Booking Get(int id, int organisationId)
+    {
+        //throw new NotImplementedException();
+        Booking booking = new Booking();
+        try
+        {
+            string query = "SELECT bookings.id AS \"booking_id\", bookings.start_datetime, bookings.end_datetime, people.id AS \"people_id\", " +
+                "bookings.statuses_id AS \"booking_statuses_id\", booking_line.items_id FROM booking_line " +
+                "INNER JOIN bookings ON booking_line.bookings_id = bookings.id " +
+                "INNER JOIN people ON bookings.people_id = people.id " +
+                "INNER JOIN items ON booking_line.items_id = items.id " +
+                $"where bookings_id = {id}";
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            using (SqlCommand readCommand = new SqlCommand(query, conn))
+            {
+                if (conn != null)
+                {
+                    conn.Open();
+                    SqlDataReader bookingReader = readCommand.ExecuteReader();
+                    booking = GetBookingObject(bookingReader);
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            booking = null;
+        }
+        return booking;
+    }
+
+    public IEnumerable<Booking> GetAll(int organisationId)
+    {
+        //throw new NotImplementedException();
+        IEnumerable<Booking> listBooking = null;
+
+        try
+        {
+            string query = "SELECT bookings.id AS \"booking_id\", bookings.start_datetime, bookings.end_datetime, people.id AS \"people_id\", " +
+                "bookings.statuses_id AS \"booking_statuses_id\", booking_line.items_id FROM booking_line " +
+                "INNER JOIN bookings ON booking_line.bookings_id = bookings.id " +
+                "INNER JOIN people ON bookings.people_id = people.id " +
+                "INNER JOIN items ON booking_line.items_id = items.id " +
+                "ORDER BY booking_id ASC";
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            using (SqlCommand readCommand = new SqlCommand(query, conn))
+            {
+                if (conn != null)
+                {
+                    conn.Open();
+                    SqlDataReader bookingReader = readCommand.ExecuteReader();
+                    listBooking = GetBookingObjects(bookingReader);
+                }
+            }
+        }
+        catch
+        {
+            listBooking = null;
+        }
+        return listBooking;
+    }
+
+    public bool Update(int id, Booking t)
+    {
+        throw new NotImplementedException();
+    }
+
+    private IEnumerable<Booking> GetBookingObjects(SqlDataReader bookingReader)
+    {
+        //throw new NotImplementedException();
+
+        List<Booking> foundBookings = new List<Booking>();
+        Booking tempBooking = null;
+        int tempBookingId; DateTime tempStartTime; DateTime tempEndTime; int tempPeopleId; int tempStatusId; int tempItemId;
+
+        while (bookingReader.Read())
+        {
+            tempBookingId = bookingReader.GetInt32(bookingReader.GetOrdinal("booking_id"));
+            tempStartTime = bookingReader.GetDateTime(bookingReader.GetOrdinal("start_datetime"));
+            tempEndTime = bookingReader.GetDateTime(bookingReader.GetOrdinal("end_datetime"));
+            tempPeopleId = bookingReader.GetInt32(bookingReader.GetOrdinal("people_id"));
+            tempStatusId = bookingReader.GetInt32(bookingReader.GetOrdinal("booking_statuses_id"));
+            tempItemId = bookingReader.GetInt32(bookingReader.GetOrdinal("items_id"));
+
+            var foundBookingIds = foundBookings.Select(fb => fb.Id);
+            if (!foundBookingIds.Contains(tempBookingId))
+            {
+                tempBooking = new Booking(tempBookingId, tempStartTime, tempEndTime, tempPeopleId, tempStatusId);
+                foundBookings.Add(tempBooking);
+            }
+            tempBooking.BookingLines.Add(new BookingLine(tempBookingId, tempItemId));
+
+        }
+
+        return foundBookings;
+    }
+
+    private Booking GetBookingObject(SqlDataReader bookingReader)
+    {
+        Booking tempBooking = null;
+        int tempBookingId; DateTime tempStartTime; DateTime tempEndTime; int tempPeopleId; int tempStatusId; int tempItemId;
+
+        while (bookingReader.Read())
+        {
+            tempBookingId = bookingReader.GetInt32(bookingReader.GetOrdinal("booking_id"));
+            tempStartTime = bookingReader.GetDateTime(bookingReader.GetOrdinal("start_datetime"));
+            tempEndTime = bookingReader.GetDateTime(bookingReader.GetOrdinal("end_datetime"));
+            tempPeopleId = bookingReader.GetInt32(bookingReader.GetOrdinal("people_id"));
+            tempStatusId = bookingReader.GetInt32(bookingReader.GetOrdinal("booking_statuses_id"));
+            tempItemId = bookingReader.GetInt32(bookingReader.GetOrdinal("items_id"));
+
+            if (tempBooking == null)
+            {
+                tempBooking = new Booking(tempBookingId, tempStartTime, tempEndTime, tempPeopleId, tempStatusId);
+            }
+            tempBooking.BookingLines.Add(new BookingLine(tempBookingId, tempItemId));
+
+        }
+        return tempBooking;
+    }
+}
 }
