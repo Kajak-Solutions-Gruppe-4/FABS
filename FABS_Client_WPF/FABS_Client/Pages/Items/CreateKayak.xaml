@@ -130,7 +130,7 @@
             </TextBox.Style>
         </TextBox>
 
-        <!--Capasity-->
+        <!--Capacity-->
         <TextBox x:Name="kayakPersonCapacityText" Grid.Column="2" Grid.Row="9" Grid.ColumnSpan="3">
             <TextBox.Style>
                 <Style TargetType="{x:Type TextBox}">
@@ -163,6 +163,15 @@
             <!--Buttons-->
         <Button Content="Tilbage" Grid.Column="2" Grid.Row="19" Width="75" Click="BackButton"/>
         <Button Content="Opret Kajak" Grid.Column="3" Grid.Row="19" Width="75" Click="CreatKayakButton"/>
+
+        <TextBlock Grid.Column="1" Grid.Row="11" FontWeight="SemiBold" Text="Lagerplads: " FontFamily="Segce UI" Margin="3"/>
+        <TextBox x:Name="pickitLocationText" Grid.Column="2" Grid.Row="11" Grid.ColumnSpan="2" />
+
+        <TextBlock Grid.Column="1" Grid.Row="12" FontWeight="SemiBold" Text="Beskrivelse: " FontFamily="Segce UI" Margin="3"/>
+        <TextBox x:Name="DecriptionText" Grid.Column="2" Grid.Row="12" Grid.ColumnSpan="2" />
+
+        <Button Content="Tilbage" Grid.Column="2" Grid.Row="14" Width="75" Click="BackButton"/>
+        <Button Content="Opret Kajak" Grid.Column="3" Grid.Row="14" Width="75" Click="CreateKayakButton"/>
 
 
     </Grid>

@@ -1,4 +1,3 @@
-﻿using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Newtonsoft.Json;
+﻿using RestSharp;
 using DataFormat = RestSharp.DataFormat;
 using FABS_Client_WPF.BusinessLogic;
 using FABS_Client_WPF.DTO;
@@ -38,7 +38,12 @@ namespace FABS_Client_WPF.Pages.Items
             Close();
         }
 
-        private void CreatKayakButton(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Logic for saving an item (kayak) to the database
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CreateKayakButton(object sender, RoutedEventArgs e)
         {
             ItemHelper helper = new ItemHelper();
 

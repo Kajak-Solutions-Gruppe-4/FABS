@@ -7,6 +7,8 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using System.IO;
 using Microsoft.Data.SqlClient;
+using System.Transactions;
+using FABS_DataAccess.BusinessLogic;
 
 namespace FABS_DataAccess.Repository
 {
@@ -49,78 +51,112 @@ namespace FABS_DataAccess.Repository
             _connectionString = Configuration.GetConnectionString("FABS_connectionstring");
         }
 
-
-
-        //public Booking Get(int id, int organitionId)
-        //{
-        //    Booking foundBooking;
-        //    try
-        //    {
-        //        //eager loading
-        //        foundBooking = _context.Bookings
-        //            //Person
-        //        .Include(p1 => p1.People)
-        //            //Status
-        //        .Include(s => s.Statuses)
-
-
-        //        .FirstOrDefault(x => x.Id == id);
-        //    }
-        //    catch
-        //    {
-        //        foundBooking = null;
-        //    }
-
-        //    return foundBooking;
-        //}
-
-        //public IEnumerable<Booking> GetAll(int organisationId)
-        //{
-        //    IEnumerable<Booking> listBooking;
-
-        //    try
-        //    {
-        //        listBooking = _context.Bookings
-        //        //Person
-        //        .Include(p1 => p1.People)
-        //        //Status
-        //        .Include(s => s.Statuses)
-        //    }
-        //    catch
-        //    {
-        //        listBooking = null;
-        //    }
-
-        //    return listBooking;
-        //}
-
-
-
-
-
-        //public int Create(Booking b)
-        //{
-        //    int insertedID;
-        //    try
-        //    {
-        //        var res = _context.Bookings.Add(b);
-        //        _context.SaveChanges();
-        //        insertedID = res.Entity.Id;
-        //    }
-        //    catch(Exception e)
-        //    {
-        //        Console.WriteLine(e.Message);
-        //        insertedId = -1;
-        //    }
-        //}
-
-        //public bool 
-
-
-        public int Create(Booking t)
+        /// <summary>
+        /// This method Creates booking in the database, if data is correct and there is no overlap between bookings and their items
+        /// </summary>
+        /// <param name="booking">The incoming booking with items</param>
+        /// <returns>Number of rows affected, or 0 if no rows have been written in DB (not successfull)</returns>
+        public int Create(Booking booking)
         {
-            throw new NotImplementedException();
+
+            int numberOfRowsInserted = 0;
+
+            //Validate booking has item
+            //TODO: Make exception.
+            if (booking.BookingLines.Count == 0)
+            {
+                return numberOfRowsInserted;
+            }
+
+            //validate Date Range
+            //TODO: Make exception.
+            if (!BookingLogic.DateRangeValidator(booking.StartDatetime, booking.EndDatetime))
+            {
+                return numberOfRowsInserted;
+            }
+
+            //Validate Overlapping
+            using (TransactionScope ts = new TransactionScope())
+            {
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    bool allSuccessfull = true;
+                    decimal insertedBookingId = -1;
+                    conn.Open();
+                    if (BookingLogic.HasOverlap(conn, booking))
+                    {
+                        return numberOfRowsInserted;
+                    }
+
+                    // Prepare command for inserting booking
+                    string bookingQuery = "INSERT INTO bookings(start_datetime, end_datetime, people_id, statuses_id) " +
+                                         "VALUES(@StartDateTime, @EndDateTime, @PersonId, @StatusId) SELECT scope_identity()";
+                    // Prepare command for inserting bookinglines
+                    //TODO: Validate item availability in SQL string
+                    string bookingLineQuery = "INSERT INTO booking_line(bookings_id, items_id)" +
+                                              "VALUES(@BookingId, @ItemId)";
+
+                    using SqlCommand insertBookingCommand = new SqlCommand(bookingQuery, conn);
+
+                    insertBookingCommand.Parameters.AddWithValue("StartDateTime", booking.StartDatetime);
+                    insertBookingCommand.Parameters.AddWithValue("EndDateTime", booking.EndDatetime);
+                    insertBookingCommand.Parameters.AddWithValue("PersonId", booking.PeopleId);
+                    insertBookingCommand.Parameters.AddWithValue("StatusId", booking.StatusesId);
+
+
+                    try
+                    {
+                    insertedBookingId = (decimal)insertBookingCommand.ExecuteScalar();
+                    numberOfRowsInserted++;
+                    }
+                    catch (SqlException e)
+                    {
+                        allSuccessfull = false;
+                    }
+                    //TODO Try catch
+
+
+
+                    foreach (BookingLine bookingLine in booking.BookingLines)
+                    {
+                        using SqlCommand createBookingLineCommand = new SqlCommand(bookingLineQuery, conn);
+
+
+                        createBookingLineCommand.Parameters.AddWithValue("BookingId", insertedBookingId);
+                        createBookingLineCommand.Parameters.AddWithValue("ItemId", bookingLine.ItemsId);
+                        try
+                        {
+                            //TODO Validate
+                            numberOfRowsInserted += createBookingLineCommand.ExecuteNonQuery();
+                            //numberOfRowsInserted++;
+                        }
+                        catch (Exception ex)
+                        {
+                            var res = ex;
+                            allSuccessfull = false;
+                            break;
+                        }
+                    }
+                    if (allSuccessfull)
+                    {
+                        ts.Complete();
+
+                    }
+                    else
+                    {
+                        numberOfRowsInserted = 0;
+                    }
+                }
+            }
+
+
+
+
+
+            return numberOfRowsInserted;
         }
+
+
 
         public bool Delete(int id)
         {
@@ -133,8 +169,7 @@ namespace FABS_DataAccess.Repository
             Booking booking = new Booking();
             try
             {
-                //TODO: WHERE clause for organisation ID so we can information hide based on organsation
-                string query ="SELECT bookings.id AS \"booking_id\", bookings.start_datetime, bookings.end_datetime, people.id AS \"people_id\", " +
+                string query = "SELECT bookings.id AS \"booking_id\", bookings.start_datetime, bookings.end_datetime, people.id AS \"people_id\", " +
                     "bookings.statuses_id AS \"booking_statuses_id\", booking_line.items_id FROM booking_line " +
                     "INNER JOIN bookings ON booking_line.bookings_id = bookings.id " +
                     "INNER JOIN people ON bookings.people_id = people.id " +
@@ -152,7 +187,7 @@ namespace FABS_DataAccess.Repository
                     }
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 booking = null;
             }
@@ -213,17 +248,17 @@ namespace FABS_DataAccess.Repository
                 tempPeopleId = bookingReader.GetInt32(bookingReader.GetOrdinal("people_id"));
                 tempStatusId = bookingReader.GetInt32(bookingReader.GetOrdinal("booking_statuses_id"));
                 tempItemId = bookingReader.GetInt32(bookingReader.GetOrdinal("items_id"));
-                
+
                 var foundBookingIds = foundBookings.Select(fb => fb.Id);
                 if (!foundBookingIds.Contains(tempBookingId))
                 {
                     tempBooking = new Booking(tempBookingId, tempStartTime, tempEndTime, tempPeopleId, tempStatusId);
                     foundBookings.Add(tempBooking);
                 }
-                    tempBooking.BookingLines.Add(new BookingLine(tempBookingId, tempItemId));
-                
-            }   
-            
+                tempBooking.BookingLines.Add(new BookingLine(tempBookingId, tempItemId));
+
+            }
+
             return foundBookings;
         }
 
@@ -240,13 +275,13 @@ namespace FABS_DataAccess.Repository
                 tempPeopleId = bookingReader.GetInt32(bookingReader.GetOrdinal("people_id"));
                 tempStatusId = bookingReader.GetInt32(bookingReader.GetOrdinal("booking_statuses_id"));
                 tempItemId = bookingReader.GetInt32(bookingReader.GetOrdinal("items_id"));
-                
+
                 if (tempBooking == null)
                 {
                     tempBooking = new Booking(tempBookingId, tempStartTime, tempEndTime, tempPeopleId, tempStatusId);
                 }
-                    tempBooking.BookingLines.Add(new BookingLine(tempBookingId, tempItemId));
-                
+                tempBooking.BookingLines.Add(new BookingLine(tempBookingId, tempItemId));
+
             }
             return tempBooking;
         }
