@@ -15,9 +15,9 @@ namespace FABS_Client_Web.Controllers
     {
         //Base url for calling API
         string Baseurl = "https://localhost:44309/api/";
+        
         // GET: BookingController
-        
-        
+        //[HttpGet]
         public async Task<ActionResult> Index()
         {
             List<BookingDto> BookingList = new List<BookingDto>();
@@ -42,30 +42,51 @@ namespace FABS_Client_Web.Controllers
         }
 
         // GET: BookingController/Details/5
-        public ActionResult Details(int id)
+        //[HttpGet]
+        public async Task<ActionResult> Details(int id)
         {
-            return View();
+            List<BookingDto> BookingList = new List<BookingDto>();
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(Baseurl);
+                client.DefaultRequestHeaders.Clear();
+
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage res = await client.GetAsync($"bookings?organisationid=1?personid={id}");
+
+                if (res.IsSuccessStatusCode)
+                {
+                    var BookingResponse = res.Content.ReadAsStringAsync().Result;
+
+                    BookingList = JsonConvert.DeserializeObject<List<BookingDto>>(BookingResponse);
+                }
+            }
+            return View(BookingList);
         }
 
         // GET: BookingController/Create
+        //[HttpPost]
         public ActionResult Create()
         {
-            return View();
+            return View(new BookingDto());
         }
 
         // POST: BookingController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        //[ValidateAntiForgeryToken]
+        public ActionResult Create(BookingDto booking)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            return RedirectToAction("Index");
+            //try
+            //{
+                
+            //    return RedirectToAction(nameof(Index));
+            //}
+            //catch
+            //{
+            //    return View();
+            //}
         }
 
         // GET: BookingController/Edit/5
