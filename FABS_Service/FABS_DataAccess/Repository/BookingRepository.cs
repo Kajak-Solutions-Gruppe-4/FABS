@@ -119,19 +119,21 @@ namespace FABS_DataAccess.Repository
                     {
                         futureItemBookingTimesCommand.Parameters.AddWithValue("ItemId", bookingLine.ItemsId);
 
-                        var bookingTimesReader = futureItemBookingTimesCommand.ExecuteReader();
-                        DateTime startDateTime;
-                        DateTime endDateTime;
-
-                        while (bookingTimesReader.Read())
+                        using (var bookingTimesReader = futureItemBookingTimesCommand.ExecuteReader())
                         {
-                            startDateTime = bookingTimesReader.GetDateTime(bookingTimesReader.GetOrdinal("start_datetime"));
-                            endDateTime = bookingTimesReader.GetDateTime(bookingTimesReader.GetOrdinal("end_datetime"));
+                            DateTime startDateTime;
+                            DateTime endDateTime;
 
-                            if (new[] { startDateTime, booking.StartDatetime }.Max() < new[] { endDateTime, booking.EndDatetime }.Min())
+                            while (bookingTimesReader.Read())
                             {
-                                isOverlapping = true;
-                                break;
+                                startDateTime = bookingTimesReader.GetDateTime(bookingTimesReader.GetOrdinal("start_datetime"));
+                                endDateTime = bookingTimesReader.GetDateTime(bookingTimesReader.GetOrdinal("end_datetime"));
+
+                                if (new[] { startDateTime, booking.StartDatetime }.Max() < new[] { endDateTime, booking.EndDatetime }.Min())
+                                {
+                                    isOverlapping = true;
+                                    break;
+                                }
                             }
                         }
 
