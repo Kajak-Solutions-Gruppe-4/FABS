@@ -30,7 +30,12 @@ namespace FABS_DataAccess.BusinessLogic
             return value;
         }
 
-
+        /// <summary>
+        /// Check if the incoming booking starttime and endtime has overlap in database
+        /// </summary>
+        /// <param name="connection">The connection DataBase</param>
+        /// <param name="booking">The incoming booking</param>
+        /// <returns>True if overlap exist, false if no overlap</returns>
         public static bool HasOverlap(SqlConnection connection, Booking booking)
         {
             SqlConnection conn = connection;
