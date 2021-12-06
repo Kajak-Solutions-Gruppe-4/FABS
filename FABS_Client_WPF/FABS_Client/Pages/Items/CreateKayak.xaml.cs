@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FABS_Client_WPF.BusinessLogic;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -30,7 +31,12 @@ namespace FABS_Client_WPF.Pages.Items
             Close();
         }
 
-        private void CreatKayakButton(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Logic for saving an item (kayak) to the database
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CreateKayakButton(object sender, RoutedEventArgs e)
         {
             Close();
         }

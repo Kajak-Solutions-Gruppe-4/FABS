@@ -30,6 +30,10 @@ namespace FABS_Client_WPF.Pages.Persons
             createPersonWindow.Show();
         }
 
+        /// <summary>
+        /// Retrieve list of all people in the database associated with the organisation. 
+        /// </summary>
+        /// <returns>List of people from the database</returns>
         public void RefreshList()
         {
             var apiClient = new RestClient("https://localhost:44309/Api");
@@ -37,7 +41,6 @@ namespace FABS_Client_WPF.Pages.Persons
             //Add an universal ID to the client for use everywhwere
             var request = new RestRequest("/people?organisationId=1", DataFormat.Json);
 
-         
 
             var response = apiClient.Execute(request);
 

@@ -10,6 +10,9 @@ namespace FABS_Client_WPF.BusinessLogic
 {
     class ItemHelper
     {
+        /// <summary>
+        /// Creates a REST Client in order to save an item in the database
+        /// </summary>
         private IRestClient _clientItem = new RestClient("https://localhost:44309/api");
         internal void PostItem(ItemDto item)
         {
