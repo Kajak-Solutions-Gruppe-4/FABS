@@ -293,24 +293,29 @@ namespace FABS_DataAccess.Repository
         /// <returns></returns>
         public List<Booking> FindAllFutureBookings(int organisationId)
         {
-            string sqlQuery = "SELECT b.start_datetime, b.end_datetime, b.people_id, b.statuses_id, bl.bookings_id, bl.items_id " +
+            string sqlQuery = "SELECT b.start_datetime, b.end_datetime, b.people_id, b.statuses_id, bl.bookings_id, bl.items_id, " +
+                                  "it.name AS 'item_type_name', it.id AS 'item_type_id', " +
+                                  "kt.description, kt.weight_limit, kt.length_meter, kt.person_capacity " +
                               "FROM bookings b " +
                               "JOIN booking_line bl ON bl.bookings_id = b.id " +
-                              "WHERE bl.items_id IN" +
-                              "(" +
+                              "JOIN items i ON bl.items_id = i.id " +
+                              "JOIN item_types it ON i.item_types_id = it.id " +
+                              "JOIN kayak_types kt ON it.id = kt.item_types_id " +
+                              "WHERE bl.items_id IN " +
+                              "( " +
                                   "SELECT i.id " +
                                   "FROM items i " +
-                                  "WHERE i.organisations_id = @OrganisationId" +
-                              ")" +
+                                  "WHERE i.organisations_id = @OrganisationId " +
+                              ") " +
                               "AND GETDATE() < b.end_datetime";
 
             List<Booking> bookingList = new List<Booking>();
 
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
-                conn.Open();
                 if (conn != null)
                 {
+                    conn.Open();
                     using (SqlCommand command = conn.CreateCommand())
                     {
                         command.CommandText = sqlQuery;
@@ -326,14 +331,33 @@ namespace FABS_DataAccess.Repository
                                 int statusesId = dataReader.GetInt32(dataReader.GetOrdinal("statuses_id"));
                                 int bookingId = dataReader.GetInt32(dataReader.GetOrdinal("bookings_id"));
                                 int itemId = dataReader.GetInt32(dataReader.GetOrdinal("items_id"));
+                                string itemTypeName = dataReader.GetString(dataReader.GetOrdinal("item_type_name"));
+                                int itemTypeId = dataReader.GetInt32(dataReader.GetOrdinal("item_type_Id"));
+                                string kayakTypeDescription = dataReader.GetString(dataReader.GetOrdinal("description"));
+                                int kayakTypeWeight = dataReader.GetInt32(dataReader.GetOrdinal("weight_limit"));
+                                decimal kayakTypeLength = dataReader.GetDecimal(dataReader.GetOrdinal("length_meter"));
+                                int kayakTypeCapacity = dataReader.GetInt32(dataReader.GetOrdinal("person_capacity"));
 
-                                Booking booking = new Booking(startDatetime, endDatetime, personId, statusesId);
-                                booking.BookingLines.Add(new BookingLine(bookingId, itemId));
-                                booking.Id = bookingId;
+                                ItemType itemType = new ItemType(itemTypeName);
+                                KayakType kayakType = new KayakType(kayakTypeDescription, kayakTypeWeight, kayakTypeLength, kayakTypeCapacity, itemType);
+                                itemType.KayakType = kayakType;
 
-                                if (!bookingList.Any(b => b.Id == booking.Id))
+                                Item item = new Item(organisationId, itemType);
+                                itemType.Items.Add(item);
+
+                                BookingLine bookingLine = new BookingLine(bookingId, item);
+                                if (!bookingList.Any(b => b.Id == bookingId))
                                 {
+                                    Booking booking = new Booking(startDatetime, endDatetime, personId, statusesId);
+                                    booking.BookingLines.Add(bookingLine);
                                     bookingList.Add(booking);
+                                }
+                                else
+                                {
+                                    bookingList.Where(b => b.Id == bookingId)
+                                               .Single()
+                                               .BookingLines
+                                               .Add(bookingLine);
                                 }
 
                             }

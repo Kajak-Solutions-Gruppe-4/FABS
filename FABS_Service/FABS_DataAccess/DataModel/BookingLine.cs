@@ -16,10 +16,16 @@ namespace FABS_DataAccess.Model
             Items = items;
         }
 
-        public BookingLine(int bookingsId, int itemsId)
+        public BookingLine(int bookingsId, int itemsId) : this()
         {
             BookingsId = bookingsId;
             ItemsId = itemsId;
+        }
+
+        public BookingLine(int bookingsId, Item items) : this()
+        {
+            BookingsId = bookingsId;
+            Items = items;
         }
     }
 }
