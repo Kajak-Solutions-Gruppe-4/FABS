@@ -62,11 +62,12 @@ namespace FABS_API_Service.Controllers
             int numberOfAffectedRows = _bookingRepository.Create(b);
             if (numberOfAffectedRows > 0)
             {
+
                 return Ok(numberOfAffectedRows);
             }
             else
             {
-                return new StatusCodeResult(500);
+                return new StatusCodeResult(403);
             }
         }
 

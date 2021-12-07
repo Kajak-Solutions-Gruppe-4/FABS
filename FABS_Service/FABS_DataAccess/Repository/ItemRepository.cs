@@ -79,6 +79,10 @@ namespace FABS_DataAccess.Repository
             return listItem;
         }
 
+        public IEnumerable<Item> GetAll(DateTime startDate, DateTime endDate, int organisationId)
+        {
+            throw new NotImplementedException();
+        }
 
         public int Create(Item i)
         {
