@@ -324,6 +324,16 @@ namespace FABS_Test_DataAccess
             }
         }
 
+        // Bad test, just created to see if the method would run.
+        [Fact]
+        public void findFutureBookingListForOrganisation1()
+        {
+            BookingRepository bookingRepository = new BookingRepository();
+            List<Booking> bookingList = bookingRepository.FindAllFutureBookings(1);
+
+            Assert.Equal(1, bookingList.First().BookingLines.Count);
+        }
+
         private int tryCreateBooking(BookingRepository bookingRepository, Booking booking)
         {
             int numberOfRowsAffected = bookingRepository.Create(booking);

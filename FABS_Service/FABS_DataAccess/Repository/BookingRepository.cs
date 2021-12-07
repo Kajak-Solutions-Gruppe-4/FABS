@@ -106,8 +106,8 @@ namespace FABS_DataAccess.Repository
 
                     try
                     {
-                    insertedBookingId = (decimal)insertBookingCommand.ExecuteScalar();
-                    numberOfRowsInserted++;
+                        insertedBookingId = (decimal)insertBookingCommand.ExecuteScalar();
+                        numberOfRowsInserted++;
                     }
                     catch (SqlException e)
                     {
@@ -283,6 +283,67 @@ namespace FABS_DataAccess.Repository
 
             }
             return tempBooking;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="conn"></param>
+        /// <param name="organisationId"></param>
+        /// <returns></returns>
+        public List<Booking> FindAllFutureBookings(int organisationId)
+        {
+            string sqlQuery = "SELECT b.start_datetime, b.end_datetime, b.people_id, b.statuses_id, bl.bookings_id, bl.items_id " +
+                              "FROM bookings b " +
+                              "JOIN booking_line bl ON bl.bookings_id = b.id " +
+                              "WHERE bl.items_id IN" +
+                              "(" +
+                                  "SELECT i.id " +
+                                  "FROM items i " +
+                                  "WHERE i.organisations_id = @OrganisationId" +
+                              ")" +
+                              "AND GETDATE() < b.end_datetime";
+
+            List<Booking> bookingList = new List<Booking>();
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+                if (conn != null)
+                {
+                    using (SqlCommand command = conn.CreateCommand())
+                    {
+                        command.CommandText = sqlQuery;
+                        command.Parameters.AddWithValue("OrganisationId", organisationId);
+
+                        using (SqlDataReader dataReader = command.ExecuteReader())
+                        {
+                            while (dataReader.Read())
+                            {
+                                DateTime startDatetime = dataReader.GetDateTime(dataReader.GetOrdinal("start_datetime"));
+                                DateTime endDatetime = dataReader.GetDateTime(dataReader.GetOrdinal("end_datetime"));
+                                int personId = dataReader.GetInt32(dataReader.GetOrdinal("people_id"));
+                                int statusesId = dataReader.GetInt32(dataReader.GetOrdinal("statuses_id"));
+                                int bookingId = dataReader.GetInt32(dataReader.GetOrdinal("bookings_id"));
+                                int itemId = dataReader.GetInt32(dataReader.GetOrdinal("items_id"));
+
+                                Booking booking = new Booking(startDatetime, endDatetime, personId, statusesId);
+                                booking.BookingLines.Add(new BookingLine(bookingId, itemId));
+                                booking.Id = bookingId;
+
+                                if (!bookingList.Any(b => b.Id == booking.Id))
+                                {
+                                    bookingList.Add(booking);
+                                }
+
+                            }
+
+                        }
+                    }
+                }
+
+            }
+            return bookingList;
         }
     }
 }
