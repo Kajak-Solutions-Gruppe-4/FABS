@@ -53,7 +53,7 @@ namespace FABS_Client_Web.Controllers
 
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                HttpResponseMessage res = await client.GetAsync($"bookings?organisationid=1?personid={id}");
+                HttpResponseMessage res = await client.GetAsync($"bookings?organisationid=1&personid={id}");
 
                 if (res.IsSuccessStatusCode)
                 {
@@ -67,16 +67,45 @@ namespace FABS_Client_Web.Controllers
 
         // GET: BookingController/Create
         //[HttpPost]
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
+            var itemList = new List<ItemDto>();
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(Baseurl);
+                client.DefaultRequestHeaders.Clear();
+
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                //TODO Call new itemList that has been filtered for overlaps/booing times
+                HttpResponseMessage res = await client.GetAsync("items?organisationid=1");
+
+                if (res.IsSuccessStatusCode)
+                {
+                    var itemResponse = res.Content.ReadAsStringAsync().Result;
+
+                    itemList = JsonConvert.DeserializeObject<List<ItemDto>>(itemResponse);
+                }
+                ViewData["Items"] = itemList;
+            }
+
             return View(new BookingDto());
         }
 
         // POST: BookingController/Create
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public ActionResult Create(BookingDto booking)
+        public async Task<ActionResult> Create(BookingDto booking)
         {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(Baseurl);
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                var stringContent = new StringContent(JsonConvert.SerializeObject(booking)); 
+                HttpResponseMessage res = await client.PostAsync("bookings?organisationid=1", stringContent);
+            }
             return RedirectToAction("Index");
             //try
             //{
