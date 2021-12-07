@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Collections;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -15,7 +16,8 @@ namespace FABS_API_Service.Controllers
     [ApiController]
     public class BookingsController : ControllerBase
     {
-        private readonly IRepository<Booking> _bookingRepository;
+        // TODO: use the interface!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        private readonly BookingRepository _bookingRepository;
 
         public BookingsController()
         {
@@ -45,6 +47,55 @@ namespace FABS_API_Service.Controllers
                 return NotFound();
             }
             return Ok(bookings);
+        }
+
+        [HttpGet, Route("OnlyFuture")]
+        public ActionResult<IEnumerable<ItemWithBookingInfoDto>> GetOnlyFuture(int organisationId)
+        {
+            List<Booking> bookings = _bookingRepository.FindAllFutureBookings(organisationId);
+            List<ItemWithBookingInfoDto> items = ConvertBookingsToItemWithBookingInfoDto(bookings);
+            return items;
+        }
+
+        private List<ItemWithBookingInfoDto> ConvertBookingsToItemWithBookingInfoDto(List<Booking> bookings)
+        {
+            List<ItemWithBookingInfoDto> items = new List<ItemWithBookingInfoDto>();
+            foreach (Booking booking in bookings)
+            {
+                foreach (BookingLine bookingLine in booking.BookingLines)
+                {
+                    DateTime[] datetimeRange = new DateTime[] { booking.StartDatetime, booking.EndDatetime };
+                    if (items.Any(i => i.item.Id == bookingLine.Items.Id))
+                    {
+                        items.Where(i => i.item.Id == bookingLine.Items.Id)
+                             .Single().DatetimeRanges
+                             .Add(datetimeRange);
+                    }
+                    else
+                    {
+                        Item item = booking.BookingLines.First().Items;
+
+                        ItemTypeDto itemTypeDto = new ItemTypeDto(item.ItemTypes.Id, item.ItemTypes.Name);
+                        itemTypeDto.Id = item.ItemTypes.Id;
+                        KayakTypeDto kayakTypeDto = new KayakTypeDto(
+                            itemTypeDto,
+                            item.ItemTypes.KayakType.Description,
+                            item.ItemTypes.KayakType.WeightLimit,
+                            item.ItemTypes.KayakType.LengthMeter,
+                            item.ItemTypes.KayakType.PersonCapacity);
+                        itemTypeDto.KayakType = kayakTypeDto;
+
+                        ItemDto itemDto = new ItemDto(item.OrganisationsId, itemTypeDto);
+                        itemDto.Id = item.Id;
+
+                        ItemWithBookingInfoDto itemWithBookingInfoDto = new ItemWithBookingInfoDto(itemDto);
+                        itemWithBookingInfoDto.DatetimeRanges.Add(datetimeRange);
+                        items.Add(itemWithBookingInfoDto);
+                    }
+
+                }
+            }
+            return items;
         }
 
         // GET api/<BookingsController>/5

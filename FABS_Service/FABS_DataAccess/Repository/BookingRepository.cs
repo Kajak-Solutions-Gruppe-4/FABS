@@ -339,10 +339,13 @@ namespace FABS_DataAccess.Repository
                                 int kayakTypeCapacity = dataReader.GetInt32(dataReader.GetOrdinal("person_capacity"));
 
                                 ItemType itemType = new ItemType(itemTypeName);
+                                itemType.Id = itemTypeId;
                                 KayakType kayakType = new KayakType(kayakTypeDescription, kayakTypeWeight, kayakTypeLength, kayakTypeCapacity, itemType);
+                                kayakType.ItemTypesId = itemTypeId;
                                 itemType.KayakType = kayakType;
 
                                 Item item = new Item(organisationId, itemType);
+                                item.Id = itemId;
                                 itemType.Items.Add(item);
 
                                 BookingLine bookingLine = new BookingLine(bookingId, item);
