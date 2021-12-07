@@ -69,7 +69,6 @@ namespace FABS_Client_Web.Controllers
         //[HttpPost]
         public async Task<ActionResult> Create()
         {
-            ViewData["NowTime"] = DateTime.Now;
             var itemList = new List<ItemDto>();
             using (var client = new HttpClient())
             {
@@ -89,7 +88,7 @@ namespace FABS_Client_Web.Controllers
                 }
                 ViewData["Items"] = itemList;
             }
-
+          
             return View(new BookingDto());
         }
 
