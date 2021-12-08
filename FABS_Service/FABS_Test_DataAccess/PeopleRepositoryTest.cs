@@ -85,7 +85,7 @@ namespace FABS_Test_DataAccess
         {
             using (var context = new FABSContext())
             {
-                var peopleRepository = new PeopleRepository();
+                var peopleRepository = new PeopleRepository("Local");
 
                 Person person = peopleRepository.Get(id, 1);
 
@@ -121,7 +121,7 @@ namespace FABS_Test_DataAccess
             using (var context = new FABSContext())
             {
                 //arrange: some happens in GetData method
-                PeopleRepository peopleRepository = new PeopleRepository();
+                PeopleRepository peopleRepository = new PeopleRepository("Local");
 
                 //act
                 int returnedID = peopleRepository.Create(person);

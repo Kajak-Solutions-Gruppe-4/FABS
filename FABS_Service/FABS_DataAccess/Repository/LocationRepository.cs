@@ -12,9 +12,9 @@ namespace FABS_DataAccess.Repository
     {
         private readonly FABSContext _context;
 
-        public LocationRepository()
+        public LocationRepository(string nameOfConnectionString)
         {
-            _context = new FABSContext();
+            _context = new FABSContext(nameOfConnectionString);
         }
 
         public Location Get(int id, int organisationId)

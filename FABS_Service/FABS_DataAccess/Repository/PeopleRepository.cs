@@ -12,9 +12,9 @@ namespace FABS_DataAccess.Repository
     {
         private readonly FABSContext _context;
 
-        public PeopleRepository()
+        public PeopleRepository(string nameOfConnectionString)
         {
-            _context = new FABSContext();
+            _context = new FABSContext(nameOfConnectionString);
         }
 
 

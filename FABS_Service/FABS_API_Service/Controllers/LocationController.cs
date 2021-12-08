@@ -19,7 +19,7 @@ namespace FABS_API_Service.Controllers
 
         public LocationController()
         {
-            _locationRepository = new LocationRepository();
+            _locationRepository = new LocationRepository("Hildur");
         }
 
         // GET: api/<LocationController>

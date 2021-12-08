@@ -23,7 +23,7 @@ namespace FABS_API_Service.Controllers
 
         public ItemsController()
         {
-            _itemRepository = new ItemRepository();
+            _itemRepository = new ItemRepository("Hildur");
         }
 
         // GET: api/<ItemsController>

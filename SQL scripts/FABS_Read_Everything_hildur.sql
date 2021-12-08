@@ -1,0 +1,18 @@
+USE [dmaa0920_1062965]
+GO
+/****** Script for SelectTopNRows command from SSMS  ******/
+SELECT TOP (1000) *   FROM [dmaa0920_1062965].[dbo].[countries]
+SELECT TOP (1000) *   FROM [dmaa0920_1062965].[dbo].[zipcode_country_city]
+SELECT TOP (1000) *   FROM [dmaa0920_1062965].[dbo].[addresses]
+SELECT TOP (1000) *   FROM [dmaa0920_1062965].[dbo].[organisations]
+SELECT TOP (1000) *   FROM [dmaa0920_1062965].[dbo].[organisation_person]
+SELECT TOP (1000) *   FROM [dmaa0920_1062965].[dbo].[people]
+SELECT TOP (1000) *   FROM [dmaa0920_1062965].[dbo].[logins]
+SELECT TOP (1000) *   FROM [dmaa0920_1062965].[dbo].[statuses]
+SELECT TOP (1000) *   FROM [dmaa0920_1062965].[dbo].[items]
+SELECT TOP (1000) *   FROM [dmaa0920_1062965].[dbo].[item_types]
+SELECT TOP (1000) *   FROM [dmaa0920_1062965].[dbo].[kayak_types]
+SELECT TOP (1000) *   FROM [dmaa0920_1062965].[dbo].[locations]
+SELECT TOP (1000) *   FROM [dmaa0920_1062965].[dbo].[warehouses]
+SELECT TOP (1000) *   FROM [dmaa0920_1062965].[dbo].[booking_line]
+SELECT TOP (1000) *   FROM [dmaa0920_1062965].[dbo].[bookings]

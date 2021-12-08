@@ -8,9 +8,12 @@ namespace FABS_DataAccess.Model
 {
     public partial class FABSContext : DbContext
     {
+        /// <summary>
+        /// Creates FABSContext which uses local database.
+        /// </summary>
         public FABSContext()
         {
-            Initialize();
+            Initialize("Local");
         }
 
         public FABSContext(DbContextOptions<FABSContext> options)

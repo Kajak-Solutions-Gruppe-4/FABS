@@ -97,7 +97,7 @@ namespace FABS_Test_DataAccess
         {
             using (var context = new FABSContext())
             {
-                var locationRepository = new LocationRepository();
+                var locationRepository = new LocationRepository("Local");
 
                 Location location = locationRepository.Get(id, 1);
 
@@ -161,7 +161,7 @@ namespace FABS_Test_DataAccess
             using (var context = new FABSContext())
             {
                 //arrange: some happens in GetData method
-                LocationRepository locationRepository = new LocationRepository();
+                LocationRepository locationRepository = new LocationRepository("Local");
 
                 //act
                 int returnedID = locationRepository.Create(location);

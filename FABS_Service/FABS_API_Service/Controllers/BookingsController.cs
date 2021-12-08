@@ -21,7 +21,7 @@ namespace FABS_API_Service.Controllers
 
         public BookingsController()
         {
-            _bookingRepository = new BookingRepository();
+            _bookingRepository = new BookingRepository("Hildur");
         }
 
 

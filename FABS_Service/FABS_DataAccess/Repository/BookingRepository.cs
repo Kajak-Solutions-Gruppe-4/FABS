@@ -21,12 +21,24 @@ namespace FABS_DataAccess.Repository
         //private readonly string _connect = ConfigurationManager.ConnectionStrings["FABS_connectionstring"].ToString();
         private string _connectionString;
 
+        /// <summary>
+        /// Creates BookingRepository which uses local database
+        /// </summary>
         public BookingRepository()
         {
-            Initialize();
+            Initialize("Local");
         }
 
-        private void Initialize()
+        /// <summary>
+        /// Creates BookingRepository
+        /// </summary>
+        /// <param name="nameOfConnectionString">the name og the connectionstring to use</param>
+        public BookingRepository(string nameOfConnectionString)
+        {
+            Initialize(nameOfConnectionString);
+        }
+
+        private void Initialize(string nameOfConnectionString)
         {
             string physicalPath = "";
             string appSettingsString = @"FABS_API_Service\appsettings.json";
@@ -48,7 +60,7 @@ namespace FABS_DataAccess.Repository
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile(physicalPath)
                 .Build();
-            _connectionString = Configuration.GetConnectionString("FABS_connectionstring");
+            _connectionString = Configuration.GetConnectionString(nameOfConnectionString);
         }
 
         /// <summary>

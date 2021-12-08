@@ -9,7 +9,15 @@ namespace FABS_DataAccess.Model
     {
         private string _connectionString;
 
-        private void Initialize()
+        /// <summary>
+        /// Creates FABS context
+        /// </summary>
+        /// <param name="nameOfConnectionString">the name og the connectionstring to use</param>
+        public FABSContext(string nameOfConnectionString)
+        {
+            Initialize(nameOfConnectionString);
+        }
+        private void Initialize(string nameOfConnectionString)
         {
             string physicalPath = "";
             string appSettingsString = @"FABS_API_Service\appsettings.json";
@@ -31,7 +39,7 @@ namespace FABS_DataAccess.Model
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile(physicalPath)
                 .Build();
-            _connectionString = Configuration.GetConnectionString("FABS_connectionstring");
+            _connectionString = Configuration.GetConnectionString(nameOfConnectionString);
         }
     }
 }
