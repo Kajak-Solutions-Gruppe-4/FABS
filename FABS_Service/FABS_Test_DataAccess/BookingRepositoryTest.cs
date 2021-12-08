@@ -104,6 +104,7 @@ namespace FABS_Test_DataAccess
             bookingOverExist.BookingLines.Add(line1);
             bookingStartInExist.BookingLines.Add(line1);
             bookingAfterExist.BookingLines.Add(line1);
+
             person1.Bookings.Add(bookingExist);
 
             OrganisationPerson organisationPerson1 = new OrganisationPerson(organisation1, person1);
@@ -307,7 +308,7 @@ namespace FABS_Test_DataAccess
         {
 
             BookingRepository bookingRepository = new BookingRepository();
-            Booking booking = new Booking(DateTime.Now.AddHours(1), DateTime.Now.AddHours(2), 1, 1);
+            Booking booking = new Booking(DateTime.Now.AddHours(3), DateTime.Now.AddHours(4), 1, 1);
             BookingLine bookingLine = new BookingLine(1, 1);
             booking.BookingLines.Add(bookingLine);
             for (int i = 0; i < 10; i++)

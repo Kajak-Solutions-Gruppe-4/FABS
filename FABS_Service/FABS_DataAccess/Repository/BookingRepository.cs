@@ -76,7 +76,10 @@ namespace FABS_DataAccess.Repository
             }
 
             //Validate Overlapping
-            using (TransactionScope ts = new TransactionScope())
+            var transactionOptions = new TransactionOptions();
+            //transactionOptions.IsolationLevel = IsolationLevel.RepeatableRead; Not strong enough
+            transactionOptions.IsolationLevel = IsolationLevel.Serializable;
+            using (TransactionScope ts = new TransactionScope(TransactionScopeOption.Required, transactionOptions))
             {
                 using (SqlConnection conn = new SqlConnection(_connectionString))
                 {
@@ -286,11 +289,10 @@ namespace FABS_DataAccess.Repository
         }
 
         /// <summary>
-        /// 
+        /// Find all bookings in the future in an organisation.
         /// </summary>
-        /// <param name="conn"></param>
-        /// <param name="organisationId"></param>
-        /// <returns></returns>
+        /// <param name="organisationId">The id of an organisation</param>
+        /// <returns>A list of the bookings in the future, containing the items</returns>
         public List<Booking> FindAllFutureBookings(int organisationId)
         {
             string sqlQuery = "SELECT b.start_datetime, b.end_datetime, b.people_id, b.statuses_id, bl.bookings_id, bl.items_id, " +
