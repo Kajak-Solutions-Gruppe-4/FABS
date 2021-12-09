@@ -36,7 +36,7 @@ namespace FABS_DataAccess.BusinessLogic
         /// <param name="connection">The connection DataBase</param>
         /// <param name="booking">The incoming booking</param>
         /// <returns>True if overlap exist, false if no overlap</returns>
-        public static bool HasOverlap(SqlConnection connection, Booking booking)
+        public static bool HasAnyOverlap(SqlConnection connection, Booking booking)
         {
             SqlConnection conn = connection;
             bool isOverlapping = false;
@@ -58,6 +58,14 @@ namespace FABS_DataAccess.BusinessLogic
                 {
                     using (SqlCommand futureItemBookingTimesCommand = new SqlCommand(futureItemBookingTimesQuery, conn))
                     {
+                        //TODO: should not validate here. bookingLine.ItemsId should always equal bookingLine.Items.Id.
+                        if(bookingLine.Items != null)
+                        {
+                            if(bookingLine.Items.Id != 0 && bookingLine.ItemsId == 0)
+                            {
+                                bookingLine.ItemsId = bookingLine.Items.Id;
+                            }
+                        }
                         futureItemBookingTimesCommand.Parameters.AddWithValue("ItemId", bookingLine.ItemsId);
 
                         using (var bookingTimesReader = futureItemBookingTimesCommand.ExecuteReader())
@@ -69,16 +77,36 @@ namespace FABS_DataAccess.BusinessLogic
                             {
                                 startDateTime = bookingTimesReader.GetDateTime(bookingTimesReader.GetOrdinal("start_datetime"));
                                 endDateTime = bookingTimesReader.GetDateTime(bookingTimesReader.GetOrdinal("end_datetime"));
-
-                                if (new[] { startDateTime, booking.StartDatetime }.Max() < new[] { endDateTime, booking.EndDatetime }.Min())
+                                isOverlapping = IsBookingOverlappingDateRange(booking, startDateTime, endDateTime);
+                                if(isOverlapping)
                                 {
-                                    isOverlapping = true;
                                     break;
                                 }
                             }
                         }
+                        if(isOverlapping)
+                        {
+                            break;
+                        }
                     }
                 }
+            }
+            return isOverlapping;
+        }
+
+        /// <summary>
+        /// Checks if a Booking is overlapping a date range.
+        /// </summary>
+        /// <param name="booking">A Booking</param>
+        /// <param name="startDatetime">The start og the date range</param>
+        /// <param name="endDatetime">The end og the date range</param>
+        /// <returns></returns>
+        public static bool IsBookingOverlappingDateRange(Booking booking, DateTime startDatetime, DateTime endDatetime)
+        {
+            bool isOverlapping = false;
+            if (new[] { booking.StartDatetime, startDatetime }.Max() < new[] { booking.EndDatetime, endDatetime }.Min())
+            {
+                isOverlapping = true;
             }
             return isOverlapping;
         }

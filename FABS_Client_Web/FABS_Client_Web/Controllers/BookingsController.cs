@@ -16,7 +16,7 @@ namespace FABS_Client_Web.Controllers
         //Base url for calling API
         string Baseurl = "https://localhost:44309/api/";
         
-        // GET: BookingController
+        // GET: BookingsController
         //[HttpGet]
         public async Task<ActionResult> Index()
         {
@@ -41,7 +41,7 @@ namespace FABS_Client_Web.Controllers
             return View(BookingList);
         }
 
-        // GET: BookingController/Details/5
+        // GET: BookingsController/Details/5
         //[HttpGet]
         public async Task<ActionResult> Details(int id)
         {
@@ -65,7 +65,7 @@ namespace FABS_Client_Web.Controllers
             return View(BookingList);
         }
 
-        // GET: BookingController/Create
+        // GET: BookingsController/Create
         //[HttpPost]
         public async Task<ActionResult> Create()
         {
@@ -92,7 +92,7 @@ namespace FABS_Client_Web.Controllers
             return View(new BookingDto());
         }
 
-        // POST: BookingController/Create
+        // POST: BookingsController/Create
         [HttpPost]
         //[ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(BookingDto booking)
@@ -118,13 +118,13 @@ namespace FABS_Client_Web.Controllers
             //}
         }
 
-        // GET: BookingController/Edit/5
+        // GET: BookingsController/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: BookingController/Edit/5
+        // POST: BookingsController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
@@ -139,13 +139,13 @@ namespace FABS_Client_Web.Controllers
             }
         }
 
-        // GET: BookingController/Delete/5
+        // GET: BookingsController/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: BookingController/Delete/5
+        // POST: BookingsController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)

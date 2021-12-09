@@ -98,7 +98,7 @@ namespace FABS_DataAccess.Repository
                     bool allSuccessfull = true;
                     decimal insertedBookingId = -1;
                     conn.Open();
-                    if (BookingLogic.HasOverlap(conn, booking))
+                    if (BookingLogic.HasAnyOverlap(conn, booking))
                     {
                         return numberOfRowsInserted;
                     }
@@ -299,6 +299,48 @@ namespace FABS_DataAccess.Repository
 
             }
             return tempBooking;
+        }
+
+        /// <summary>
+        /// Finds all future bookings that does not overlap a date range.
+        /// </summary>
+        /// <param name="startDatetime">The beginning of the date range</param>
+        /// <param name="endDatetime">The beginning of the date range</param>
+        /// <param name="organisationId">The id of the organisation to find bookings from</param>
+        /// <returns>A list of bookings that does not overlap the date range</returns>
+        public List<Booking> FindNotOverlappingFutureBookingsInDaterange(DateTime startDatetime, DateTime endDatetime, int organisationId)
+        {
+            List<Booking> futureBookings = FindAllFutureBookings(organisationId);
+            List<Booking> availableBookings = new List<Booking>();
+            foreach (Booking booking in futureBookings)
+            {
+                if (!BookingLogic.IsBookingOverlappingDateRange(booking, startDatetime, endDatetime) && BookingLogic.DateRangeValidator(startDatetime, endDatetime))
+                {
+                    availableBookings.Add(booking);
+                }
+            }
+            return availableBookings;
+        }
+
+        /// <summary>
+        /// Finds all future bookings that does overlap a date range.
+        /// </summary>
+        /// <param name="startDatetime">The beginning of the date range</param>
+        /// <param name="endDatetime">The beginning of the date range</param>
+        /// <param name="organisationId">The id of the organisation to find bookings from</param>
+        /// <returns>A list of bookings that does not overlap the date range</returns>
+        public List<Booking> FindOverlappingFutureBookingsInDaterange(DateTime startDatetime, DateTime endDatetime, int organisationId)
+        {
+            List<Booking> futureBookings = FindAllFutureBookings(organisationId);
+            List<Booking> availableBookings = new List<Booking>();
+            foreach (Booking booking in futureBookings)
+            {
+                if (BookingLogic.IsBookingOverlappingDateRange(booking, startDatetime, endDatetime))
+                {
+                    availableBookings.Add(booking);
+                }
+            }
+            return availableBookings;
         }
 
         /// <summary>

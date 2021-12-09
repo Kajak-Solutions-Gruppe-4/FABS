@@ -29,6 +29,9 @@ namespace FABS_API_Service
             // TODO: should not need to ingore
             services.AddControllers().AddNewtonsoftJson(x =>
                 x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+            services.AddCors(); // Make sure you call this previous to AddMvc
+            services.AddMvc(option => option.EnableEndpointRouting = false)
+                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -38,6 +41,15 @@ namespace FABS_API_Service
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            // Make sure you call this before calling app.UseMvc()
+            app.UseCors(
+                options => options.AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+            );
+
+            app.UseMvc();
 
             app.UseHttpsRedirection();
 
@@ -49,6 +61,7 @@ namespace FABS_API_Service
             {
                 endpoints.MapControllers();
             });
+
         }
     }
 }

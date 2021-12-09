@@ -7,6 +7,7 @@
     Model.StartDateTime = DateTime.Parse(time);
     Model.EndDateTime = DateTime.Parse(time).AddMinutes(15);
 }
+
 <h1>Create</h1>
 
 <h4>BookingDto</h4>
@@ -22,12 +23,12 @@
                 </div>*@
         <div class="form-group">
             <label asp-for="StartDateTime" class="control-label"></label>
-            <input asp-for="StartDateTime" class="form-control" />
+            <input asp-for="StartDateTime" class="form-control" onchange="startDateChange()" id="startDateInput"/>
             <span asp-validation-for="StartDateTime" class="text-danger"></span>
         </div>
             <div class="form-group">
                 <label asp-for="EndDateTime" class="control-label"></label>
-                <input asp-for="EndDateTime" class="form-control" />
+                <input asp-for="EndDateTime" class="form-control" onchange="endDateChange()" id="endDateInput"/>
                 <span asp-validation-for="EndDateTime" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -40,40 +41,37 @@
                 <input asp-for="BookingLine.ItemId" class="form-control" />
                 <span asp-validation-for="BookingLine.ItemId" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group" id="tableDiv">
                 @*<ul>*@
-                <table style="width: 100%">
+                <table style="width: 100%" id="availableItemTable">
                     <tr>
-                        This is a table of items
-                    </tr>
-                    <tr>
-                        <td>
+                        <th>
                             Item ID
-                        </td>
-                        <td>
+                        </th>
+                        <th>
                             Itemtype name
-                        </td>
-                        <td>
+                        </th>
+                        <th>
                             Organisation ID
-                        </td>
+                        </th>
                     </tr>
                     @foreach (var item in (List<ItemDto>)ViewData["Items"])
-                    {
+                     {
                         @*<li>
                                 @item.Id
                             </li>*@
-                        <tr>
-                            <td style="width: 17%">
+                        <tr class="availableItemRow">
+                            <td style="width: 20%">
                                 @item.Id
                             </td>
-                            <td style="width: 48%">
+                            <td style="width: auto">
                                 @item.ItemTypesId.Name
                             </td>
                             <td style="width: 35%">
                                 @item.OrganisationsId.Id
                             </td>
                         </tr>
-                    }
+                     }
                 </table>
                 @*</ul>*@
 
@@ -88,7 +86,7 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
-
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+<script>var items = @Json.Serialize(ViewData["Items"]);</script>
