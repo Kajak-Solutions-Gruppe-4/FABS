@@ -55,18 +55,19 @@ namespace FABS_DataAccess.Repository
             try
             {
                 listLocation = _context.Locations
-                    //Warehouse
+                //Warehouse
                 .Include(w => w.Warehouses)
-                    //Location
+                //Location
                 .ThenInclude(a => a.Addresses)
                 .ThenInclude(z => z.ZipcodeCountryCity)
                 .ThenInclude(c => c.Countries)
-                    //Person
+                //Person
                 .Include(p => p.People)
                 .ThenInclude(l => l.Login)
-                    //Organisation
+                //Organisation
                 .Include(o1 => o1.Organisations)
-                .ThenInclude(o2 => o2.OrganisationPeople);
+                .ThenInclude(o2 => o2.OrganisationPeople)
+                .Where(op => op.OrganisationsId == organisationId);
             }
 
             catch

@@ -1,0 +1,94 @@
+﻿@model FABS_Client_Web.Models.BookingDto
+
+
+@{
+    ViewData["Title"] = "Create";
+    var time = DateTime.Now.ToString("dd-MM-yyyy HH:mm");
+    Model.StartDateTime = DateTime.Parse(time);
+    Model.EndDateTime = DateTime.Parse(time).AddMinutes(15);
+}
+<h1>Create</h1>
+
+<h4>BookingDto</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @*<div class="form-group">
+                    <label asp-for="Id" class="control-label"></label>
+                    <input asp-for="Id" class="form-control" />
+                    <span asp-validation-for="Id" class="text-danger"></span>
+                </div>*@
+        <div class="form-group">
+            <label asp-for="StartDateTime" class="control-label"></label>
+            <input asp-for="StartDateTime" class="form-control" />
+            <span asp-validation-for="StartDateTime" class="text-danger"></span>
+        </div>
+            <div class="form-group">
+                <label asp-for="EndDateTime" class="control-label"></label>
+                <input asp-for="EndDateTime" class="form-control" />
+                <span asp-validation-for="EndDateTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PersonId" class="control-label"></label>
+                <input asp-for="PersonId" class="form-control" />
+                <span asp-validation-for="PersonId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BookingLine.ItemId" class="control-label"></label>
+                <input asp-for="BookingLine.ItemId" class="form-control" />
+                <span asp-validation-for="BookingLine.ItemId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                @*<ul>*@
+                <table style="width: 100%">
+                    <tr>
+                        This is a table of items
+                    </tr>
+                    <tr>
+                        <td>
+                            Item ID
+                        </td>
+                        <td>
+                            Itemtype name
+                        </td>
+                        <td>
+                            Organisation ID
+                        </td>
+                    </tr>
+                    @foreach (var item in (List<ItemDto>)ViewData["Items"])
+                    {
+                        @*<li>
+                                @item.Id
+                            </li>*@
+                        <tr>
+                            <td style="width: 17%">
+                                @item.Id
+                            </td>
+                            <td style="width: 48%">
+                                @item.ItemTypesId.Name
+                            </td>
+                            <td style="width: 35%">
+                                @item.OrganisationsId.Id
+                            </td>
+                        </tr>
+                    }
+                </table>
+                @*</ul>*@
+
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

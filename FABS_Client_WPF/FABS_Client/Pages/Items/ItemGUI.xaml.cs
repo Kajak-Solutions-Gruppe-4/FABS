@@ -49,13 +49,17 @@ namespace FABS_Client_WPF.Pages.Items
         public void RefreshList()
         {
             var apiClient = new RestClient("https://localhost:44309/Api");
+            // Hardcoded organisation ID for the specific client TODO: 
+            //Add an universal ID to the client for use everywhwere
             var request = new RestRequest("/items?organisationId=1", DataFormat.Json);
+
+
 
             var response = apiClient.Execute(request);
 
-            List<ItemDto> listOfItems = JsonConvert.DeserializeObject<List<ItemDto>>(response.Content); 
+            List<ItemDto> listOfKayaks = JsonConvert.DeserializeObject<List<ItemDto>>(response.Content);
 
-            Kayaks.ItemsSource = listOfItems;
+            KayakViewList.ItemsSource = listOfKayaks;
         }
     }
 }

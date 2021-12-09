@@ -122,25 +122,25 @@ namespace FABS_API_Service.Controllers
             }
         }
 
-        private PersonDto ConvertModelToDto(Person model)
+        private PersonDto ConvertModelToDto(Person person)
         {
             AddressDto addressDto = new AddressDto(
-                model.Addresses.Id,
-                model.Addresses.StreetName,
-                model.Addresses.StreetNumber,
-                model.Addresses.ApartmentNumber,
-                model.Addresses.ZipcodeCountryCity.Zipcode,
-                model.Addresses.ZipcodeCountryCity.Countries.Id,
-                model.Addresses.ZipcodeCountryCity.Countries.Name,
-                model.Addresses.ZipcodeCountryCity.City
+                person.Addresses.Id,
+                person.Addresses.StreetName,
+                person.Addresses.StreetNumber,
+                person.Addresses.ApartmentNumber,
+                person.Addresses.ZipcodeCountryCity.Zipcode,
+                person.Addresses.ZipcodeCountryCity.Countries.Id,
+                person.Addresses.ZipcodeCountryCity.Countries.Name,
+                person.Addresses.ZipcodeCountryCity.City
                 );
             PersonDto personDto = new PersonDto(
-                model.Id,
-                model.FirstName,
-                model.LastName,
-                model.TelephoneNumber,
+                person.Id,
+                person.FirstName,
+                person.LastName,
+                person.TelephoneNumber,
                 addressDto,
-                model.Login.Email
+                person.Login.Email
                 );
             return personDto;
         }

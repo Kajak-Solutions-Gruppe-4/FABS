@@ -55,6 +55,7 @@ namespace FABS_Client_WPF.DTO
             Email = email;
         }
 
+
         // TODO: move to addressDto
         public string GetFullAddress()
         {

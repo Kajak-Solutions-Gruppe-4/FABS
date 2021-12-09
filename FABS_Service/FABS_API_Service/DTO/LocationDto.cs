@@ -14,6 +14,14 @@ namespace FABS_API_Service.DTO
         public PersonDto People { get; set; }
         public OrganisationDto Organisation { get; set; }
 
+        public LocationDto(string pickLocation, string description, PersonDto people, OrganisationDto organisation)
+        {
+            PickLocation = pickLocation;
+            Description = description;
+            People = people;
+            Organisation = organisation;
+        }
+
         public LocationDto()
         {
 
@@ -44,6 +52,15 @@ namespace FABS_API_Service.DTO
             Id = id;
             PickLocation = pickLocation;
             Description = description;
+        }
+
+        public LocationDto(int id, string pickLocation, string description, PersonDto people, OrganisationDto organisation)
+        {
+            Id = id;
+            PickLocation = pickLocation;
+            Description = description;
+            People = people;
+            Organisation = organisation;
         }
     }
 }

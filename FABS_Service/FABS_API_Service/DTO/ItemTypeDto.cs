@@ -4,7 +4,8 @@
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public KayakTypeDto KayakType { get; set; }
+        KayakTypeDto KayakTypeDto { get; set; }
+
 
         public ItemTypeDto()
         {
@@ -16,11 +17,13 @@
             Id = id;
             Name = name;
         }
-        public ItemTypeDto(int id, string name, KayakTypeDto kayakType)
+
+        public ItemTypeDto(int id, string name, KayakTypeDto kayakTypeDto)
         {
             Id = id;
             Name = name;
-            KayakType = kayakType;
+            KayakTypeDto = kayakTypeDto;
+
         }
     }
 }

@@ -13,23 +13,23 @@
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width ="20" />
-            <ColumnDefinition Width ="100" />
+            <ColumnDefinition Width ="auto" />
+            <ColumnDefinition Width ="auto" />
+            <ColumnDefinition Width ="auto" />
+            <ColumnDefinition Width ="auto" />
+            <ColumnDefinition Width ="auto" />
+            <ColumnDefinition Width ="auto" />
+            <ColumnDefinition Width ="auto" />
+            <ColumnDefinition Width ="auto" />
             <ColumnDefinition Width ="auto" />
             <ColumnDefinition Width ="*" />
-            <ColumnDefinition Width ="auto" />
-            <ColumnDefinition Width ="auto" />
-            <ColumnDefinition Width ="auto" />
-            <ColumnDefinition Width ="auto" />
-            <ColumnDefinition Width ="auto" />
-            <ColumnDefinition Width ="auto" />
-            <ColumnDefinition Width ="auto" />
             <ColumnDefinition Width ="20" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="20"/>
-            <RowDefinition Height="20"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
@@ -55,24 +55,26 @@
         <TextBlock Grid.Column="1" Grid.Row="1" FontSize="20" FontWeight="Bold" Text="Kajakker" FontFamily="Segce UI" Grid.ColumnSpan="4" Margin="15"/>
 
         <!--Create Item label & texfeild-->
-        <TextBlock Grid.Column="1" Grid.Row="3" FontSize="12" FontWeight="Bold" Text="--- Kayak List ---" FontFamily="Segce UI" Grid.ColumnSpan="4" Margin="15" TextAlignment="Center"/>
-        <ListView Margin="10" Name="Kayaks" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" VerticalAlignment="Top" MaxHeight="200">
+        <ListView Margin="10" Name="KayakViewList" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" VerticalAlignment="Top" MaxHeight="200">
+
             <ListView.View>
+
                 <GridView>
-                    <GridViewColumn Header="Kajaknavn" Width="auto" DisplayMemberBinding="{Binding Path=ItemTypesId.Name}" />
-                    <GridViewColumn Header="Beskrivelse" Width="auto" DisplayMemberBinding="{Binding Path=ItemTypesId.KayakType.Description}" />
-                    <GridViewColumn Header="Længde" Width="auto" DisplayMemberBinding="{Binding Path=ItemTypesId.KayakType.LengthMeter}" />
-                    <GridViewColumn Header="Max lastvægt" Width="auto" DisplayMemberBinding="{Binding Path=ItemTypesId.KayakType.WeightLimit}"/>
-                    <GridViewColumn Header="Antal personer" Width="auto"  DisplayMemberBinding="{Binding Path=ItemTypesId.KayakType.PersonCapacity}" />
-                    <GridViewColumn Header="Lokation" Width="auto" DisplayMemberBinding="{Binding Path=LocationsId.PickLocation}" />
-                    <!--<GridViewColumn Header="Plads" Width="auto" DisplayMemberBinding="{Binding Path=Address.City}" />-->
-                    <GridViewColumn Header="Status" Width="auto" DisplayMemberBinding="{Binding Path=StatusesId.Name}" />
+                    <GridViewColumn Header="Kajak ID" Width="auto"    DisplayMemberBinding="{Binding Path=Id}" />
+                    <GridViewColumn Header="Kajak Type" Width="auto"    DisplayMemberBinding="{Binding Path=ItemTypesId.Name}" />
+                    <GridViewColumn Header="Status" Width="auto"        DisplayMemberBinding="{Binding Path=StatusesId.Name}" />
+                    <GridViewColumn Header="Lokation" Width="auto"      DisplayMemberBinding="{Binding Path=LocationsId.PickLocation}" />
+                    <!--<GridViewColumn Header="Længde" Width="auto" DisplayMemberBinding="{Binding Path=LocationsId.Name}"/>
+                    <GridViewColumn Header="Kapacitet" Width="auto"  DisplayMemberBinding="{Binding Path=StatusesId}" />-->
+
 
 
                 </GridView>
             </ListView.View>
+
         </ListView>
-        
+
+
         <Button Content="Opret Kajak" Grid.Column="2" Grid.Row="5" Width="75" Click="CreateKayakButton"/>
         <Button Content="Rediger Kajak" Grid.Column="1" Grid.Row="5" Width="75" Click="CreateKayakButton"/>
     </Grid>
