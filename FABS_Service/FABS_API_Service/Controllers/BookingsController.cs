@@ -83,7 +83,7 @@ namespace FABS_API_Service.Controllers
                             item.ItemTypes.KayakType.WeightLimit,
                             item.ItemTypes.KayakType.LengthMeter,
                             item.ItemTypes.KayakType.PersonCapacity);
-                        itemTypeDto.KayakType = kayakTypeDto;
+                        itemTypeDto.KayakTypeDto = kayakTypeDto;
 
                         ItemDto itemDto = new ItemDto(item.OrganisationsId, itemTypeDto);
                         itemDto.Id = item.Id;
