@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace FABS_Client_Web.Controllers
 {
-    public class BookingController : Controller
+    public class BookingsController : Controller
     {
         //Base url for calling API
         string Baseurl = "https://localhost:44309/api/";
