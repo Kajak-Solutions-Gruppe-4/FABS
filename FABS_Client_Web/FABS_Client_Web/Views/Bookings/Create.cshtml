@@ -43,7 +43,7 @@
                 <span asp-validation-for="PersonId" class="text-danger"></span>
             </div>
             <div class="form-group" id="tableDiv">
-                @*<ul>*@
+                @*Vælg tidspunkt for at se ledige kajakker*@
                 <table style="width: 100%" id="availableItemTable">
                     <tr>
                         <th>
@@ -56,26 +56,21 @@
                             Organisation ID
                         </th>
                     </tr>
-                    @foreach (var item in (List<ItemDto>)ViewData["Items"])
-                    {
-                        @*<li>
-                            @item.Id
-                        </li>*@
-                        <tr class="notSelectedItem" onclick="onItemClick(this)">
-                            <td style="width: 20%">
-                                @item.Id
-                            </td>
-                            <td style="width: auto">
-                                @item.ItemTypesId.Name
-                            </td>
-                            <td style="width: 35%">
-                                @item.OrganisationsId.Id
-                            </td>
-                        </tr>
-                    }
+                    @*@foreach (var item in (List<ItemDto>)ViewData["Items"])
+            {
+                <tr class="notSelectedItem" onclick="onItemClick(this)">
+                    <td style="width: 20%">
+                        @item.Id
+                    </td>
+                    <td style="width: auto">
+                        @item.ItemTypesId.Name
+                    </td>
+                    <td style="width: 35%">
+                        @item.OrganisationsId.Id
+                    </td>
+                </tr>
+            }*@
                 </table>
-                @*</ul>*@
-
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -91,3 +86,11 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
 <script>var items = @Json.Serialize(ViewData["Items"]);</script>
+<script>
+    document.getElementById("tableDiv").onload = function () {
+        dateChange(
+            document.getElementById("startDateInput").value,
+            document.getElementById("endDateInput").value
+        )
+    }
+</script>

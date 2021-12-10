@@ -33,7 +33,6 @@ async function dateChange(startDate, endDate) {
     tableDiv.children[0].remove();
 
     let newTable = document.createElement("table")
-    tableDiv.appendChild(newTable);
 
     //Creating headers
     let headers = document.createElement("tr");
@@ -55,20 +54,27 @@ async function dateChange(startDate, endDate) {
         }) //filter returns the filtered list
     }
 
-    //Creating item rows
-    for (var i = 0; i < availableItems.length; i++) {
-        let row = document.createElement("tr");
-        row.className = "notSelectedItem";
-        row.onclick = function () { onItemClick(row) };
-        let data = [availableItems[i].id, availableItems[i].itemTypesId.name, availableItems[i].organisationsId.id];
-        for (var j = 0; j < data.length; j++) {
-            let cell = document.createElement("td");
-            let cellText = document.createTextNode(data[j]);
-            cell.appendChild(cellText);
-            row.appendChild(cell);
+    if (availableItems.length > 0) {
+        //Creating item rows
+        for (var i = 0; i < availableItems.length; i++) {
+            let row = document.createElement("tr");
+            row.className = "notSelectedItem";
+            row.onclick = function () { onItemClick(row) };
+            let data = [availableItems[i].id, availableItems[i].itemTypesId.name, availableItems[i].organisationsId.id];
+            for (var j = 0; j < data.length; j++) {
+                let cell = document.createElement("td");
+                let cellText = document.createTextNode(data[j]);
+                cell.appendChild(cellText);
+                row.appendChild(cell);
+            }
+            newTable.appendChild(row);
         }
-        newTable.appendChild(row);
+    } else {
+        newTable = document.createElement("p")
+        newTable.innerText = "Der er ikke nogle ledige kajakker på dette tidspunkt."
     }
+
+    tableDiv.appendChild(newTable);
 }
 
 function onItemClick(clickedElement) {
@@ -132,12 +138,15 @@ async function postBooking(booking) {
         dataType: "json",
         async: false,
         success: function (response, textStatus, jqXHR) {
-            console.log(response);
+            let kayakWord = "kajak"
+            if (response > 2) {
+                kayakWord += "ker"
+            }
+
+            alert("Du har booket " + (response - 1) + " " + kayakWord + " :-)")
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR);
-            console.log(textStatus);
-            console.log(errorThrown);
+            alert("Bookingen lykkedes ikke, prøv igen :-<")
         }
     })
 }
