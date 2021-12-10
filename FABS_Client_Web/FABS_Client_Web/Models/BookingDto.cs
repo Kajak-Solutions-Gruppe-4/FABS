@@ -17,8 +17,6 @@ namespace FABS_Client_Web.Models
         [Required]
         public int PersonId { get; set; }
 
-        public List<int> ItemsIds { get; set; }
-
         public List<BookingLineDto> BookingLines { get; set; }
 
         public BookingDto()

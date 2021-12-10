@@ -6,6 +6,7 @@
     var time = DateTime.Now.ToString("dd-MM-yyyy HH:mm");
     Model.StartDateTime = new DateTime(2022, 12, 9, 9, 0, 0);
     Model.EndDateTime = new DateTime(2022, 12, 9, 15, 0, 0);
+    Model.PersonId = 1;
     //Model.StartDateTime = DateTime.Parse(time);
     //Model.EndDateTime = DateTime.Parse(time).AddMinutes(15);
 }
@@ -16,26 +17,29 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        @*override the use of MVC, and post via javascript*@ 
+        @*<form asp-action="Create">*@
+        <form onsubmit="onSubmit()">
+            
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             @*<div class="form-group">
-                    <label asp-for="Id" class="control-label"></label>
-                    <input asp-for="Id" class="form-control" />
-                    <span asp-validation-for="Id" class="text-danger"></span>
-                </div>*@
-        <div class="form-group">
-            <label asp-for="StartDateTime" class="control-label"></label>
-            <input asp-for="StartDateTime" class="form-control" onchange="startDateChange()" id="startDateInput"/>
-            <span asp-validation-for="StartDateTime" class="text-danger"></span>
-        </div>
+                <label asp-for="Id" class="control-label"></label>
+                <input asp-for="Id" class="form-control" />
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <label asp-for="StartDateTime" class="control-label"></label>
+                <input asp-for="StartDateTime" class="form-control" onchange="startDateChange()" id="startDateInput" />
+                <span asp-validation-for="StartDateTime" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="EndDateTime" class="control-label"></label>
-                <input asp-for="EndDateTime" class="form-control" onchange="endDateChange()" id="endDateInput"/>
+                <input asp-for="EndDateTime" class="form-control" onchange="endDateChange()" id="endDateInput" />
                 <span asp-validation-for="EndDateTime" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="PersonId" class="control-label"></label>
-                <input asp-for="PersonId" class="form-control" />
+                <input asp-for="PersonId" class="form-control" id="personIdInput"/>
                 <span asp-validation-for="PersonId" class="text-danger"></span>
             </div>
             <div class="form-group" id="tableDiv">
@@ -53,10 +57,10 @@
                         </th>
                     </tr>
                     @foreach (var item in (List<ItemDto>)ViewData["Items"])
-                     {
+                    {
                         @*<li>
-                                @item.Id
-                            </li>*@
+                            @item.Id
+                        </li>*@
                         <tr class="notSelectedItem" onclick="onItemClick(this)">
                             <td style="width: 20%">
                                 @item.Id
@@ -68,7 +72,7 @@
                                 @item.OrganisationsId.Id
                             </td>
                         </tr>
-                     }
+                    }
                 </table>
                 @*</ul>*@
 

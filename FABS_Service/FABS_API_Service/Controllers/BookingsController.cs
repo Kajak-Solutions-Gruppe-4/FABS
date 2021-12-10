@@ -68,7 +68,7 @@ namespace FABS_API_Service.Controllers
         [HttpGet, Route("OnlyFutureInDateRange")]
         public ActionResult<IEnumerable<ItemWithBookingInfoDto>> GetOnlyFutureInDateRange(int organisationId, DateTime startDatetime, DateTime endDatetime)
         {
-            List<Booking> bookings = _bookingRepository.FindNotOverlappingFutureBookingsInDaterange(startDatetime, endDatetime, organisationId);
+            List<Booking> bookings = _bookingRepository.FindOverlappingFutureBookingsInDaterange(startDatetime, endDatetime, organisationId);
             List<ItemWithBookingInfoDto> items = ConvertBookingsToItemWithBookingInfoDto(bookings);
             return items;
         }
@@ -181,10 +181,12 @@ namespace FABS_API_Service.Controllers
                 bDto.PersonId,
                 bDto.StatusId
                 );
-            foreach (BookingLineDto bookingLineDto in bDto.BookingsLines)
+            foreach (BookingLineDto bookingLineDto in bDto.BookingLines)
             {
                 booking.BookingLines.Add(new BookingLine(bookingLineDto.BookingId, bookingLineDto.ItemId));
             }
+            // statuses not implemented correctly for now, so temporary fix
+            booking.StatusesId = 4;
             return booking;
         }
     }

@@ -79,11 +79,68 @@ function onItemClick(clickedElement) {
     }
 }
 
+function onSubmit() {
+    console.log("Submit begin")
+    let itemElements = document.getElementsByClassName("selectedItem");
+    let itemIds = [];
+    for (var i = 0; i < itemElements.length; i++) {
+        itemIds.push(itemElements[i].children[0].innerText);
+    }
+
+    let bookingLines = createBookingLines(itemIds);
+    console.log(bookingLines)
+    let booking = createBooking(bookingLines);
+    postBooking(booking);
+}
+
+function createBookingLines(itemsIds) {
+    console.log("Creating booking lines")
+    console.log(itemsIds)
+    let bookingLines = []
+    for (var i = 0; i < itemsIds.length; i++) {
+        let bookingLine = {
+            "bookingId": 0,
+            "itemId": itemsIds[i]
+        }
+        bookingLines.push(bookingLine)
+    }
+    return bookingLines
+}
+
+function createBooking(bookingLines) {
+    console.log("Creating booking")
+    let booking = {
+        "startDateTime": document.getElementById("startDateInput").value,
+        "endDateTime": document.getElementById("endDateInput").value,
+        "personId": document.getElementById("personIdInput").value,
+        "bookingLines": bookingLines
+    }
+    console.log(bookingLines)
+    return booking;
+}
 
 
 
-
-
+async function postBooking(booking) {
+    console.log("Posting booking")
+    console.log(JSON.stringify(booking))
+    $.ajax({
+        url: 'https://localhost:44309/api/bookings?organisationId=1',
+        type: 'POST',
+        data: JSON.stringify(booking),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        async: false,
+        success: function (response, textStatus, jqXHR) {
+            console.log(response);
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR);
+            console.log(textStatus);
+            console.log(errorThrown);
+        }
+    })
+}
 
 
 
@@ -97,7 +154,6 @@ function onItemClick(clickedElement) {
 
 async function findOverlappingBookings(startDate, endDate) {
     let url = 'https://localhost:44309/api/bookings/OnlyFutureInDateRange?organisationId=1&startdatetime=' + startDate + '&enddatetime=' + endDate
-    let overlappingItems = []
     return await $.getJSON(url).then(function (data) {
         return data
     })

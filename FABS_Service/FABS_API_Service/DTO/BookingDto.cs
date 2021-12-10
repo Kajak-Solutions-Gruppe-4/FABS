@@ -11,7 +11,7 @@ namespace FABS_API_Service.DTO
         public DateTime StartDateTime { get; set; }
         public DateTime EndDateTime { get; set; }
         public int PersonId { get; set; }
-        public List<BookingLineDto> BookingsLines { get; set; }
+        public List<BookingLineDto> BookingLines { get; set; }
 
         public int StatusId { get; set; }
 
@@ -25,7 +25,7 @@ namespace FABS_API_Service.DTO
             StartDateTime = startDateTime;
             EndDateTime = endDateTime;
             PersonId = personId;
-            BookingsLines = bookingsLine;
+            BookingLines = bookingsLine;
             StatusId = statusId;
         }
 
@@ -43,7 +43,7 @@ namespace FABS_API_Service.DTO
             StartDateTime = startDateTime;
             EndDateTime = endDateTime;
             PersonId = personId;
-            BookingsLines = bookingsLines;
+            BookingLines = bookingsLines;
             StatusId = statusId;
         }
     }
