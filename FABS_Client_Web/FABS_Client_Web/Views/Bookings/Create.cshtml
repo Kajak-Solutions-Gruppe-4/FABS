@@ -4,8 +4,10 @@
 @{
     ViewData["Title"] = "Create";
     var time = DateTime.Now.ToString("dd-MM-yyyy HH:mm");
-    Model.StartDateTime = DateTime.Parse(time);
-    Model.EndDateTime = DateTime.Parse(time).AddMinutes(15);
+    Model.StartDateTime = new DateTime(2022, 12, 9, 9, 0, 0);
+    Model.EndDateTime = new DateTime(2022, 12, 9, 15, 0, 0);
+    //Model.StartDateTime = DateTime.Parse(time);
+    //Model.EndDateTime = DateTime.Parse(time).AddMinutes(15);
 }
 
 <h1>Create</h1>

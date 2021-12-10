@@ -332,15 +332,15 @@ namespace FABS_DataAccess.Repository
         public List<Booking> FindOverlappingFutureBookingsInDaterange(DateTime startDatetime, DateTime endDatetime, int organisationId)
         {
             List<Booking> futureBookings = FindAllFutureBookings(organisationId);
-            List<Booking> availableBookings = new List<Booking>();
+            List<Booking> overlappingBookings = new List<Booking>();
             foreach (Booking booking in futureBookings)
             {
                 if (BookingLogic.IsBookingOverlappingDateRange(booking, startDatetime, endDatetime))
                 {
-                    availableBookings.Add(booking);
+                    overlappingBookings.Add(booking);
                 }
             }
-            return availableBookings;
+            return overlappingBookings;
         }
 
         /// <summary>

@@ -25,7 +25,7 @@ function endDateChange() {
     dateChange(startDate, endDate);
 }
 
-function dateChange(startDate, endDate) {
+async function dateChange(startDate, endDate) {
     let tableDiv = document.getElementById("tableDiv");
     tableDiv.children[0].remove();
 
@@ -44,22 +44,18 @@ function dateChange(startDate, endDate) {
     newTable.appendChild(headers);
 
     //filter to show only available items
-    let url = 'https://localhost:44309/api/bookings/OnlyFutureInDateRange?organisationId=1&startdatetime=' + startDate.value + '&enddatetime=' + endDate.value
-    let overlappingItems = $.getJSON(url, function (data) {})
-    console.log(overlappingItems)
+    let overlappingItems = await findOverlappingBookings(startDate.value, endDate.value)
     let availableItems = items;
     for (var i = 0; i < overlappingItems.length; i++) {
         availableItems = availableItems.filter(item => {
-            return item.id === overlappingItems[i].item.id;
+            return item.id != overlappingItems[i].item.id;
         }) //filter returns the filtered list
     }
-
-
 
     //Creating item rows
     for (var i = 0; i < availableItems.length; i++) {
         let row = document.createElement("tr");
-        let data = [items[i].id, items[i].itemTypesId.name, items[i].organisationsId.id];
+        let data = [availableItems[i].id, availableItems[i].itemTypesId.name, availableItems[i].organisationsId.id];
         for (var j = 0; j < data.length; j++) {
             let cell = document.createElement("td");
             let cellText = document.createTextNode(data[j]);
@@ -68,10 +64,12 @@ function dateChange(startDate, endDate) {
         }
         newTable.appendChild(row);
     }
+}
 
-
-
-
-
-    
+async function findOverlappingBookings(startDate, endDate) {
+    let url = 'https://localhost:44309/api/bookings/OnlyFutureInDateRange?organisationId=1&startdatetime=' + startDate + '&enddatetime=' + endDate
+    let overlappingItems = []
+    return await $.getJSON(url).then(function (data) {
+        return data
+    })
 }

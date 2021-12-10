@@ -42,6 +42,7 @@ namespace FABS_API_Service
                 app.UseDeveloperExceptionPage();
             }
 
+            // NOTE: report this
             // Make sure you call this before calling app.UseMvc()
             app.UseCors(
                 options => options.AllowAnyOrigin()
