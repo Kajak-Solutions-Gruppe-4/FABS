@@ -45,7 +45,7 @@ namespace FABS_Client_Web.Controllers
         //[HttpGet]
         public async Task<ActionResult> Details(int id)
         {
-            List<BookingDto> BookingList = new List<BookingDto>();
+            BookingDto booking = new BookingDto();
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(Baseurl);
@@ -53,16 +53,16 @@ namespace FABS_Client_Web.Controllers
 
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                HttpResponseMessage res = await client.GetAsync($"bookings?organisationid=1&personid={id}");
+                HttpResponseMessage res = await client.GetAsync($"bookings/{id}?organisationid=1");
 
                 if (res.IsSuccessStatusCode)
                 {
                     var BookingResponse = res.Content.ReadAsStringAsync().Result;
 
-                    BookingList = JsonConvert.DeserializeObject<List<BookingDto>>(BookingResponse);
+                    booking = JsonConvert.DeserializeObject<BookingDto>(BookingResponse);
                 }
             }
-            return View(BookingList);
+            return View(booking);
         }
 
         // GET: BookingsController/Create
