@@ -17,7 +17,9 @@ namespace FABS_Client_Web.Models
         [Required]
         public int PersonId { get; set; }
 
-        public List<BookingLineDto> BookingsLine { get; set; }
+        public List<int> ItemsIds { get; set; }
+
+        public List<BookingLineDto> BookingLines { get; set; }
 
         public BookingDto()
         {
@@ -29,7 +31,7 @@ namespace FABS_Client_Web.Models
             StartDateTime = startDateTime;
             EndDateTime = endDateTime;
             PersonId = personId;
-            BookingsLine = bookingsLine;
+            BookingLines = bookingsLine;
         }
 
         public BookingDto(DateTime startDateTime, DateTime endDateTime, int personId, List<BookingLineDto> bookingsLine)
@@ -37,7 +39,7 @@ namespace FABS_Client_Web.Models
             StartDateTime = startDateTime;
             EndDateTime = endDateTime;
             PersonId = personId;
-            BookingsLine = bookingsLine;
+            BookingLines = bookingsLine;
         }
     }
 }
