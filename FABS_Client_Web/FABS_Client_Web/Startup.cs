@@ -62,7 +62,7 @@ namespace FABS_Client_Web
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Bookings}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
         }

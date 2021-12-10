@@ -11,7 +11,7 @@ function startDateChange() {
         endDate.value = startDate.value;
     }
 
-    dateChange(startDate, endDate);
+    dateChange(startDate.value, endDate.value);
 }
 
 function endDateChange() {
@@ -22,10 +22,13 @@ function endDateChange() {
         startDate.value = endDate.value;
     }
 
-    dateChange(startDate, endDate);
+    dateChange(startDate.value, endDate.value);
 }
 
 async function dateChange(startDate, endDate) {
+    console.log(startDate)
+    console.log(endDate)
+
     let tableDiv = document.getElementById("tableDiv");
     tableDiv.children[0].remove();
 
@@ -44,7 +47,7 @@ async function dateChange(startDate, endDate) {
     newTable.appendChild(headers);
 
     //filter to show only available items
-    let overlappingItems = await findOverlappingBookings(startDate.value, endDate.value)
+    let overlappingItems = await findOverlappingBookings(startDate, endDate)
     let availableItems = items;
     for (var i = 0; i < overlappingItems.length; i++) {
         availableItems = availableItems.filter(item => {
@@ -55,6 +58,8 @@ async function dateChange(startDate, endDate) {
     //Creating item rows
     for (var i = 0; i < availableItems.length; i++) {
         let row = document.createElement("tr");
+        row.className = "notSelectedItem";
+        row.onclick = function () { onItemClick(row) };
         let data = [availableItems[i].id, availableItems[i].itemTypesId.name, availableItems[i].organisationsId.id];
         for (var j = 0; j < data.length; j++) {
             let cell = document.createElement("td");
@@ -65,6 +70,30 @@ async function dateChange(startDate, endDate) {
         newTable.appendChild(row);
     }
 }
+
+function onItemClick(clickedElement) {
+    if (clickedElement.className === "notSelectedItem") {
+        clickedElement.className = "selectedItem"
+    } else {
+        clickedElement.className = "notSelectedItem"
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 async function findOverlappingBookings(startDate, endDate) {
     let url = 'https://localhost:44309/api/bookings/OnlyFutureInDateRange?organisationId=1&startdatetime=' + startDate + '&enddatetime=' + endDate

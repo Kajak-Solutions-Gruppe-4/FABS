@@ -38,11 +38,6 @@
                 <input asp-for="PersonId" class="form-control" />
                 <span asp-validation-for="PersonId" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="BookingLine.ItemId" class="control-label"></label>
-                <input asp-for="BookingLine.ItemId" class="form-control" />
-                <span asp-validation-for="BookingLine.ItemId" class="text-danger"></span>
-            </div>
             <div class="form-group" id="tableDiv">
                 @*<ul>*@
                 <table style="width: 100%" id="availableItemTable">
@@ -62,7 +57,7 @@
                         @*<li>
                                 @item.Id
                             </li>*@
-                        <tr class="availableItemRow">
+                        <tr class="notSelectedItem" onclick="onItemClick(this)">
                             <td style="width: 20%">
                                 @item.Id
                             </td>

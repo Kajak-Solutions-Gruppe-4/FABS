@@ -69,3 +69,15 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+
+/*
+    Our css
+----------------------------------------------------------*/
+
+tr.notSelectedItem:hover {
+    background-color: cornflowerblue;
+}
+
+tr.selectedItem {
+    background-color: cadetblue;
+}
