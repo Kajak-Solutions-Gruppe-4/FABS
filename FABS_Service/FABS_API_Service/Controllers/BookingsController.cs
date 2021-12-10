@@ -116,9 +116,16 @@ namespace FABS_API_Service.Controllers
 
         // GET api/<BookingsController>/5
         [HttpGet("{id}")]
-        public string Get(int id, int organisationId)
+        public ActionResult<Booking> Get(int id, int organisationId)
         {
-            return "value";
+            if (organisationId <= 0)
+            {
+                return new StatusCodeResult(422);
+            }
+            Booking booking = _bookingRepository.Get(id, organisationId);
+            BookingDto bookingDto = ConvertModelToDto(booking);
+         
+            return Ok(bookingDto);
         }
 
         // POST api/<BookingsController>
