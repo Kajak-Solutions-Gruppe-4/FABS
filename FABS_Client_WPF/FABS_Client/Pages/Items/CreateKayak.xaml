@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FABS_Client_WPF.Pages.Items"
         mc:Ignorable="d"
-        Title="CreateKayak" Height="600" Width="340">
+        Title="CreateKayak" Height="600" Width="360">
 
     <Grid Background="White">
 
@@ -81,7 +81,12 @@
         <TextBlock Grid.Column="1" Grid.Row="3" FontWeight="SemiBold" Text="Enheds type: " FontFamily="Segce UI" Margin="3"/>
         <ComboBox x:Name = "itemTypeDropDown" Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="3" ItemsSource="{Binding Path=itemTypeDataSource}" DisplayMemberPath="PickLocation" SelectedValuePath="PickLocation">
         </ComboBox>
-
+        
+        <!--Create Item Type Link-->
+        <Button Grid.Column="5" Grid.Row="3" MaxHeight="18" MaxWidth="18"  Visibility="Visible" Margin="2" Background="Transparent" BorderBrush="Transparent" Click="ItemTypeButton">
+            <Image Source="/Pages/Link.png" />
+        </Button>
+        
         <!--Amount-->
         <TextBlock Grid.Column="1" Grid.Row="4" FontWeight="SemiBold" Text="Tilføj (x) antal kajakker: " FontFamily="Segce UI" Margin="3"/>
         <StackPanel Grid.Column="2" Grid.Row="4">
@@ -145,10 +150,22 @@
         <TextBlock Grid.Column="1" Grid.Row="20" FontWeight="SemiBold" Text="Varehus: " FontFamily="Segce UI" Margin="3"/>
         <ComboBox x:Name = "warehouseDropDown" Grid.Column="2" Grid.Row="20" Grid.ColumnSpan="3" ItemsSource="{Binding Path=WarehouseDataSource}" DisplayMemberPath="Name" SelectedValuePath="Name" SelectedValue="WarehouseDto"/>
 
+        <!--Create Item Type Link-->
+        <Button Grid.Column="5" Grid.Row="20" MaxHeight="18" MaxWidth="18"  Visibility="Visible" Margin="2" Background="Transparent" BorderBrush="Transparent" Click="WarehouseButton">
+            <Image Source="/Pages/Link.png" />
+        </Button>
+        
         <!--Location-->
         <TextBlock Grid.Column="1" Grid.Row="21" FontWeight="SemiBold" Text="Lagerplads: " FontFamily="Segce UI" Margin="3"/>
-        <ComboBox x:Name = "locationDropDown" Grid.Column="2" Grid.Row="21" Grid.ColumnSpan="3" ItemsSource="{Binding Path=LocationDataSource}" DisplayMemberPath="PickLocation" SelectedValuePath="PickLocation" SelectedValue="LocationDto" FocusableChanged="locationDropDown_FocusableChanged" SelectionChanged="locationDropDown_SelectionChanged">
+        <ComboBox x:Name = "locationDropDown" Grid.Column="2" Grid.Row="21" Grid.ColumnSpan="3" ItemsSource="{Binding Path=LocationDataSource}" DisplayMemberPath="PickLocation" SelectedValuePath="PickLocation" SelectedValue="LocationDto" SelectionChanged="locationDropDown_SelectionChanged">
         </ComboBox>
+
+        <!--Create Item Type Link-->
+
+        <Button Grid.Column="5" Grid.Row="21" MaxHeight="18" MaxWidth="18"  Visibility="Visible" Margin="2" Background="Transparent" BorderBrush="Transparent" Click="LocationButton">
+            <Image Source="/Pages/Link.png" />
+        </Button>
+
 
         <!--Location Decription-->
         <TextBlock x:Name="LocationDecriptionHeader" Grid.Column="1" Grid.Row="22" FontWeight="SemiBold" Text="Lager Beskrivelse: " FontFamily="Segce UI" Margin="3" Visibility="Hidden"/>

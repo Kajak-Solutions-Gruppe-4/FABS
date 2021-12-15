@@ -76,9 +76,9 @@
 
 
         <Button Content="Opret Kajak" Grid.Column="1" Grid.Row="5" Width="100" Click="CreateKayakButton"/>
-        <Button Content="Opret Kajak Type" Grid.Column="2" Grid.Row="5" Width="100" Click="CreateKayakButton"/>
-        <Button Content="Opret Lokation" Grid.Column="3" Grid.Row="5" Width="100" Click="CreateKayakButton"/>
-        <Button Content="Opret Varehus" Grid.Column="4" Grid.Row="5" Width="100" Click="CreateKayakButton"/>
+        <Button Content="Opret Kajak Type" Grid.Column="2" Grid.Row="5" Width="100" Click="CreateKayakTypeButton"/>
+        <Button Content="Opret Lokation" Grid.Column="3" Grid.Row="5" Width="100" Click="CreateLocationButton"/>
+        <Button Content="Opret Varehus" Grid.Column="4" Grid.Row="5" Width="100" Click="CreateWarehouseButton"/>
     </Grid>
     
 </Page>

@@ -42,6 +42,25 @@ namespace FABS_Client_WPF.Pages.Items
             createKayak.Show();
         }
 
+        private void CreateKayakTypeButton(object sender, RoutedEventArgs e)
+        {
+            CreateItemType createItemType = new CreateItemType(this);
+            //this.Visibility = Visibility.Hidden //Hides Main window while usng second window
+            createItemType.Show();
+        }
+
+        private void CreateLocationButton(object sender, RoutedEventArgs e)
+        {
+            CreateLocation createLocation = new CreateLocation(this);
+            //this.Visibility = Visibility.Hidden //Hides Main window while usng second window
+            createLocation.Show();
+        }
+
+        private void CreateWarehouseButton(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// Creates a REST client for retrieving items from the database.
         /// </summary>

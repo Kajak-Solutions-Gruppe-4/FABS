@@ -35,6 +35,27 @@ namespace FABS_Client_WPF.Pages.Items
 
         }
 
+        private void ItemTypeButton(object sender, RoutedEventArgs e)
+        {
+            //CreateKayak createKayak = new CreateKayak(this);
+            ////this.Visibility = Visibility.Hidden //Hides Main window while usng second window
+            //createKayak.Show();
+            throw new NotImplementedException();
+        }
+
+        private void LocationButton(object sender, RoutedEventArgs e)
+        {
+            //CreateLocation createLocation = new CreateLocation(this);
+            ////this.Visibility = Visibility.Hidden //Hides Main window while usng second window
+            //createLocation.Show();
+            throw new NotImplementedException();
+        }
+
+        private void WarehouseButton(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
         private void BackButton(object sender, RoutedEventArgs e)
         {
             Close();
@@ -45,7 +66,7 @@ namespace FABS_Client_WPF.Pages.Items
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void CreateKayakButton(object sender, RoutedEventArgs e)
+        private void CreateButton(object sender, RoutedEventArgs e)
         {
             ItemHelper helper = new ItemHelper();
 
@@ -181,6 +202,7 @@ namespace FABS_Client_WPF.Pages.Items
             AmountText.Text = Convert.ToString(result);
         }
 
+        //TODO Hide Elemens until selected
         private void LocationVisability()
         {
             //locationDropDown_FocusableChanged
