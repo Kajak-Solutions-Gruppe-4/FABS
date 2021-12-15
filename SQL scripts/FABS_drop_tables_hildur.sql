@@ -102,8 +102,3 @@ GO
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[addresses]') AND type in (N'U'))
 DROP TABLE [dbo].[addresses]
 GO
-USE [master]
-GO
-/****** Object:  Database [FABS]    Script Date: 08-12-2021 13:42:48 ******/
-DROP DATABASE [FABS]
-GO
