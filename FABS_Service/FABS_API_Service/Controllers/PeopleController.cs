@@ -23,7 +23,7 @@ namespace FABS_API_Service.Controllers
         [ActivatorUtilitiesConstructor]
         public PeopleController()
         {
-            _peopleRepository = new PeopleRepository();
+            _peopleRepository = new PeopleRepository("Hildur");
         }
         // GET: api/<PeopleController>
         [HttpGet]

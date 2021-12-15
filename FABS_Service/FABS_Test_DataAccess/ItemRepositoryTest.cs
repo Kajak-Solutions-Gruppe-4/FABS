@@ -97,7 +97,7 @@ namespace FABS_Test_DataAccess
         {
             using (var context = new FABSContext())
             {
-                var itemRepository = new ItemRepository();
+                var itemRepository = new ItemRepository("Local");
 
                 Item item = itemRepository.Get(id, 1);
 
@@ -164,7 +164,7 @@ namespace FABS_Test_DataAccess
             using (var context = new FABSContext())
             {
                 //arrange: some happens in GetData method
-                ItemRepository itemRepository = new ItemRepository();
+                ItemRepository itemRepository = new ItemRepository("Local");
 
                 //act
                 int returnedID = itemRepository.Create(item);

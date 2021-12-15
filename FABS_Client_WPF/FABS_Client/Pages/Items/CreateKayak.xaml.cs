@@ -1,4 +1,3 @@
-﻿using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Newtonsoft.Json;
+﻿using RestSharp;
 using DataFormat = RestSharp.DataFormat;
 using FABS_Client_WPF.BusinessLogic;
 using FABS_Client_WPF.DTO;
@@ -40,7 +40,12 @@ namespace FABS_Client_WPF.Pages.Items
             Close();
         }
 
-        private void CreateButton(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Logic for saving an item (kayak) to the database
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CreateKayakButton(object sender, RoutedEventArgs e)
         {
             ItemHelper helper = new ItemHelper();
 
@@ -63,13 +68,12 @@ namespace FABS_Client_WPF.Pages.Items
                 locationDropDown.Text.ToString()
                 );
 
-            //warehouse
-            WarehouseDto warehouse = new WarehouseDto(
-                warehouseDropDown.Text.ToString()
-                );
+            ////warehouse
+            //WarehouseDto warehouse = new WarehouseDto(
+            //    warehouseDropDown.Text.ToString()
+            //    );
 
             //Item
-
             ItemDto item = new ItemDto(
                 location,
                 itemType
@@ -140,7 +144,6 @@ namespace FABS_Client_WPF.Pages.Items
             var request = new RestRequest("/Locations?organisationId=1", DataFormat.Json);
 
             var response = apiClient.Execute(request);
-            string defaultInput = "123";
 
             List<LocationDto> listOfLocations = JsonConvert.DeserializeObject<List<LocationDto>>(response.Content);
             locationDropDown.ItemsSource = listOfLocations;

@@ -11,6 +11,9 @@ namespace FABS_Client_WPF.BusinessLogic
 {
     class PersonHelper
     {
+        /// <summary>
+        /// Logic for creating a REST Client in order to save a person in the database
+        /// </summary>
         private IRestClient _clientPeople = new RestClient("https://localhost:44309/api");
         internal void PostPerson(PersonDto person)
         {

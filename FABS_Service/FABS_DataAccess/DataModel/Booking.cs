@@ -20,6 +20,15 @@ namespace FABS_DataAccess.Model
             StartDatetime = startDatetime;
             EndDatetime = endDatetime;
             PeopleId = peopleId;
+            StatusesId = statusId;
+        }
+
+        public Booking(DateTime startDatetime, DateTime endDatetime, int peopleId, int statusesId) : this()
+        {
+            StartDatetime = startDatetime;
+            EndDatetime = endDatetime;
+            PeopleId = peopleId;
+            StatusesId = statusesId;
         }
     }
 }

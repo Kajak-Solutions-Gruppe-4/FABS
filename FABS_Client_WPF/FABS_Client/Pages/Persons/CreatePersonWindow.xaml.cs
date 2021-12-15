@@ -25,6 +25,11 @@ namespace FABS_Client_WPF.Pages.Persons
     {
         private PersonsGUI _parentWindow;
 
+        /// <summary>
+        /// Constructor for Create Person window. Can use methods from the parent window.
+        /// </summary>
+        /// <param name="parentWindow"></param>
+        /// <returns>A new person data entry window</returns>
         public CreatePersonWindow(PersonsGUI parentWindow)
         {
             _parentWindow = parentWindow;
@@ -36,6 +41,13 @@ namespace FABS_Client_WPF.Pages.Persons
             Close();
         }
 
+        /// <summary>
+        /// This method creates a new Person in the database.
+        /// Automatically updates the person list with the new entry.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <returns>Void</returns>
         private void CreatePersonButton(object sender, RoutedEventArgs e)
         {
             PersonHelper helper = new PersonHelper();
@@ -45,7 +57,7 @@ namespace FABS_Client_WPF.Pages.Persons
                 streetnameText.Text.ToString(),
                 streetNoText.Text.ToString(),
 
-                //TODO: make so arpartmentNumber is null when the string is empty, instead of "" (an empty string)
+                //TODO: make so apartmentNumber is null when the string is empty, instead of "" (an empty string)
                 apartmentNoText.Text.ToString(),
                 zipcodeText.Text.ToString(),
                 1,
@@ -61,16 +73,12 @@ namespace FABS_Client_WPF.Pages.Persons
                 address,
                //Login = login
                emailText.Text.ToString());
-            
-                
-        
 
+            //Ask helper to actually post/save the person
             helper.PostPerson(person);
 
+            //Refresh the list to reflect that the new person is saved in the database
             _parentWindow.RefreshList();
-
-            //var instanceOfPersonGUI = new PersonsGUI();
-            //instanceOfPersonGUI.RefreshList();
 
             Close();
         }

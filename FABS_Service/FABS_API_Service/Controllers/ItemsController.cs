@@ -15,11 +15,15 @@ namespace FABS_API_Service.Controllers
     [ApiController]
     public class ItemsController : ControllerBase
     {
-        private readonly IRepository<Item> _itemRepository;
+
+        //TODO: make the Get(DateTime startDate, DateTime endDate, int organisationId) work through IRepository, not ItemRepository
+        //private readonly IRepository<Item> _itemRepository;
+
+        private readonly ItemRepository _itemRepository;
 
         public ItemsController()
         {
-            _itemRepository = new ItemRepository();
+            _itemRepository = new ItemRepository("Hildur");
         }
 
         // GET: api/<ItemsController>
@@ -31,6 +35,31 @@ namespace FABS_API_Service.Controllers
                 return new StatusCodeResult(422);
             }
             IEnumerable<Item> listItems = _itemRepository.GetAll(organisationId);
+            List<ItemDto> items = new List<ItemDto>();
+            foreach (Item item in listItems)
+            {
+                items.Add(ConvertModelToDto(item));
+            }
+
+            int c = items.Count();
+            if (c < 0)
+            {
+                return NotFound();
+            }
+            return Ok(items);
+        }
+        
+        [HttpGet, Route("GetAll")]
+        
+        public ActionResult<IEnumerable<Item>> GetAll(DateTime startDate, DateTime endDate, int organisationId)
+        {
+            if (organisationId <= 0)
+            {
+                return new StatusCodeResult(422);
+            }
+
+            //TODO: make this work through a IRepository instance instead of a ItemRepositoryInstance
+            IEnumerable<Item> listItems = _itemRepository.GetAll(startDate, endDate, organisationId);
             List<ItemDto> items = new List<ItemDto>();
             foreach (Item item in listItems)
             {

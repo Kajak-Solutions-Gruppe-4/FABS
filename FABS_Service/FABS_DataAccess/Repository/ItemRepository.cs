@@ -12,9 +12,9 @@ namespace FABS_DataAccess.Repository
     {
         private readonly FABSContext _context;
 
-        public ItemRepository()
+        public ItemRepository(string nameOfConnectionString)
         {
-            _context = new FABSContext();
+            _context = new FABSContext(nameOfConnectionString);
         }
 
         public Item Get(int id, int organisationId)
@@ -79,6 +79,10 @@ namespace FABS_DataAccess.Repository
             return listItem;
         }
 
+        public IEnumerable<Item> GetAll(DateTime startDate, DateTime endDate, int organisationId)
+        {
+            throw new NotImplementedException();
+        }
 
         public int Create(Item i)
         {
