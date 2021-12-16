@@ -115,6 +115,8 @@ namespace FABS_Test_DataAccess
 
             //adding test obejcts to list
             var allData = new List<object[]>();
+
+
             switch (nameOfCaller)
             {
                 case "Seed":
@@ -146,66 +148,63 @@ namespace FABS_Test_DataAccess
         {
             //throw new NotImplementedException();
 
-            using (var context = new FABSContext())
+            var bookingRepository = new BookingRepository();
+            Booking booking = bookingRepository.Get(id, 1);
+
+            if (expectedSuccess == true)
             {
-                var bookingRepository = new BookingRepository();
-                Booking booking = bookingRepository.Get(id, 1);
+                //Booking
+                Assert.Equal(new DateTime(2021, 1, 24, 23, 12, 0), booking.StartDatetime);
+                Assert.Equal(new DateTime(2021, 1, 25, 1, 0, 0), booking.EndDatetime);
+                Assert.Equal("Booking Status", booking.Statuses.Category);
+                Assert.Equal("Active", booking.Statuses.Name);
 
-                if (expectedSuccess == true)
-                {
-                    //Booking
-                    Assert.Equal(new DateTime(2021, 1, 24, 23, 12, 0), booking.StartDatetime);
-                    Assert.Equal(new DateTime(2021, 1, 25, 1, 0, 0), booking.EndDatetime);
-                    Assert.Equal("Booking Status", booking.Statuses.Category);
-                    Assert.Equal("Active", booking.Statuses.Name);
+                //Booking lines
+                //Item location
+                Assert.Equal("Building A", booking.BookingLines.First().Items.Locations.Warehouses.Name);
+                Assert.Equal("Sofiendalsvej", booking.BookingLines.First().Items.Locations.Warehouses.Addresses.StreetName);
+                Assert.Equal("60", booking.BookingLines.First().Items.Locations.Warehouses.Addresses.StreetNumber);
+                Assert.Null(booking.BookingLines.First().Items.Locations.Warehouses.Addresses.ApartmentNumber);
+                Assert.Equal("9000", booking.BookingLines.First().Items.Locations.Warehouses.Addresses.ZipcodeCountryCity.Zipcode);
+                Assert.Equal("Aalborg", booking.BookingLines.First().Items.Locations.Warehouses.Addresses.ZipcodeCountryCity.City);
+                Assert.Equal("Danmark", booking.BookingLines.First().Items.Locations.Warehouses.Addresses.ZipcodeCountryCity.Countries.Name);
 
-                    //Booking lines
-                    //Item location
-                    Assert.Equal("Building A", booking.BookingLines.First().Items.Locations.Warehouses.Name);
-                    Assert.Equal("Sofiendalsvej", booking.BookingLines.First().Items.Locations.Warehouses.Addresses.StreetName);
-                    Assert.Equal("60", booking.BookingLines.First().Items.Locations.Warehouses.Addresses.StreetNumber);
-                    Assert.Null(booking.BookingLines.First().Items.Locations.Warehouses.Addresses.ApartmentNumber);
-                    Assert.Equal("9000", booking.BookingLines.First().Items.Locations.Warehouses.Addresses.ZipcodeCountryCity.Zipcode);
-                    Assert.Equal("Aalborg", booking.BookingLines.First().Items.Locations.Warehouses.Addresses.ZipcodeCountryCity.City);
-                    Assert.Equal("Danmark", booking.BookingLines.First().Items.Locations.Warehouses.Addresses.ZipcodeCountryCity.Countries.Name);
+                //Item type
+                Assert.Equal("Red Kayaks Rule!", booking.BookingLines.First().Items.ItemTypes.KayakType.Description);
+                Assert.Equal(120, booking.BookingLines.First().Items.ItemTypes.KayakType.WeightLimit);
+                Assert.Equal(2.5m, booking.BookingLines.First().Items.ItemTypes.KayakType.LengthMeter);
+                Assert.Equal(1, booking.BookingLines.First().Items.ItemTypes.KayakType.PersonCapacity);
 
-                    //Item type
-                    Assert.Equal("Red Kayaks Rule!", booking.BookingLines.First().Items.ItemTypes.KayakType.Description);
-                    Assert.Equal(120, booking.BookingLines.First().Items.ItemTypes.KayakType.WeightLimit);
-                    Assert.Equal(2.5m, booking.BookingLines.First().Items.ItemTypes.KayakType.LengthMeter);
-                    Assert.Equal(1, booking.BookingLines.First().Items.ItemTypes.KayakType.PersonCapacity);
+                //Pick location
+                Assert.Equal("1.2.3", booking.BookingLines.First().Items.Locations.PickLocation);
+                Assert.Equal("This is an awesome location spot 1", booking.BookingLines.First().Items.Locations.Description);
 
-                    //Pick location
-                    Assert.Equal("1.2.3", booking.BookingLines.First().Items.Locations.PickLocation);
-                    Assert.Equal("This is an awesome location spot 1", booking.BookingLines.First().Items.Locations.Description);
+                //Person
+                Assert.Equal("Peter", booking.People.FirstName);
+                Assert.Equal("Hahn", booking.People.LastName);
+                Assert.Equal("20202020", booking.People.TelephoneNumber);
+                Assert.False(booking.People.IsAdmin);
 
-                    //Person
-                    Assert.Equal("Peter", booking.People.FirstName);
-                    Assert.Equal("Hahn", booking.People.LastName);
-                    Assert.Equal("20202020", booking.People.TelephoneNumber);
-                    Assert.False(booking.People.IsAdmin);
+                //login
+                Assert.Equal("test1@test.com", booking.People.Login.Email);
+                Assert.Equal("1234", booking.People.Login.Password);
 
-                    //login
-                    Assert.Equal("test1@test.com", booking.People.Login.Email);
-                    Assert.Equal("1234", booking.People.Login.Password);
+                //Person Address
+                Assert.Equal("Sofiendalsvej", booking.People.Addresses.StreetName);
+                Assert.Equal("60", booking.People.Addresses.StreetNumber);
+                Assert.Null(booking.People.Addresses.ApartmentNumber);
+                Assert.Equal("9000", booking.People.Addresses.ZipcodeCountryCity.Zipcode);
+                Assert.Equal("Aalborg", booking.People.Addresses.ZipcodeCountryCity.City);
+                Assert.Equal("Denmark", booking.People.Addresses.ZipcodeCountryCity.Countries.Name);
 
-                    //Person Address
-                    Assert.Equal("Sofiendalsvej", booking.People.Addresses.StreetName);
-                    Assert.Equal("60", booking.People.Addresses.StreetNumber);
-                    Assert.Null(booking.People.Addresses.ApartmentNumber);
-                    Assert.Equal("9000", booking.People.Addresses.ZipcodeCountryCity.Zipcode);
-                    Assert.Equal("Aalborg", booking.People.Addresses.ZipcodeCountryCity.City);
-                    Assert.Equal("Denmark", booking.People.Addresses.ZipcodeCountryCity.Countries.Name);
+                //Organisation
+                Assert.Equal("12341234", booking.People.OrganisationPeople.ToList()[0].Organisations.Cvr);
+                Assert.Equal("12341234", booking.People.OrganisationPeople.ToList()[0].Organisations.Name);
+            }
 
-                    //Organisation
-                    Assert.Equal("12341234", booking.People.OrganisationPeople.ToList()[0].Organisations.Cvr);
-                    Assert.Equal("12341234", booking.People.OrganisationPeople.ToList()[0].Organisations.Name);
-                }
-
-                else if (expectedSuccess == false)
-                {
-                    Assert.Null(booking);
-                }
+            else if (expectedSuccess == false)
+            {
+                Assert.Null(booking);
             }
         }
 
@@ -339,7 +338,7 @@ namespace FABS_Test_DataAccess
         {
             int numberOfRowsAffected = bookingRepository.Create(booking);
             int numberOfCreatedBookings = 0;
-            if(numberOfRowsAffected > 0)
+            if (numberOfRowsAffected > 0)
             {
                 numberOfCreatedBookings = 1;
             }
