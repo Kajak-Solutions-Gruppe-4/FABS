@@ -46,6 +46,7 @@ namespace FABS_Client_Web.Controllers
         public async Task<ActionResult> Details(int id)
         {
             BookingDto booking = new BookingDto();
+            //Instanciate a Http Client to send API call
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(Baseurl);
@@ -53,12 +54,13 @@ namespace FABS_Client_Web.Controllers
 
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
+                //Call the service with the url
                 HttpResponseMessage res = await client.GetAsync($"bookings/{id}?organisationid=1");
 
                 if (res.IsSuccessStatusCode)
                 {
                     var BookingResponse = res.Content.ReadAsStringAsync().Result;
-
+                    //Deserialize JSON to DTO object
                     booking = JsonConvert.DeserializeObject<BookingDto>(BookingResponse);
                 }
             }

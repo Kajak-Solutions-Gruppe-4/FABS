@@ -52,8 +52,6 @@ namespace FABS_DataAccess.BusinessLogic
                                             "AND b.end_datetime > GETDATE()";
             if (conn != null)
             {
-
-
                 foreach (var bookingLine in booking.BookingLines)
                 {
                     using (SqlCommand futureItemBookingTimesCommand = new SqlCommand(futureItemBookingTimesQuery, conn))
