@@ -70,7 +70,6 @@ namespace FABS_DataAccess.Repository
         /// <returns>Number of rows affected, or 0 if no rows have been written in DB (not successfull)</returns>
         public int Create(Booking booking)
         {
-
             int numberOfRowsInserted = 0;
 
             //Validate booking has item
@@ -79,14 +78,12 @@ namespace FABS_DataAccess.Repository
             {
                 return numberOfRowsInserted;
             }
-
             //validate Date Range
             //TODO: Make exception.
             if (!BookingLogic.DateRangeValidator(booking.StartDatetime, booking.EndDatetime))
             {
                 return numberOfRowsInserted;
             }
-
             //Validate Overlapping
             var transactionOptions = new TransactionOptions();
             //transactionOptions.IsolationLevel = IsolationLevel.RepeatableRead; Not strong enough
@@ -102,7 +99,6 @@ namespace FABS_DataAccess.Repository
                     {
                         return numberOfRowsInserted;
                     }
-
                     // Prepare command for inserting booking
                     string bookingQuery = "INSERT INTO bookings(start_datetime, end_datetime, people_id, statuses_id) " +
                                          "VALUES(@StartDateTime, @EndDateTime, @PersonId, @StatusId) SELECT scope_identity()";
@@ -118,7 +114,6 @@ namespace FABS_DataAccess.Repository
                     insertBookingCommand.Parameters.AddWithValue("PersonId", booking.PeopleId);
                     insertBookingCommand.Parameters.AddWithValue("StatusId", booking.StatusesId);
 
-
                     try
                     {
                         insertedBookingId = (decimal)insertBookingCommand.ExecuteScalar();
@@ -128,9 +123,6 @@ namespace FABS_DataAccess.Repository
                     {
                         allSuccessfull = false;
                     }
-                    //TODO Try catch
-
-
 
                     foreach (BookingLine bookingLine in booking.BookingLines)
                     {
@@ -163,11 +155,6 @@ namespace FABS_DataAccess.Repository
                     }
                 }
             }
-
-
-
-
-
             return numberOfRowsInserted;
         }
 
