@@ -19,13 +19,21 @@ namespace FABS_API_Service.Controllers
         // TODO: use the interface!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         private readonly BookingRepository _bookingRepository;
 
+        /// <summary>
+        /// Constructor for building a connection to Hildur
+        /// </summary>
         public BookingsController()
         {
             _bookingRepository = new BookingRepository("Hildur");
         }
 
 
-
+        /// <summary>
+        /// This is the controller that is responsible for getting access and generating 
+        /// the list of all bookings in an organisation.
+        /// </summary>
+        /// <param name="organisationId"></param>
+        /// <returns>A list of bookings</returns>
         // GET: api/<BookingsController>
         [HttpGet]
         public ActionResult<IEnumerable<Booking>> Get(int organisationId)
@@ -49,6 +57,11 @@ namespace FABS_API_Service.Controllers
             return Ok(bookings);
         }
 
+        /// <summary>
+        /// Retrieving a list of all future bookings from the database for an organisation.
+        /// </summary>
+        /// <param name="organisationId"></param>
+        /// <returns>A list of all items booked in the furture in an organisation</returns>
         [HttpGet, Route("OnlyFuture")]
         public ActionResult<IEnumerable<ItemWithBookingInfoDto>> GetOnlyFuture(int organisationId)
         {
@@ -57,6 +70,13 @@ namespace FABS_API_Service.Controllers
             return items;
         }
 
+        /// <summary>
+        /// Creating a list of future bookings with associated items NOT within the selected date range.
+        /// </summary>
+        /// <param name="organisationId"></param>
+        /// <param name="startDatetime"></param>
+        /// <param name="endDatetime"></param>
+        /// <returns>A list of items available in chosen daterange</returns>
         [HttpGet, Route("OnlyFutureNotInDateRange")]
         public ActionResult<IEnumerable<ItemWithBookingInfoDto>> GetOnlyFutureNotInDateRange(int organisationId, DateTime startDatetime, DateTime endDatetime)
         {
@@ -65,6 +85,13 @@ namespace FABS_API_Service.Controllers
             return items;
         }
 
+        /// <summary>
+        /// This method makes a list of bookings with associated items within the selected date range.
+        /// </summary>
+        /// <param name="organisationId"></param>
+        /// <param name="startDatetime"></param>
+        /// <param name="endDatetime"></param>
+        /// <returns>A list of items not available in daterange</returns>
         [HttpGet, Route("OnlyFutureInDateRange")]
         public ActionResult<IEnumerable<ItemWithBookingInfoDto>> GetOnlyFutureInDateRange(int organisationId, DateTime startDatetime, DateTime endDatetime)
         {

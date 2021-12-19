@@ -38,6 +38,10 @@ namespace FABS_DataAccess.Repository
             Initialize(nameOfConnectionString);
         }
 
+        /// <summary>
+        /// Calling up the path for a connection to the database
+        /// </summary>
+        /// <param name="nameOfConnectionString"></param>
         private void Initialize(string nameOfConnectionString)
         {
             string physicalPath = "";
@@ -165,6 +169,13 @@ namespace FABS_DataAccess.Repository
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Getting a specific booking belonging to a certain member.
+        /// Shall be refactored to a list over the members bookings.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="organisationId"></param>
+        /// <returns>A single booking object</returns>
         public Booking Get(int id, int organisationId)
         {
             //throw new NotImplementedException();
@@ -195,7 +206,12 @@ namespace FABS_DataAccess.Repository
             }
             return booking;
         }
-
+        
+        /// <summary>
+        /// Generating a list of all bookings in the database
+        /// </summary>
+        /// <param name="organisationId"></param>
+        /// <returns>List a list of bookings</returns>
         public IEnumerable<Booking> GetAll(int organisationId)
         {
             //throw new NotImplementedException();
@@ -234,6 +250,11 @@ namespace FABS_DataAccess.Repository
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// This method gets all booking objects in the database.
+        /// </summary>
+        /// <param name="bookingReader"></param>
+        /// <returns>A list of bookings</returns>
         private IEnumerable<Booking> GetBookingObjects(SqlDataReader bookingReader)
         {
             //throw new NotImplementedException();
@@ -264,6 +285,11 @@ namespace FABS_DataAccess.Repository
             return foundBookings;
         }
 
+        /// <summary>
+        /// This method finds a single booking in the database.
+        /// </summary>
+        /// <param name="bookingReader"></param>
+        /// <returns>A single booking object</returns>
         private Booking GetBookingObject(SqlDataReader bookingReader)
         {
             Booking tempBooking = null;
