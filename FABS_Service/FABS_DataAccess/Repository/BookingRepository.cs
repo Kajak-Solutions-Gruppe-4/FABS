@@ -137,9 +137,7 @@ namespace FABS_DataAccess.Repository
                         createBookingLineCommand.Parameters.AddWithValue("ItemId", bookingLine.ItemsId);
                         try
                         {
-                            //TODO Validate
                             numberOfRowsInserted += createBookingLineCommand.ExecuteNonQuery();
-                            //numberOfRowsInserted++;
                         }
                         catch (Exception ex)
                         {
