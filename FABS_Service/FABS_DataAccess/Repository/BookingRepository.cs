@@ -176,7 +176,6 @@ namespace FABS_DataAccess.Repository
         /// <returns>A single booking object</returns>
         public Booking Get(int id, int organisationId)
         {
-            //throw new NotImplementedException();
             Booking booking = new Booking();
             try
             {
@@ -185,14 +184,14 @@ namespace FABS_DataAccess.Repository
                     "INNER JOIN bookings ON booking_line.bookings_id = bookings.id " +
                     "INNER JOIN people ON bookings.people_id = people.id " +
                     "INNER JOIN items ON booking_line.items_id = items.id " +
-                    $"where bookings_id = {id}";
-
+                    "where bookings_id = @BookingId";
                 using (SqlConnection conn = new SqlConnection(_connectionString))
                 using (SqlCommand readCommand = new SqlCommand(query, conn))
                 {
                     if (conn != null)
                     {
                         conn.Open();
+                        readCommand.Parameters.AddWithValue("BookingId", id);
                         SqlDataReader bookingReader = readCommand.ExecuteReader();
                         booking = GetBookingObject(bookingReader);
                     }
